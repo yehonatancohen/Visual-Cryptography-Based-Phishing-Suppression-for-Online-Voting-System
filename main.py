@@ -86,6 +86,6 @@ def create_combination(out_image_A, out_image_B):
     out_image_combined.save(out_filename_combined, 'PNG')
     print("Combined image saved as: {}".format(out_filename_combined))
 
-original_image = create_original_image(300, 150, "zxjhvkdfgiuer84")
+original_image = create_original_image(300, 150, "cohen")
 (share_img_A, share_img_B) = create_shares(original_image)
 create_combination(share_img_A, share_img_B)
