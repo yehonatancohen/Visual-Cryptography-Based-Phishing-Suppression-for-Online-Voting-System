@@ -1,5 +1,5 @@
 import sqlite3
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash
 from PIL.Image import Image
 import database.db_files as db_files
 from database.models import User
@@ -37,6 +37,8 @@ def __get_user__(conn, email):
     rows = curr.fetchall()
     if len(rows) > 1:
         raise MemoryError(f"More than one user with {email}")
+    if len(rows) == 0:
+        return None
     row = rows[0]
     return User(row[0], row[1], row[2], row[3], row[4])
     

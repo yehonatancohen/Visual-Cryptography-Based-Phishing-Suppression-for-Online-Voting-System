@@ -1,10 +1,10 @@
 import os
 import uuid
-from PIL import ImageFile
+from PIL.Image import Image
 SHARES_FOLDER_PATH='./database/shares'
 
 
-def save_img(img: ImageFile):
+def save_img(img: Image):
     """
     This function receives a Pillow image file\n
     and saves the image at SHARES_FOLDER_PATH with a unique ID
