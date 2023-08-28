@@ -10,7 +10,7 @@ class User():
     def __repr__(self) -> str:
         return f"{self.email}: {self.f_name} {self.s_name}. Share: {self.share_path}.\n{self.hashed_password}"
 
-class survey():
+class Survey():
         def __init__(self, id, name, start_date, end_date, owner_email) -> None:
             self.id = id
             self.name = name

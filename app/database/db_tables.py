@@ -1,6 +1,6 @@
 import sqlite3
 
-DB_PATH = "./database/database.db"
+DB_PATH = "./app/database/database.db"
 
 users_table_init_query = """
     CREATE TABLE users(
@@ -47,6 +47,8 @@ candidate_table_init_query = """
 """
 
 def init_tables():
+    """Create tables
+    """
     conn = sqlite3.connect(DB_PATH)
     curr = conn.cursor()
     curr.execute(users_table_init_query)

@@ -1,7 +1,7 @@
 import os
 import uuid
 from PIL.Image import Image
-SHARES_FOLDER_PATH='./shares'
+SHARES_FOLDER_PATH='./app/database/shares'
 
 
 def save_img(img: Image):

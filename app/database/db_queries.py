@@ -1,8 +1,9 @@
-import sqlite3
+import base64
+import uuid, shortuuid
 from werkzeug.security import generate_password_hash
 from PIL.Image import Image
 import database.db_files as db_files
-from database.models import User
+from database.models import User, Survey
 
 def __add_user__(conn, email: str, f_name: str, s_name: str, share2: Image, password: str,
               email_size_limit: int = -1, f_name_size_limit: int = -1, s_name_size_limit: int = -1):
@@ -28,6 +29,7 @@ def __add_user__(conn, email: str, f_name: str, s_name: str, share2: Image, pass
     curr.execute('INSERT INTO users (email, f_name, s_name, share_path, pass) VALUES (?, ?, ?, ?, ?) ', (email, f_name, s_name, share_path, hashed_pswd,))
     conn.commit()
     conn.close()
+    return id
 
 
 def __get_user__(conn, email):
@@ -42,3 +44,33 @@ def __get_user__(conn, email):
     row = rows[0]
     return User(row[0], row[1], row[2], row[3], row[4])
     
+
+def __add_survey__(conn, name: str, start_day: int, start_month: int, start_year: int,
+                    end_day: int, end_month: int, end_year: int, owner_mail, name_length_limit = -1):
+    curr = conn.cursor()
+    from database.users import get_user
+    if get_user(owner_mail) is None:
+        raise ValueError(f"email \"{owner_mail}\" doesn't exist")
+    #base64.b64encode(bytes(fix, encoding='utf-8')).decode()
+    id = shortuuid.uuid()
+    start_date = f'{start_year:04d}-{start_month:02d}-{start_day:02d}'
+    end_date = f'{end_year:04d}-{end_month:02d}-{end_day:02d}'
+    if name_length_limit != -1 and len(name) > name_length_limit:
+        return ValueError(f"survey name {name} longer than allowed length ({name_length_limit})")
+    curr.execute('INSERT INTO surveys (id, name, start, end, owner) VALUES (?, ?, ?, ?, ?) ', (id, name, start_date, end_date, owner_mail,))
+    conn.commit()
+    conn.close()
+    return id
+
+
+def __get_survey__(conn, survey_id: str) -> Survey:
+    curr=conn.cursor()
+
+    curr.execute('SELECT * FROM surveys WHERE id = ?', (survey_id,))
+    rows = curr.fetchall()
+    if len(rows) > 1:
+        raise MemoryError(f"More than one user with {survey_id}")
+    if len(rows) == 0:
+        return None
+    row = rows[0]
+    return Survey(row[0], row[1], row[2], row[3], row[4])
