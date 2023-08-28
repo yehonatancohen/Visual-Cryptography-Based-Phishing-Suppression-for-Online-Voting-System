@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_wtf.csrf import CSRFProtect
 from werkzeug.utils import secure_filename
 from forms import RegistrationForm
-from database import db_operations
+import database
 from helpers import captcha
 app = Flask(__name__)
 csrf = CSRFProtect(app)
