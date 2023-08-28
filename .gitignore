@@ -7,3 +7,5 @@
 ~$roject.docx
 ~WRL0005.tmp
 __pycache__
+/database/database.db
+/database/shares
