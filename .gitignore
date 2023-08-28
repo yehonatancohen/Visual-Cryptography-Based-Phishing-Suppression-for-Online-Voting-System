@@ -3,3 +3,7 @@
 .env.local
 .env.staging
 .venv
+.venv
+~$roject.docx
+~WRL0005.tmp
+__pycache__
