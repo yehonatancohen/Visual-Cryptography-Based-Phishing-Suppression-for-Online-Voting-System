@@ -6,15 +6,31 @@ random = SystemRandom()
 xrange = range
 images_location = os.path.join(os.path.dirname(os.path.abspath(__file__)), "images\\")
 
-# Create the original image with text and save it
-def create_original_image(x,y,text):
+# Create the original image with text and returns it
+def create_original_image(x, y, text):
     img = Image.new('1', (x, y), 1)
     draw = ImageDraw.Draw(img)
-    font_size = 70
-    font = ImageFont.truetype('arial.ttf', font_size)
-    _,_,text_width, text_height = draw.textbbox((0,0),text, font=font)
-    draw.text(((x-text_width)/2, (y-text_height)/2), text, font=font, fill=0, antialias=False)
-    img.save(images_location + 'original.png', 'PNG')
+    
+    # Start with a large font size
+    max_font_size = 70
+    font = None
+    
+    while max_font_size > 0:
+        font = ImageFont.truetype('arial.ttf', max_font_size)
+        text_width, text_height = draw.textsize(text, font=font)
+        
+        # Check if text fits within the image boundaries
+        if text_width <= x and text_height <= y:
+            break
+        else:
+            max_font_size -= 5  # Reduce the font size and try again
+    
+    # Calculate the position to center the text
+    text_x = (x - text_width) / 2
+    text_y = (y - text_height) / 2
+    
+    draw.text((text_x, text_y), text, font=font, fill=0, antialias=False)
+    
     return img
 
 
@@ -57,9 +73,6 @@ def create_shares(original_image):
                 draw_B.point((x*2+1, y*2), pat[1])
                 draw_B.point((x*2, y*2+1), pat[2])
                 draw_B.point((x*2+1, y*2+1), pat[3])
-
-    out_image_A.save(out_filename_A, 'PNG')
-    out_image_B.save(out_filename_B, 'PNG')
     return (out_image_A, out_image_B)
 
 
@@ -80,12 +93,9 @@ def create_combination(out_image_A, out_image_B):
             else:
                 out_image_combined.putpixel((x, y), 1)
 
+    return out_image_combined
 
-
-    out_filename_combined = images_location + "share_combined.png"
-    out_image_combined.save(out_filename_combined, 'PNG')
-    print("Combined image saved as: {}".format(out_filename_combined))
-
-original_image = create_original_image(300, 150, "cohen")
-(share_img_A, share_img_B) = create_shares(original_image)
-create_combination(share_img_A, share_img_B)
+def new_user(server_pass, user_pass):
+    original_image = create_original_image(300, 150, server_pass + "@" + user_pass)
+    (share_img_A, share_img_B) = create_shares(original_image)
+    return (share_img_A, share_img_B)
