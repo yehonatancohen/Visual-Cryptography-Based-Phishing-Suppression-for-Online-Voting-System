@@ -1,5 +1,7 @@
 import sqlite3
 
+DB_PATH = "./database/database.db"
+
 users_table_init_query = """
     CREATE TABLE users(
         email TEXT PRIMARY KEY,
@@ -45,10 +47,14 @@ candidate_table_init_query = """
 """
 
 def init_tables():
-    conn = sqlite3.connect("./database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     curr = conn.cursor()
     curr.execute(users_table_init_query)
     curr.execute(survey_table_init_query)
     curr.execute(user_survey_table_init_query)
     curr.execute(candidate_table_init_query)
+    conn.commit()
+    conn.close()
 
+def get_connection():
+    return sqlite3.connect(DB_PATH)
