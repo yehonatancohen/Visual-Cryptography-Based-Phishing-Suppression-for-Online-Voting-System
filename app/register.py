@@ -16,15 +16,16 @@ def register():
 
     if form.validate_on_submit():
         # Get user input
+        first_name = form.name.data.split(" ")[0]
+        last_name = form.name.data.split(" ")[1]
         email = form.email.data
         password = form.password.data
-        
-        (salt, hashed_key, server_key) = key.generate_key()
 
-        (user_share, server_share) = captcha.new_user()
+        (user_share, server_share) = captcha.generate_shares()
+
+        database.add_user(email, first_name, last_name, server_share, password)
         
         # send the user share to the user
-        # save the server share, salt and hash to the database 
 
         # Redirect to a success page or user profile page
         return redirect(url_for('registration_success'))

@@ -95,7 +95,7 @@ def create_combination(out_image_A, out_image_B):
 
     return out_image_combined
 
-def new_user(server_pass, user_pass):
+def generate_shares(server_pass, user_pass):
     original_image = create_original_image(300, 150, server_pass + "@" + user_pass)
     (share_img_A, share_img_B) = create_shares(original_image)
     return (share_img_A, share_img_B)
