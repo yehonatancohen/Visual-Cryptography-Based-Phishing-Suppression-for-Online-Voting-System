@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Part 2</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .login-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+  }
+  .upload-container {
+    margin-top: 20px;
+  }
+  .upload-message {
+    margin-bottom: 15px;
+  }
+  .upload-input {
+    display: none;
+  }
+  .upload-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  .upload-button:hover {
+    background-color: #0056b3;
+  }
+</style>
+</head>
+<body>
+<div class="login-container">
+  <h1>Login Part 2</h1>
+  <div class="upload-container">
+    <p class="upload-message">Please upload an image:</p>
+    <label for="image-input" class="upload-button">Upload Image</label>
+    <input type="file" accept="image/*" class="upload-input" id="image-input" required>
+  </div>
+</div>
+</body>
+</html>
