@@ -2,6 +2,7 @@ import shortuuid
 from werkzeug.security import generate_password_hash
 from PIL.Image import Image
 from PIL import Image as ImageLoader
+import json
 from database.db_files import save_candidate_img, save_share
 from database.models import User
 from database.models import Survey
@@ -255,3 +256,15 @@ def __voter_vote__(conn, email: str, survey_id: str, candidate_id: int) -> bool:
     conn.close()
     return True
 
+
+def __get_results__(conn, survey_id):
+    cur = conn.cursor()
+    cur.execute(f'SELECT candidate_id, votes FROM {CANDIDATE_TABLE_NAME} WHERE survey_id = ?',
+                (survey_id, ))
+    rows = cur.fetchall()
+    results = {}
+    for row in rows:
+        json_obj = json.loads('{"'+str(row[0])+'":"'+str(row[1])+'"}')
+        results = {**results, **json_obj}
+
+    return results

@@ -4,7 +4,7 @@
 """
 from database.db_tables import init_tables
 from database.surveys import add_survey, get_survey, get_user_surveys, delete_survey \
-                            , SURVEY_NAME_LENGTH_LIMIT
+                            , SURVEY_NAME_LENGTH_LIMIT, get_results
 from database.users import add_user, get_user, does_user_exist, \
                     validate_user, get_share, \
                     EMAIL_SIZE_LIMIT, S_NAME_SIZE_LIMIT, F_NAME_SIZE_LIMIT, SEC_QUESTION_SIZE_LIMIT

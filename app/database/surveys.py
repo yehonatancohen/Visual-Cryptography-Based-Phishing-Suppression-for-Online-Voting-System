@@ -1,4 +1,5 @@
-from database.db_queries import __get_survey__, __add_survey__, __get_surveys__, __delete_survey__
+from database.db_queries import __get_survey__, __add_survey__, __get_surveys__, \
+                                __get_results__, __delete_survey__
 from database.db_tables import get_connection
 from database.models import Survey
 
@@ -57,3 +58,14 @@ def delete_survey(id: str) -> None:
     """
     conn = get_connection()
     __delete_survey__(conn, id)
+
+
+def get_results(survey_id: str) -> dict:
+    """returns dictionary: { candidate_id: votes }
+    Args:
+        survey_id (str)
+    Returns:
+        dict
+    """
+    conn = get_connection()
+    return __get_results__(conn, survey_id)
