@@ -1,4 +1,4 @@
-from database.db_queries import __get_survey__, __add_survey__
+from database.db_queries import __get_survey__, __add_survey__, __get_surveys__
 from database.db_tables import get_connection
 from database.models import Survey
 
@@ -35,3 +35,14 @@ def add_survey(name: str, start_day: int, start_month: int, start_year: int,
     return __add_survey__(conn, name, start_day, start_month, start_year,
                    end_day, end_month, end_year, owner_email, SURVEY_NAME_LENGTH_LIMIT)
     
+
+def get_user_surveys(email: str) -> list[Survey]:
+    """Returns all survey's where email given is their owner
+    Args:
+        email (str)
+
+    Returns:
+        surveys (list(models.survey))
+    """
+    conn = get_connection()
+    return __get_surveys__(conn, email)

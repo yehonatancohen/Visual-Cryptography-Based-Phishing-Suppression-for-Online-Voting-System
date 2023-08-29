@@ -83,3 +83,16 @@ def __get_survey__(conn, survey_id: str) -> Survey:
         return None
     row = rows[0]
     return Survey(row[0], row[1], row[2], row[3], row[4])
+
+
+def __get_surveys__(conn, email: str) -> list[Survey]:
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM surveys WHERE owner = ?', (email,))
+    rows = cur.fetchall()
+    if len(rows) == 0:
+        return []
+    result = []
+    for row in rows:
+        survey = Survey(row[0], row[1], row[2], row[3], row[4])
+        result.append(survey)
+    return result
