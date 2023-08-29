@@ -1,4 +1,4 @@
-from database.db_queries import __get_survey__, __add_survey__, __get_surveys__
+from database.db_queries import __get_survey__, __add_survey__, __get_surveys__, __delete_survey__
 from database.db_tables import get_connection
 from database.models import Survey
 
@@ -46,3 +46,14 @@ def get_user_surveys(email: str) -> list[Survey]:
     """
     conn = get_connection()
     return __get_surveys__(conn, email)
+
+
+def delete_survey(id: str) -> None:
+    """This method receives a survey id and removes it from the database
+    Args:
+        id (str)
+    Returns:
+        None
+    """
+    conn = get_connection()
+    __delete_survey__(conn, id)

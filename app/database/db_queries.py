@@ -57,6 +57,7 @@ def __get_user__(conn, email):
     if len(rows) == 0:
         return None
     row = rows[0]
+    conn.close()
     return User(row[0], row[1], row[2], row[3], row[4], row[5], row[6])
     
 
@@ -87,6 +88,7 @@ def __get_survey__(conn, survey_id: str) -> Survey:
     if len(rows) == 0:
         return None
     row = rows[0]
+    conn.close()
     return Survey(row[0], row[1], row[2], row[3], row[4])
 
 
@@ -100,4 +102,11 @@ def __get_surveys__(conn, email: str) -> list[Survey]:
     for row in rows:
         survey = Survey(row[0], row[1], row[2], row[3], row[4])
         result.append(survey)
+    conn.close()
     return result
+
+def __delete_survey__(conn, id: str) -> None:
+    cur = conn.cursor()
+    cur.execute("DELETE FROM surveys WHERE id = ?", (id,))
+    conn.commit()
+    conn.close()
