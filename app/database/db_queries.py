@@ -205,9 +205,17 @@ def __get_candidate__(conn, survey_id: str, candidate_id: int) -> Candidate:
     if len(rows) > 1:
         raise MemoryError(f"More than one candidate {candidate_id} at survey {survey_id}")
     row = rows[0]
-    img = row[4]
-    if img == "":
-        img = None
-    else:
-        img = ImageLoader.open(img)
-    return Candidate(row[0], row[1], row[2], row[3], img)
+    return Candidate(row[0], row[1], row[2], row[3], row[4])
+
+
+def __get_all_candidates__(conn, survey_id: str) -> list[Candidate]:
+    cur = conn.cursor()
+    cur.execute(f'SELECT * FROM {CANDIDATE_TABLE_NAME} WHERE survey_id = ?'
+                ,(survey_id, ))
+    rows = cur.fetchall()
+    result = []
+    for row in rows:
+        candidate = Candidate(row[0], row[1], row[2], row[3], row[4])
+        result.append(candidate)
+    return result
+    

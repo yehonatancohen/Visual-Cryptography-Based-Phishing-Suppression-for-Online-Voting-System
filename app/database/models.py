@@ -1,3 +1,4 @@
+from PIL import Image
 
 class User:
     def __init__(self, email, f_name, s_name, share_path,
@@ -35,11 +36,15 @@ class Voter:
         return f"voter {self.email} from survey {self.survey_id}.\nVoted = {self.has_voted}\n"
     
 class Candidate:
-    def __init__(self, cand_id, survey_id, cand_name, cand_desc, image) -> None:
+    def __init__(self, cand_id, survey_id, cand_name, cand_desc, image_path) -> None:
         self.cand_id = cand_id
         self.survey_id = survey_id
         self.cand_name = cand_name
         self.cand_desc = cand_desc
+        if image_path == "":
+            image = None
+        else:
+            image = Image.open(image_path)
         self.image = image
 
     def __repr__(self) -> str:

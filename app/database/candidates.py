@@ -1,5 +1,6 @@
 from database.db_tables import get_connection
-from database.db_queries import __add_candidate__, __get_candidate__
+from database.db_queries import __add_candidate__, __get_candidate__, \
+                            __get_all_candidates__
 from PIL.Image import Image
 from database.models import Candidate
 
@@ -28,3 +29,14 @@ def get_candidate(survey_id: str, candidate_id: int) -> Candidate:
     """
     conn = get_connection()
     return __get_candidate__(conn, survey_id, candidate_id)
+
+
+def get_all_candidates(survey_id: str) -> list[Candidate]:
+    """returns a list of all candidates in survey given\n
+    Args:
+        survey_id (str)
+    Returns:
+        list[Candidate]:
+    """
+    conn = get_connection()
+    return __get_all_candidates__(conn, survey_id)
