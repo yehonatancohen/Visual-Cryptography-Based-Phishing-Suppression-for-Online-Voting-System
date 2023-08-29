@@ -144,3 +144,13 @@ def __add_voter__(conn, email: str, survey_id: str) -> None:
                  (survey_id, email, False))
     conn.commit()
     conn.close()
+
+def __get_all_voters__(conn, survey_id: str) -> list[Voter]:
+    cur = conn.cursor()
+    cur.execute(f'SELECT * FROM {VOTERS_TABLE_NAME} WHERE survey_id = ?', (survey_id, ))
+    rows = cur.fetchall()
+    result = []
+    for row in rows:
+        voter = Voter(row[0], row[1], row[2])
+        result.append(voter)
+    return result
