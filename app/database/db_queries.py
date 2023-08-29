@@ -1,10 +1,12 @@
 import shortuuid
 from werkzeug.security import generate_password_hash
 from PIL.Image import Image
+from PIL import Image as ImageLoader
 from database.db_files import save_candidate_img, save_share
 from database.models import User
 from database.models import Survey
 from database.models import Voter
+from database.models import Candidate
 from database.db_tables import USERS_TABLE_NAME, VOTERS_TABLE_NAME,\
                         SURVEYS_TABLE_NAME, CANDIDATE_TABLE_NAME
 
@@ -191,3 +193,21 @@ def __add_candidate__(conn, survey_id: str, name: str, desc: str, image: Image =
     
     conn.commit()
     conn.close()
+
+
+def __get_candidate__(conn, survey_id: str, candidate_id: int) -> Candidate:
+    cur = conn.cursor()
+    cur.execute(f'SELECT * FROM {CANDIDATE_TABLE_NAME} WHERE survey_id = ? AND candidate_id = ?'
+                ,(survey_id, candidate_id))
+    rows = cur.fetchall()
+    if len(rows) == 0:
+        return None
+    if len(rows) > 1:
+        raise MemoryError(f"More than one candidate {candidate_id} at survey {survey_id}")
+    row = rows[0]
+    img = row[4]
+    if img == "":
+        img = None
+    else:
+        img = ImageLoader.open(img)
+    return Candidate(row[0], row[1], row[2], row[3], img)

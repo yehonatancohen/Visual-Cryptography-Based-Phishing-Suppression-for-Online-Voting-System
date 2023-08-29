@@ -1,6 +1,7 @@
 from database.db_tables import get_connection
-from database.db_queries import __add_candidate__
+from database.db_queries import __add_candidate__, __get_candidate__
 from PIL.Image import Image
+from database.models import Candidate
 
 CANDIDATE_DESC_SIZE_LIMIT = 400
 
@@ -15,3 +16,15 @@ def add_candidate(survey_id: str, name: str, desc: str, image: Image = None) -> 
     """
     conn = get_connection()
     __add_candidate__(conn, survey_id, name, desc, image, CANDIDATE_DESC_SIZE_LIMIT)
+
+
+def get_candidate(survey_id: str, candidate_id: int) -> Candidate:
+    """returns models.Candidate object with candidate given from survey given
+    Args:
+        survey_id (str)
+        candidate_id (int)
+    Returns:
+        Candidate
+    """
+    conn = get_connection()
+    return __get_candidate__(conn, survey_id, candidate_id)
