@@ -125,6 +125,7 @@ def __get_voter__(conn, email: str, survey_id: str) -> Voter:
     if len(rows) > 1:
         raise MemoryError(f"More than one voter {email} at survey {survey_id}")
     row = rows[0]
+    conn.close()
     return Voter(row[0], row[1], row[2])
 
 
@@ -144,3 +145,27 @@ def __add_voter__(conn, email: str, survey_id: str) -> None:
                  (survey_id, email, False))
     conn.commit()
     conn.close()
+
+def __get_all_voters__(conn, survey_id: str) -> list[Voter]:
+    cur = conn.cursor()
+    cur.execute(f'SELECT * FROM {VOTERS_TABLE_NAME} WHERE survey_id = ?', (survey_id, ))
+    rows = cur.fetchall()
+    result = []
+    for row in rows:
+        voter = Voter(row[0], row[1], row[2])
+        result.append(voter)
+    conn.close()
+    return result
+
+
+def __remove_voter__(conn, survey_id: str, email: str) -> None:
+    cur = conn.cursor()
+    from database.voters import get_voter
+    if get_voter(email, survey_id) is None:
+        raise ValueError(f'No voter {email} at survey {survey_id}')
+    
+    cur.execute(f'DELETE FROM {VOTERS_TABLE_NAME} WHERE survey_id = ? AND user = ?',
+                (survey_id, email, ))
+    conn.commit()
+    conn.close()
+    
