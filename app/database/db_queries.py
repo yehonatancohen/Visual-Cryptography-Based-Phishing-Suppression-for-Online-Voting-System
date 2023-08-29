@@ -1,7 +1,7 @@
 import shortuuid
 from werkzeug.security import generate_password_hash
 from PIL.Image import Image
-import database.db_files as db_files
+from database.db_files import save_candidate_img, save_share
 from database.models import User
 from database.models import Survey
 from database.models import Voter
@@ -40,7 +40,7 @@ def __add_user__(conn, email: str,
         raise ValueError(f"Security question larger the allowed length \
                          (len({sec_question}) = {len(sec_question)} > {sec_question_size_limit})\n")
     
-    share_path = db_files.save_img(share2)
+    share_path = save_share(share2)
     hashed_pswd = generate_password_hash(password, method="scrypt", salt_length=128)
     hashed_code = generate_password_hash(server_code, method="scrypt", salt_length=128)
     curr.execute(f'INSERT INTO {USERS_TABLE_NAME} (email, f_name, s_name, share_path, pass, server_code, sec_question) \
@@ -169,3 +169,25 @@ def __remove_voter__(conn, survey_id: str, email: str) -> None:
     conn.commit()
     conn.close()
     
+
+def __add_candidate__(conn, survey_id: str, name: str, desc: str, image: Image = None,
+                      candidate_desc_size_limit = -1) -> None:
+    cur = conn.cursor()
+    from database.surveys import get_survey
+    if get_survey(survey_id) is None:
+        return ValueError(f'Survey {survey_id} does not exist')
+    
+    if candidate_desc_size_limit != -1 and len(desc) > candidate_desc_size_limit:
+        raise ValueError(f"First name larger the allowed length \
+                         (len({desc}) = {len(desc)} > {candidate_desc_size_limit})")
+    img_path = ""
+    if image is not None:
+        img_path = save_candidate_img(image)
+    
+    cur.execute(f'INSERT INTO {CANDIDATE_TABLE_NAME} (candidate_id, survey_id, cand_name, cand_desc, image_path)\
+                VALUES (\
+                (SELECT IFNULL(MAX(candidate_id), 0) + 1 FROM {CANDIDATE_TABLE_NAME} WHERE survey_id = ?), \
+                ?, ?, ?, ?)', (survey_id, survey_id, name, desc, img_path,))
+    
+    conn.commit()
+    conn.close()

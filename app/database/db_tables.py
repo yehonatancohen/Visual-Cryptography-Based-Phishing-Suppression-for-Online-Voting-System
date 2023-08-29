@@ -41,7 +41,7 @@ user_survey_table_init_query = f"""
 
 candidate_table_init_query = f"""
     CREATE TABLE {CANDIDATE_TABLE_NAME}(
-        candidate_id INT,
+        candidate_id INTEGER,
         survey_id TEXT,
         cand_name TEXT,
         cand_desc TEXT,

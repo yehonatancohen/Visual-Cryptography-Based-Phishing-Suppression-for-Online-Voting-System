@@ -9,3 +9,4 @@
 __pycache__
 /app/database/database.db
 /app/database/shares
+/app/database/candidates
