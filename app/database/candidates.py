@@ -1,6 +1,6 @@
 from database.db_tables import get_connection
 from database.db_queries import __add_candidate__, __get_candidate__, \
-                            __get_all_candidates__
+                            __get_all_candidates__, __remove_candidate__
 from PIL.Image import Image
 from database.models import Candidate
 
@@ -40,3 +40,15 @@ def get_all_candidates(survey_id: str) -> list[Candidate]:
     """
     conn = get_connection()
     return __get_all_candidates__(conn, survey_id)
+
+
+def remove_candidate(survey_id: str, candidate_id: int) -> None:
+    """removes candidate given from survey given
+    Args:
+        survey_id (str)
+        candidate_id (int)
+    Returns:
+        None
+    """
+    conn = get_connection()
+    __remove_candidate__(conn, survey_id, candidate_id)

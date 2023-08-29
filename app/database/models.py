@@ -36,7 +36,7 @@ class Voter:
         return f"voter {self.email} from survey {self.survey_id}.\nVoted = {self.has_voted}\n"
     
 class Candidate:
-    def __init__(self, cand_id, survey_id, cand_name, cand_desc, image_path) -> None:
+    def __init__(self, cand_id, survey_id, cand_name, cand_desc, image_path: str) -> None:
         self.cand_id = cand_id
         self.survey_id = survey_id
         self.cand_name = cand_name
@@ -45,6 +45,13 @@ class Candidate:
             image = None
         else:
             image = Image.open(image_path)
+        self.image = image
+
+    def __init__(self, cand_id, survey_id, cand_name, cand_desc, image: Image.Image) -> None:
+        self.cand_id = cand_id
+        self.survey_id = survey_id
+        self.cand_name = cand_name
+        self.cand_desc = cand_desc
         self.image = image
 
     def __repr__(self) -> str:

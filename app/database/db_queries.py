@@ -49,7 +49,6 @@ def __add_user__(conn, email: str,
                  VALUES (?, ?, ?, ?, ?, ?, ?) ', (email, f_name, s_name, share_path, hashed_pswd, hashed_code, sec_question))
     conn.commit()
     conn.close()
-    return id
 
 
 def __get_user__(conn, email):
@@ -205,6 +204,7 @@ def __get_candidate__(conn, survey_id: str, candidate_id: int) -> Candidate:
     if len(rows) > 1:
         raise MemoryError(f"More than one candidate {candidate_id} at survey {survey_id}")
     row = rows[0]
+    conn.close()
     return Candidate(row[0], row[1], row[2], row[3], row[4])
 
 
@@ -217,5 +217,16 @@ def __get_all_candidates__(conn, survey_id: str) -> list[Candidate]:
     for row in rows:
         candidate = Candidate(row[0], row[1], row[2], row[3], row[4])
         result.append(candidate)
+    conn.close()
     return result
     
+
+def __remove_candidate__(conn, survey_id: str, candidate_id: int) -> None:
+    cur = conn.cursor()
+    from database.candidates import get_candidate
+    if get_candidate(survey_id, candidate_id) is None:
+        raise ValueError(f"candidate {candidate_id} does not exist in survey {survey_id}")
+    cur.execute(f'DELETE FROM {CANDIDATE_TABLE_NAME} WHERE survey_id = ? AND candidate_id = ?'
+                ,(survey_id, candidate_id, ))
+    conn.commit()
+    conn.close()
