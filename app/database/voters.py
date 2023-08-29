@@ -1,5 +1,6 @@
 from database.db_tables import get_connection
-from database.db_queries import __add_voter__, __get_voter__, __get_all_voters__
+from database.db_queries import __add_voter__, __get_voter__, \
+    __get_all_voters__, __remove_voter__
 from database.models import Voter
 
 
@@ -37,3 +38,13 @@ def get_all_voters(survey_id: str) -> list[Voter]:
     """
     conn=get_connection()
     return __get_all_voters__(conn, survey_id)
+
+
+def remove_voter(survey_id: str, email: str) -> None:
+    """Removes voter with email specified from survey specified
+    Args:
+        survey_id (str)
+        email (str)
+    """
+    conn = get_connection()
+    return __remove_voter__(conn, survey_id, email)
