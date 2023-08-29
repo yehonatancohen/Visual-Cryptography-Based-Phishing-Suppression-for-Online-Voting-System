@@ -4,6 +4,8 @@ from PIL.Image import Image
 import database.db_files as db_files
 from database.models import User
 from database.models import Survey
+from database.db_tables import USERS_TABLE_NAME, VOTERS_TABLE_NAME,\
+                        SURVEYS_TABLE_NAME, CANDIDATE_TABLE_NAME
 
 
 def __add_user__(conn, email: str,
@@ -40,7 +42,7 @@ def __add_user__(conn, email: str,
     share_path = db_files.save_img(share2)
     hashed_pswd = generate_password_hash(password, method="scrypt", salt_length=128)
     hashed_code = generate_password_hash(server_code, method="scrypt", salt_length=128)
-    curr.execute('INSERT INTO users (email, f_name, s_name, share_path, pass, server_code, sec_question) \
+    curr.execute(f'INSERT INTO {USERS_TABLE_NAME} (email, f_name, s_name, share_path, pass, server_code, sec_question) \
                  VALUES (?, ?, ?, ?, ?, ?, ?) ', (email, f_name, s_name, share_path, hashed_pswd, hashed_code, sec_question))
     conn.commit()
     conn.close()
@@ -50,7 +52,7 @@ def __add_user__(conn, email: str,
 def __get_user__(conn, email):
     curr = conn.cursor()
 
-    curr.execute('SELECT * FROM users WHERE email = ?', (email,))
+    curr.execute(F'SELECT * FROM {USERS_TABLE_NAME} WHERE email = ?', (email,))
     rows = curr.fetchall()
     if len(rows) > 1:
         raise MemoryError(f"More than one user with {email}")
@@ -72,7 +74,7 @@ def __add_survey__(conn, name: str, start_day: int, start_month: int, start_year
     end_date = f'{end_year:04d}-{end_month:02d}-{end_day:02d}'
     if name_length_limit != -1 and len(name) > name_length_limit:
         return ValueError(f"survey name {name} longer than allowed length ({name_length_limit})")
-    curr.execute('INSERT INTO surveys (id, name, start, end, owner) VALUES (?, ?, ?, ?, ?) ', (id_, name, start_date, end_date, owner_mail,))
+    curr.execute(f'INSERT INTO {SURVEYS_TABLE_NAME} (id, name, start, end, owner) VALUES (?, ?, ?, ?, ?) ', (id_, name, start_date, end_date, owner_mail,))
     conn.commit()
     conn.close()
     return id_
@@ -81,7 +83,7 @@ def __add_survey__(conn, name: str, start_day: int, start_month: int, start_year
 def __get_survey__(conn, survey_id: str) -> Survey:
     curr=conn.cursor()
 
-    curr.execute('SELECT * FROM surveys WHERE id = ?', (survey_id,))
+    curr.execute(f'SELECT * FROM {SURVEYS_TABLE_NAME} WHERE id = ?', (survey_id,))
     rows = curr.fetchall()
     if len(rows) > 1:
         raise MemoryError(f"More than one user with {survey_id}")
@@ -94,7 +96,7 @@ def __get_survey__(conn, survey_id: str) -> Survey:
 
 def __get_surveys__(conn, email: str) -> list[Survey]:
     cur = conn.cursor()
-    cur.execute('SELECT * FROM surveys WHERE owner = ?', (email,))
+    cur.execute(f'SELECT * FROM {SURVEYS_TABLE_NAME} WHERE owner = ?', (email,))
     rows = cur.fetchall()
     if len(rows) == 0:
         return []
@@ -107,6 +109,6 @@ def __get_surveys__(conn, email: str) -> list[Survey]:
 
 def __delete_survey__(conn, id: str) -> None:
     cur = conn.cursor()
-    cur.execute("DELETE FROM surveys WHERE id = ?", (id,))
+    cur.execute(f"DELETE FROM {SURVEYS_TABLE_NAME} WHERE id = ?", (id,))
     conn.commit()
     conn.close()

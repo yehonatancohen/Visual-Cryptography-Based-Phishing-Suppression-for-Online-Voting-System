@@ -1,9 +1,13 @@
 import sqlite3
 
 DB_PATH = "./app/database/database.db"
+USERS_TABLE_NAME = 'users'
+SURVEYS_TABLE_NAME = 'surveys'
+VOTERS_TABLE_NAME = 'voters'
+CANDIDATE_TABLE_NAME = 'candidates'
 
-users_table_init_query = """
-    CREATE TABLE users(
+users_table_init_query = f"""
+    CREATE TABLE {USERS_TABLE_NAME}(
         email TEXT PRIMARY KEY,
         f_name TEXT,
         s_name TEXT,
@@ -14,8 +18,8 @@ users_table_init_query = """
     )
 """
 
-survey_table_init_query = """
-    CREATE TABLE surveys(
+survey_table_init_query = f"""
+    CREATE TABLE {SURVEYS_TABLE_NAME}(
         id TEXT PRIMARY KEY,
         name TEXT,
         start date,
@@ -25,8 +29,8 @@ survey_table_init_query = """
     )
 """
 
-user_survey_table_init_query = """
-    CREATE TABLE usersInSurvey(
+user_survey_table_init_query = f"""
+    CREATE TABLE {VOTERS_TABLE_NAME}(
         survey_id TEXT,
         user TEXT,
         voted boolean,
@@ -35,8 +39,8 @@ user_survey_table_init_query = """
     )
 """
 
-candidate_table_init_query = """
-    CREATE TABLE candidateInSurvey(
+candidate_table_init_query = f"""
+    CREATE TABLE {CANDIDATE_TABLE_NAME}(
         candidate_id INT,
         survey_id TEXT,
         cand_name TEXT,
