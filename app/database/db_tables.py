@@ -46,6 +46,7 @@ candidate_table_init_query = f"""
         cand_name TEXT,
         cand_desc TEXT,
         image_path TEXT,
+        votes INTEGER,
         FOREIGN KEY (survey_id) REFERENCES {SURVEYS_TABLE_NAME} (id),
         PRIMARY KEY (candidate_id, survey_id)
     )

@@ -36,7 +36,7 @@ class Voter:
         return f"voter {self.email} from survey {self.survey_id}.\nVoted = {self.has_voted}\n"
     
 class Candidate:
-    def __init__(self, cand_id, survey_id, cand_name, cand_desc, image_path: str) -> None:
+    def __init__(self, cand_id, survey_id, cand_name, cand_desc, image_path: str, votes) -> None:
         self.cand_id = cand_id
         self.survey_id = survey_id
         self.cand_name = cand_name
@@ -46,13 +46,15 @@ class Candidate:
         else:
             image = Image.open(image_path)
         self.image = image
+        self.votes = votes
 
-    def __init__(self, cand_id, survey_id, cand_name, cand_desc, image: Image.Image) -> None:
+    def __init__(self, cand_id, survey_id, cand_name, cand_desc, image: Image.Image, votes) -> None:
         self.cand_id = cand_id
         self.survey_id = survey_id
         self.cand_name = cand_name
         self.cand_desc = cand_desc
         self.image = image
+        self.votes = votes
 
     def __repr__(self) -> str:
-        return f"Candidate {self.cand_name}-{self.cand_id} from survey {self.survey_id}.\n{self.cand_desc}\n{self.image}"
+        return f"Candidate {self.cand_name}-{self.cand_id} from survey {self.survey_id}.\n{self.cand_desc}\n{self.image}\nHas {self.votes} votes."

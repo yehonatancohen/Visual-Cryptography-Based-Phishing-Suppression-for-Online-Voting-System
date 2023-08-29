@@ -185,10 +185,10 @@ def __add_candidate__(conn, survey_id: str, name: str, desc: str, image: Image =
     if image is not None:
         img_path = save_candidate_img(image)
     
-    cur.execute(f'INSERT INTO {CANDIDATE_TABLE_NAME} (candidate_id, survey_id, cand_name, cand_desc, image_path)\
+    cur.execute(f'INSERT INTO {CANDIDATE_TABLE_NAME} (candidate_id, survey_id, cand_name, cand_desc, image_path, votes)\
                 VALUES (\
                 (SELECT IFNULL(MAX(candidate_id), 0) + 1 FROM {CANDIDATE_TABLE_NAME} WHERE survey_id = ?), \
-                ?, ?, ?, ?)', (survey_id, survey_id, name, desc, img_path,))
+                ?, ?, ?, ?, 0)', (survey_id, survey_id, name, desc, img_path,))
     
     conn.commit()
     conn.close()
@@ -205,7 +205,7 @@ def __get_candidate__(conn, survey_id: str, candidate_id: int) -> Candidate:
         raise MemoryError(f"More than one candidate {candidate_id} at survey {survey_id}")
     row = rows[0]
     conn.close()
-    return Candidate(row[0], row[1], row[2], row[3], row[4])
+    return Candidate(row[0], row[1], row[2], row[3], row[4], row[5])
 
 
 def __get_all_candidates__(conn, survey_id: str) -> list[Candidate]:
@@ -215,7 +215,7 @@ def __get_all_candidates__(conn, survey_id: str) -> list[Candidate]:
     rows = cur.fetchall()
     result = []
     for row in rows:
-        candidate = Candidate(row[0], row[1], row[2], row[3], row[4])
+        candidate = Candidate(row[0], row[1], row[2], row[3], row[4], row[5])
         result.append(candidate)
     conn.close()
     return result
@@ -230,3 +230,28 @@ def __remove_candidate__(conn, survey_id: str, candidate_id: int) -> None:
                 ,(survey_id, candidate_id, ))
     conn.commit()
     conn.close()
+
+
+
+def __voter_vote__(conn, email: str, survey_id: str, candidate_id: int) -> bool:
+    cur = conn.cursor()
+    from database.voters import get_voter
+    voter = get_voter(email, survey_id)
+    if voter is None or voter.has_voted == 1:
+        return False
+    
+    from database.candidates import get_candidate
+    if get_candidate(survey_id, candidate_id) is None:
+        raise ValueError(f"Candidate {candidate_id} does not exist is survey {survey_id}")
+
+    cur.execute(f'SELECT votes from {CANDIDATE_TABLE_NAME} where survey_id = ? AND candidate_id = ?',
+                (survey_id, candidate_id, ))
+    new_votes = int(cur.fetchall()[0][0]) + 1
+    cur.execute(f'UPDATE {CANDIDATE_TABLE_NAME} SET votes = ? WHERE survey_id = ? AND candidate_id = ?',
+                (new_votes, survey_id, candidate_id,))
+    cur.execute(f'UPDATE {VOTERS_TABLE_NAME} SET voted = ? WHERE user = ?',
+                (1, email,))
+    conn.commit()
+    conn.close()
+    return True
+

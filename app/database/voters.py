@@ -1,6 +1,6 @@
 from database.db_tables import get_connection
 from database.db_queries import __add_voter__, __get_voter__, \
-    __get_all_voters__, __remove_voter__
+    __get_all_voters__, __remove_voter__, __voter_vote__
 from database.models import Voter
 
 
@@ -57,3 +57,17 @@ def remove_voter(survey_id: str, email: str) -> None:
     """
     conn = get_connection()
     return __remove_voter__(conn, survey_id, email)
+
+
+def voter_vote(email: str, survey_id: str, candidate_id: int) -> bool:
+    """returns true if voter with email given has not voted yet 
+    and voting was successfull
+    Args:
+        email (str)
+        survey_id (str)
+        candidate_id (int)
+    Returns:
+        bool: True if successfull
+    """
+    conn = get_connection()
+    return __voter_vote__(conn, email, survey_id, candidate_id)
