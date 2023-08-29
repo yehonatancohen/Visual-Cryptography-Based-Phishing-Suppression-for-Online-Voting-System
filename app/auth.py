@@ -1,16 +1,18 @@
-# main.py
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, blueprints, flash
 from flask_wtf.csrf import CSRFProtect
 from werkzeug.utils import secure_filename
 from forms import RegistrationForm, LoginForm
-import database
+from models import user
+import database as db
 from helpers import captcha, key
-app = Flask(__name__)
-csrf = CSRFProtect(app)
 
-# Set up your database and import necessary functions/models
+auth = Blueprint('auth', __name__)
 
-@app.route('/register', methods=['POST', 'GET'])
+@auth.route('/register')
+def signup():
+    return render_template('register.html')
+
+@auth.route('/register', methods=['POST'])
 def register():
     form = RegistrationForm()
 
@@ -18,22 +20,27 @@ def register():
         # Get user input
         first_name = form.name.data.split(" ")[0]
         last_name = form.name.data.split(" ")[1]
+        security_code = form.security.data # Security question
         email = form.email.data
         password = form.password.data
 
         (user_share, server_share) = captcha.generate_shares()
 
-        database.add_user(email, first_name, last_name, server_share, password)
+        user_msg = db.add_user(email, first_name, last_name, server_share, password)
+
+        if (user_msg):
+            flash("error message")
+            return redirect(url_for('auth.register'))
         
         # send the user share to the user
 
         # Redirect to a success page or user profile page
-        return redirect(url_for('registration_success'))
+        return redirect(url_for('auth.profile'))
 
-    return render_template('registration.html', form=form)
+    return render_template('register.html', form=form)
 
 
-@app.route('/login', methods=['POST', 'GET'])
+@auth.route('/login', methods=['POST', 'GET'])
 def login():
     form = LoginForm()
 
@@ -50,18 +57,10 @@ def login():
         # save the server share, salt and hash to the database 
 
         # Redirect to a success page or user profile page
-        return redirect(url_for('registration_success'))
+        return redirect(url_for('auth.profile'))
 
-    return render_template('registration.html', form=form)
+    return render_template('login.html', form=form)
 
-@app.route('/mail_check', methods=['POST', 'GET'])
-def mail_check(email):
-    pass
-    #check if email exits, if so, return server share, hash and salt
-
-@app.route('/registration-success')
-def registration_success():
-    return "Registration successful! Welcome to our site."
-
-if __name__ == '__main__':
-    app.run()
+@auth.rout('/profile')
+def profile():
+    return render_template("profile.html")
