@@ -8,7 +8,9 @@ users_table_init_query = """
         f_name TEXT,
         s_name TEXT,
         share_path TEXT,
-        pass TEXT
+        pass TEXT,
+        server_code TEXT,
+        sec_question TEXT
     )
 """
 

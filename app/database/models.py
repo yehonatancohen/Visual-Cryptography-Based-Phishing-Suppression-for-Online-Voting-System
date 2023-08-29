@@ -1,14 +1,18 @@
 
 class User():
-    def __init__(self, email, f_name, s_name, share_path, hashed_password) -> None:
+    def __init__(self, email, f_name, s_name, share_path,
+                hashed_password, hashed_server_code, security_question) -> None:
         self.email = email
         self.f_name = f_name
         self.s_name = s_name
         self.share_path = share_path
         self.hashed_password = hashed_password
+        self.hashed_server_code = hashed_server_code
+        self.security_question = security_question
     
     def __repr__(self) -> str:
-        return f"{self.email}: {self.f_name} {self.s_name}. Share: {self.share_path}.\n{self.hashed_password}"
+        return f"{self.email}: {self.f_name} {self.s_name}. \
+            Share: {self.share_path}.\nQuestion: {self.security_question}\nPass: {self.hashed_password}\nCode: {self.hashed_server_code}"
 
 class Survey():
         def __init__(self, id, name, start_date, end_date, owner_email) -> None:

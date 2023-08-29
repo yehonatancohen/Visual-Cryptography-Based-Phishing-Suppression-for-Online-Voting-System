@@ -1,11 +1,8 @@
-import database.db_tables as db_tables
+"""
+    users and surveys database manager
+    IMPORT AND USE THIS AND ONLY THIS
+"""
 from database.db_tables import init_tables
 from database.surveys import add_survey, get_survey
 from database.users import add_user, get_user, does_user_exist, \
-                    validate_password, get_share
-
-
-
-
-
-
+                    validate_user, get_share
