@@ -14,6 +14,15 @@ def add_voter(email: str, survey_id: str) -> None:
     __add_voter__(conn, email, survey_id)
 
 
+def add_voters(emails: list[str], survey_id: str) -> None:
+    """Adds ALL emails given to the allowed voters at survey given\n
+    Args:\n
+        emails (list[str])\n
+        survey_id (str)\n
+    """
+    for email in emails:
+        add_voter(email, survey_id)
+
 def get_voter(email: str, survey_id: str) -> Voter:
     """Returns models.voter of voters with email given in survey given
 
