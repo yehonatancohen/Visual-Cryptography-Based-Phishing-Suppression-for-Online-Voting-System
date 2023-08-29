@@ -11,7 +11,8 @@ def __add_user__(conn, email: str,
                 password: str, server_code: str, sec_question: str,
                 email_size_limit: int = -1,
                 f_name_size_limit: int = -1,
-                s_name_size_limit: int = -1):
+                s_name_size_limit: int = -1,
+                sec_question_size_limit: int = -1):
     curr = conn.cursor()
 
     try:
@@ -31,6 +32,10 @@ def __add_user__(conn, email: str,
     if s_name_size_limit != -1 and len(s_name) > s_name_size_limit:
         raise ValueError(f"Sur name larger the allowed length \
                          (len({s_name}) = {len(s_name)} > {s_name_size_limit})\n")
+
+    if sec_question_size_limit != -1 and len(sec_question) > sec_question_size_limit:
+        raise ValueError(f"Security question larger the allowed length \
+                         (len({sec_question}) = {len(sec_question)} > {sec_question_size_limit})\n")
     
     share_path = db_files.save_img(share2)
     hashed_pswd = generate_password_hash(password, method="scrypt", salt_length=128)

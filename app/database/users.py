@@ -8,7 +8,7 @@ import database.db_tables as db_tables
 EMAIL_SIZE_LIMIT = 150
 F_NAME_SIZE_LIMIT = 100
 S_NAME_SIZE_LIMIT = 100
-
+SEC_QUESTION_SIZE_LIMIT = 100
 
 def add_user(email: str, f_name: str, s_name: str, share2: Image,
             password: str, server_code: str, sec_question: str) -> None:
@@ -28,7 +28,8 @@ def add_user(email: str, f_name: str, s_name: str, share2: Image,
     db_queries.__add_user__(conn, email, f_name, s_name, share2, password, server_code, sec_question,  
                             email_size_limit=EMAIL_SIZE_LIMIT, 
                             f_name_size_limit=F_NAME_SIZE_LIMIT,
-                            s_name_size_limit=S_NAME_SIZE_LIMIT)
+                            s_name_size_limit=S_NAME_SIZE_LIMIT,
+                            sec_question_size_limit=SEC_QUESTION_SIZE_LIMIT)
 
 
 def get_user(email: str) -> models.User:
