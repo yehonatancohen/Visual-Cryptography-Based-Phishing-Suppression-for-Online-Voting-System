@@ -4,6 +4,7 @@ from PIL.Image import Image
 import database.db_files as db_files
 from database.models import User
 from database.models import Survey
+from database.models import Voter
 from database.db_tables import USERS_TABLE_NAME, VOTERS_TABLE_NAME,\
                         SURVEYS_TABLE_NAME, CANDIDATE_TABLE_NAME
 
@@ -110,5 +111,36 @@ def __get_surveys__(conn, email: str) -> list[Survey]:
 def __delete_survey__(conn, id: str) -> None:
     cur = conn.cursor()
     cur.execute(f"DELETE FROM {SURVEYS_TABLE_NAME} WHERE id = ?", (id,))
+    conn.commit()
+    conn.close()
+
+
+def __get_voter__(conn, email: str, survey_id: str) -> Voter:
+    cur = conn.cursor()
+    cur.execute(f'SELECT * FROM {VOTERS_TABLE_NAME} WHERE user = ? AND survey_id = ?'
+                , (email, survey_id))
+    rows = cur.fetchall()
+    if len(rows) == 0:
+        return None
+    if len(rows) > 1:
+        raise MemoryError(f"More than one voter {email} at survey {survey_id}")
+    row = rows[0]
+    return Voter(row[0], row[1], row[2])
+
+
+
+def __add_voter__(conn, email: str, survey_id: str) -> None:
+    cur = conn.cursor()
+    from database.surveys import get_survey
+
+    if get_survey(survey_id) is None:
+        raise ValueError(f"Survey {survey_id} given does not exist")
+    
+    from database.voters import get_voter
+    if get_voter(email, survey_id) is not None:
+        raise ValueError(f"Voter {email} already exists in survey {survey_id}")
+    
+    cur.execute(f"INSERT INTO {VOTERS_TABLE_NAME} (survey_id, user, voted) VALUES (?, ?, ?)",
+                 (survey_id, email, False))
     conn.commit()
     conn.close()

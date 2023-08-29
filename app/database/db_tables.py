@@ -25,7 +25,7 @@ survey_table_init_query = f"""
         start date,
         end date,
         owner TEXT,
-        FOREIGN KEY (owner) REFERENCES users (email)
+        FOREIGN KEY (owner) REFERENCES {USERS_TABLE_NAME} (email)
     )
 """
 
@@ -34,7 +34,7 @@ user_survey_table_init_query = f"""
         survey_id TEXT,
         user TEXT,
         voted boolean,
-        FOREIGN KEY (survey_id) REFERENCES surveys (id),
+        FOREIGN KEY (survey_id) REFERENCES {SURVEYS_TABLE_NAME} (id),
          PRIMARY KEY (survey_id, user)
     )
 """
@@ -46,7 +46,7 @@ candidate_table_init_query = f"""
         cand_name TEXT,
         cand_desc TEXT,
         image_path TEXT,
-        FOREIGN KEY (survey_id) REFERENCES surveys (id),
+        FOREIGN KEY (survey_id) REFERENCES {SURVEYS_TABLE_NAME} (id),
         PRIMARY KEY (candidate_id, survey_id)
     )
 
