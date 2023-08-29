@@ -40,18 +40,22 @@ def register():
     return render_template('register.html', form=form)
 
 
-@auth.route('/login', methods=['POST', 'GET'])
+@auth.route('/login')
+def login():
+    return render_template('login.html')
+
+@auth.route('/login', methods=['POST'])
 def login():
     form = LoginForm()
 
     if form.validate_on_submit():
-        # Get user input
         email = form.email.data
-        password = form.password.data
         
-        (salt, hashed_key, server_key) = key.generate_key()
+        if (not db.does_user_exist(email)):
+            flash("User does not exist")
+            return redirect(url_for(auth.login))
 
-        (user_share, server_share) = captcha.new_user()
+        
         
         # send the user share to the user
         # save the server share, salt and hash to the database 
@@ -61,6 +65,6 @@ def login():
 
     return render_template('login.html', form=form)
 
-@auth.rout('/profile')
+@auth.route('/profile')
 def profile():
     return render_template("profile.html")
