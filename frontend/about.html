@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="about.css">
+    
+    <head>
+        <title>Home Page</title>
+    
+    </head>
+    
+    <body>
+        <header class="header">
+            <img style="cursor: pointer;" onclick="window.location.href='home.html'" id="logo" src="LOGO.png" >
+    
+            <nav class="navbar">
+                <a href="home.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="#">Account</a>
+                <a href="contact.html">Contact</a>
+                <a href="login.html" class="start">Get Started</a>
+            </nav>
+        </header>
+        <div class="wrapper">
+        <section class="home">
+            <div class="home-content">
+                <h3>About Us</h3>
+                <h4>Welcome to VoteLock, where trust and technology converge to safeguard the integrity of online voting. We're a trio of ambitious, forward-thinking individuals who, at the age of 18, are completing our Bachelor's degrees and preparing to serve in the Israeli Defense Force.</h4>
+                <h3>Our Vision</h3> 
+                <h4>Our vision is clear: to create a world where every vote counts and every election is beyond manipulation. We believe in using technology to ensure secure, transparent, and accessible voting.</h4>
+                <h3>Visual Cryptography - Our Innovation</h3>
+                <h4>VoteLock's innovation lies in our use of Visual Cryptography, a cutting-edge encryption method. It divides an image into two shares, rendering it unreadable unless all shares are combined correctly. This technology guarantees the confidentiality of your vote by countering phishing attacks.</h4>
+                <h3>Join Our Journey</h3>
+                <h4>Come with us on this exciting journey to redefine online voting. Together, we can create a future where democracy is secure, and every voice matters.
+                Thank you for choosing VoteLock. Your trust fuels our mission.</h4>
+                <br>
+                <h2>Meet the Developers:</h2>
+                <br>
+                <div class="devs">
+                    <div class="dev">
+                        <img src="yuval.png" alt="Yuval">
+                        <div class="dev-info">
+                            <p class="dev-name">Yuval</p>
+                            <p class="dev-description">Frontend & Backend</p>
+                        </div>
+                    </div>
+                    <div class="dev">
+                        <img src="gur.png" alt="Gur">
+                        <div class="dev-info">
+                            <p class="dev-name">Gur</p>
+                            <p class="dev-description">Database & Backend</p>
+                        </div>
+                    </div>
+                    <div class="dev">
+                        <img src="yonac.png" alt="Yonac">
+                        <div class="dev-info">
+                            <p class="dev-name">Yonac</p>
+                            <p class="dev-description">Backend & Server</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="align">
+                    <button id="faqsscrollbtn" class="scrollbtn">FAQ'S</button>
+                </div>
+            </div>
+        </section>
+        <div class="faqs">
+            <div class="align">
+                <button id="aboutscrollbtn" class="scrollbtn">About</button>
+            </div>
+            <p>
+            <h1>FAQ'S</h1>
+            <br>
+            <h3>What is visual cryptography and how does it secure my vote?</h3>
+            <h5>Visual cryptography divides your personal word into two shares, ensuring no one can access your vote without combining the two correctly, preserving confidentiality.</h4>
+            <h3> Can I change my vote after submission?</h3> 
+            <h5>No, once submitted, your vote is final to prevent manipulation.</h4>
+            <h3>What is This Personal Word in the Register Page?</h3>
+            <h5>In order to secure your vote to the fullest we ask you a personal word, a email and a password. the personal word can be everything from a dogs name to your school name or even just a code.</h4>
+            <h3>Can I trust the security of this voting system?</h3>
+            <h5>Yes, we utilize state-of-the-art security measures, including encryption and regular security assessments, to ensure the system's integrity and your vote's protection.</h4>
+            <h3>How Does the whole thing work?</h3>
+            <h5>Upon registering and entering your email password and personal word, you will receive a email with an image. when you try and log in again you will need to insert the image we sent you, the server will take that image combine it with the other share and returne the final image to you, id the word in the image matches your personal word you know this site is the real deal! and you can start voting safely</h4>
+        </p>
+        </div>
+    </div>
+    <script src="about.js"></script>
+</html>
+

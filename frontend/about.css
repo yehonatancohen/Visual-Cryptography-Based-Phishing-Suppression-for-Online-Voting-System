@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Rubik', sans-serif;
+
+}
+
+body {
+    background: url(back.jpg) no-repeat;
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    color: rgba(37,62,84,255);
+}
+.wrapper{
+    position: relative;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: 1s ease;
+}
+
+.wrapper.active .home{
+    transition: 1s ease;
+    transform: translateY(-1000px);
+}
+
+.wrapper .faqs{
+    transition: 1s ease;
+    position: absolute;
+    transform: translateY(1000px);
+}
+.wrapper.active .faqs{
+    transition: 1s ease;
+    transform: translateY(0);
+}
+
+.wrapper .home{
+    transition: 1s ease;
+}
+
+.faqs{
+    padding: 0 10%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+#logo{
+    width: 200px;
+}
+.navbar a{
+    font-size: 18px;
+    color: rgba(37,62,84,255);
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 35px;
+    transition: .3s;
+}
+
+.navbar a:hover{
+    color: white;
+}
+
+.start{
+    background-color: rgba(37,62,84,255);
+    color: rgba(147,213,239,255) !important;
+    border: 3px;
+    border-radius: 12px;
+    padding: 10px 10px;
+}
+
+.start:hover{
+    background-color: white !important;
+    color: rgba(37,62,84,255) !important;
+}
+
+h1{
+    font-size: 4em;
+}
+h2{
+    font-size: 3em;
+}
+h3{
+    font-size: 2em;
+}
+h4{
+    font-size: 1.2em;
+}
+h5{
+    font-size: 1.5em;
+}
+
+.home{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10%;
+}
+.devs {
+    display: flex;
+    justify-content: space-between;
+}
+
+.dev {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.dev img {
+    max-width: 250px;
+    margin: 0 auto;
+}
+
+.dev-info {
+    margin-top: 0px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 10px; /* Adjust the spacing between image and description */
+}
+.dev-name{
+    font-size: 2em;
+    color: rgba(230,239,252,255);
+}
+
+.dev-description {
+    font-size: 1.5em;
+    color:rgba(187,232,253,255);
+}
+
+#faqsscrollbtn{
+    position: relative;
+    margin-top: 20px;
+    height: 50px;
+    width: 170px;
+    color:rgba(37,62,84,255);
+    background-color: rgba(187,232,253,255);
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5em;
+    transition: .3s ease;
+}
+
+#faqsscrollbtn:hover{
+    background-color: white;
+}
+
+#aboutscrollbtn{
+    position: relative;
+    height: 50px;
+    width: 170px;
+    color: rgba(187,232,253,255);;
+    background-color: rgba(37,62,84,255);
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5em;
+    transition: .3s ease;
+}
+
+#aboutscrollbtn:hover{
+    background-color: white;
+    color: rgba(37,62,84,255);
+}
+.align{
+    text-align: center;
+}
+.faqs{
+    background: transparent;
+    line-height: 40px;
+}
+
+.home-content{
+    margin-top: 50px;
+}
+
+#aboutscrollbtn{
+    margin-bottom: 50px;
+}
