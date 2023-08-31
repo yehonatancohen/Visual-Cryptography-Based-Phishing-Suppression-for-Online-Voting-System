@@ -1,59 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+<link rel="stylesheet" href="{{url_for('static', filename='login.css')}}">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Email Login</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  .login-container {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    width: 300px;
-  }
-  .login-container h1 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  .login-input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
-  .login-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: #ffffff;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-  }
-  .login-button:hover {
-    background-color: #0056b3;
-  }
-</style>
+    <title>Registration Page</title>
 </head>
 <body>
-<div class="login-container">
-  <h1>Login</h1>
-  <form>
-    <input type="email" class="login-input" placeholder="Email" required>
-    <button type="submit" class="login-button">Login</button>
-  </form>
-</div>
+    <header>
+        <img style="cursor: pointer;" onclick="window.location.href='home.html'" id="logo" src="{{url_for('static', filename='LOGO.png')}}" >
+    </header>
+    <div class="wrapper">
+        <div class="form-box admin">
+            <h2>Register</h2>
+            <form action="/register" method="POST">
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="person"></ion-icon></span>
+                    <input type="text" name ="p_name" required>
+                    <Label>First name</Label>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="person"></ion-icon></span>
+                    <input type="text" name ="s_name" required>
+                    <Label>Sur name</Label>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                    <input type="email" name="email" required>
+                    <Label>Email</Label>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                    <input type="password" name="password" required>
+                    <Label>Password</Label>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                    <input type="text" name="sec_question" required>
+                    <Label>Question (Ex: Mothers maiden name)</Label>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="help-circle"></ion-icon></span>
+                    <input type="text" name="sec_answer" maxlength="10" required>
+                    <Label>Personal Word</Label>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <div class="login-register">
+                    <p>Already a user?
+                        <a href="#" class="admin-link">Login</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+        <div class="form-box login">
+            <h2>Login</h2>
+            <form action="#">
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                    <input type="email" id="emailField" required>
+                    <Label>Email</Label>
+                </div>
+                <br>
+                <button type="button" class="btn" id="continueButton">Continue</button>
+                <div class="login-register">
+                    <p>Don't have an account?
+                        <a href="#" class="login-link">Register</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+
+        <div class="form-box photo">
+            <h2>Verify its you</h2>
+            <form action="/submitshare" method="POST" enctype = "multipart/form-data">
+                <br>
+                
+                <input type="hidden" name='email' id="email_transfer" value="">
+                <label for="image" id="Upload">Upload key</label>
+                <input type="file" onclick="set_element_email('email_transfer', 'emailField')"  name="image" id="image" accept="image/*"/>
+                <img class="display" id="display" src="#"/>
+                <br>
+                <button type="submit" class="btn">Submit Share</button>
+                <div class="login-register">
+                    <p>Used the wrong email?
+                        <a href="#" class="photo-link">Go back</a>
+                    </p>
+                </div>
+                </form> 
+            
+        </div>
+    </div>
+    <script src="{{url_for('static', filename='script.js')}}"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
