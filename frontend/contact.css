@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Rubik', sans-serif;
+}
+
+.header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+#logo{
+    width: 200px;
+}
+.navbar a{
+    font-size: 18px;
+    color: rgba(37,62,84,255);
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 35px;
+    transition: .3s;
+}
+
+.navbar a:hover{
+    color: white;
+}
+
+
+.start{
+    background-color: rgba(37,62,84,255);
+    color: rgba(147,213,239,255) !important;
+    border: 3px;
+    border-radius: 12px;
+    padding: 10px 10px;
+}
+
+.start:hover{
+    background-color: white !important;
+    color: rgba(37,62,84,255) !important;
+}
+
+
+body {
+    display: flex;
+    background: url(back.jpg) no-repeat;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+}
+
+.wrapper{
+    position: relative;
+    width: 300px;
+    height: 250px;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .05);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: 1s ease;
+}
+
+.wrapper .contact-box{
+    padding: 40px;
+    line-height: 30px;
+}
+h1{
+    color: rgba(37,62,84,255);
+}
+
+.contact-box .icon{
+    position: absolute;
+    left: 10px;
+    font-size: 1.2em;
+    color: rgba(37,62,84,255);
+    line-height: 35px;
+}
+.box a{
+    color: rgba(37,62,84,255);
+    font-size: 1.2em;
+    text-decoration: none;
+    transition: .2s;
+}
+.box a:hover{
+    color: black;
+    transition: .2s;
+}
