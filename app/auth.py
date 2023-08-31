@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, blueprints, flash
+from flask import Flask, render_template, request, redirect, url_for, blueprints, flash, session
 from flask_wtf.csrf import CSRFProtect
 from werkzeug.utils import secure_filename
 from forms import RegistrationForm, LoginForm
@@ -44,7 +44,7 @@ def register():
 def login():
     return render_template('login.html')
 
-@auth.route('/login', methods=['POST'])
+@auth.route('/login', methods=['GET'])
 def login():
     form = LoginForm()
 
@@ -55,15 +55,26 @@ def login():
             flash("User does not exist")
             return redirect(url_for(auth.login))
 
+        user = db.get_user(email)
         
+        if(user):
+            #flask.session['email'] = email
+            pass
         
         # send the user share to the user
         # save the server share, salt and hash to the database 
 
         # Redirect to a success page or user profile page
-        return redirect(url_for('auth.profile'))
+        return redirect(url_for('auth.loginshare'))
 
     return render_template('login.html', form=form)
+
+@auth.route('/login', methods=['POST'])
+def login():
+    form = LoginForm
+
+    if form.validate_on_submit():
+
 
 @auth.route('/profile')
 def profile():
