@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Rubik', sans-serif;
+}
+
+.header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+#logo{
+    width: 200px;
+}
+.navbar a{
+    font-size: 18px;
+    color: rgba(37,62,84,255);
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 35px;
+    transition: .3s;
+}
+
+.navbar a:hover{
+    color: white;
+}
+
+
+.start{
+    background-color: rgba(37,62,84,255);
+    color: rgba(147,213,239,255) !important;
+    border: 3px;
+    border-radius: 12px;
+    padding: 10px 10px;
+}
+
+.start:hover{
+    background-color: white !important;
+    color: rgba(37,62,84,255) !important;
+}
+
+
+body {
+    display: flex;
+    background: url(back.jpg) no-repeat;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="create.css">
+        <title>
+            Account Page
+        </title>
+    </head>
+    <body>
+        <header id="loggedIn" class="header">
+            <img style="cursor: pointer;" onclick="window.location.href='home.html'" id="logo" src="LOGO.png" >
+    
+            <nav class="navbar">
+                <a href="home.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+                <a href="myPolls.html">My Polls</a>
+                <a href="createPoll.html">Create</a>
+                <a href="vote.html">Vote</a>
+                <a href="login.html" class="start">Log Out</a>
+            </nav>
+        </header>
+        <div class="wrapper">
+            <div class="form-box">
+                <h2>Create Poll</h2>
+                <form action="#">
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="person"></ion-icon></span>
+                        <input type="text" required>
+                        <Label>Poll Name</Label>
+                    </div>
+                    <div class="input-box date">
+                        <input type="date" required>
+                        <Label>From Date</Label>
+                    </div>
+                    <div class="input-box  date">
+                        <input type="date" required>
+                        <Label>To Date</Label>
+                    </div>
+                    <div class="paragraph-box">
+                        <textarea placeholder="Add voters seperated by commas Example1@gmail.com, Example2@gmail.com, Example3@gmail.com," required></textarea>
+                        <Label>Add Voters</Label>
+                    </div>
+                    <button type="submit" class="btn">Register</button>
+                </form>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</html>
