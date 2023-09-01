@@ -1,50 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Home Page</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-  }
-  .navbar {
-    background-color: #333;
-    overflow: hidden;
-  }
-  .navbar a {
-    float: left;
-    display: block;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-  }
-  .navbar a:hover {
-    background-color: #ddd;
-    color: black;
-  }
-  .container {
-    padding: 20px;
-  }
-</style>
-</head>
-<body>
-<div class="navbar">
-  <a href="#login">Login</a>
-  <a href="#register">Register</a>
-  <a href="#logout">Logout</a>
-  <a href="#my-surveys">My Surveys</a>
-  <a href="#create-survey">Create a Survey</a>
-  <a href="#vote">Vote</a>
-</div>
+<html>
+<link rel="stylesheet" href="{{url_for('static', filename='home.css')}}">
 
-<div class="container">
-  <h1>Welcome to Your App</h1>
-  <p>This is the home page of your app.</p>
-</div>
+<head>
+    <title>Home Page</title>
+
+</head>
+
+<body>
+    <header class="header">
+        <img style="cursor: pointer;" onclick="window.location.href='/'" id="logo" src="{{url_for('static', filename='LOGO.png')}}" >
+
+        <nav class="navbar">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Account</a>
+            <a href="#">Contact</a>
+            <a href="{{url_for('auth.login_get')}}" class="start">Get Started</a>
+        </nav>
+    </header>
+    <section class="home">
+        <div class="home-content">
+            <h1>THANK YOU FOR VOTING WITH US</h2>
+            <h2>We are the world's most secure voting site</h2>
+            <h3>Start today and protect your assets in the best way you can</h3>
+            <br>
+            <button onclick="window.location.href='/login'" id="start" style="height: 50px; width: 150px; font-size: 1.2em; cursor: pointer;">Get Started</button>
+        </div>
+    </section>
 </body>
 </html>
