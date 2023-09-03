@@ -8,15 +8,27 @@
 </head>
 
 <body>
-    <header class="header">
+    <header  id="LoggedOut" class="header">
         <img style="cursor: pointer;" onclick="window.location.href='home.html'" id="logo" src="LOGO.png" >
 
         <nav class="navbar">
             <a href="home.html">Home</a>
             <a href="about.html">About</a>
-            <a href="#">Account</a>
             <a href="contact.html">Contact</a>
             <a href="login.html" class="start">Get Started</a>
+        </nav>
+    </header>
+    <header style="display: none;" id="loggedIn" class="header">
+        <img style="cursor: pointer;" onclick="window.location.href='home.html'" id="logo" src="LOGO.png" >
+
+        <nav class="navbar">
+            <a href="home.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <a href="myPolls.html">My Polls</a>
+            <a href="createPoll.html">Create a Poll</a>
+            <a href="vote.html">Vote a Poll</a>
+            <a href="login.html" class="start">Log Out</a>
         </nav>
     </header>
     <section class="home">
