@@ -1,7 +1,7 @@
-from flask import render_template, request, Blueprint, redirect
+from flask import render_template, request, Blueprint, redirect, url_for
 import database as db
 from PIL import Image
-from UTIL.captcha import generate_shares
+from UTIL.captcha import generate_shares, create_combination
 import shortuuid
 from UTIL.email import send_share
 
@@ -31,10 +31,15 @@ def login_get():
 @auth.route('/submitshare', methods=['POST'])
 def submit_share():
 
-    emailField = request.form.get('email')
-    share_2 = request.files['image']
-    PILimage = Image.open(share_2)
+    email = request.form.get('email')
+    user_share = request.files['image']
+    PILimage = Image.open(user_share)
     PILimage.show()
+
+    server_share = db.get_share(email)
+    
+    # This is the combined image that needs to be viewed to the user
+    combined_image = create_combination(server_share, user_share)
 
     #if db.does_user_exist()
     """form = LoginForm()
@@ -57,6 +62,19 @@ def submit_share():
 
         # Redirect to a success page or user profile page
         return redirect(url_for('auth.loginshare'))"""
+
+    return render_template('login.html')
+
+@auth.route('/verifypassword', methods=['POST'])
+def verify_password():
+    email = request.form.get('email')
+    password = request.form.get('password')
+    sec_question = request.form.get('s_question')
+    
+    is_valid = db.validate_user(email, password, sec_question)
+
+    if(is_valid):
+        return redirect(url_for('auth.profile'))
 
     return render_template('login.html')
 
