@@ -5,7 +5,9 @@ from UTIL.captcha import generate_shares, create_combination
 import shortuuid
 from UTIL.email import send_share
 
-auth = Blueprint('auth', __name__)
+auth = Blueprint('auth', __name__,
+    template_folder='templates',
+    static_folder='static', static_url_path='/assets')
 
 
 @auth.route('/register', methods=['POST'])
@@ -25,10 +27,14 @@ def signup_post():
     return redirect('login')
 
 @auth.route('/login', methods=['GET'])
-def login_get():
+def login():
     return render_template('login.html')
 
-@auth.route('/checkemail', method=['POST'])
+@auth.route('/logout', methods=['POST'])
+def logout():
+    pass
+
+@auth.route('/checkemail', methods=['POST'])
 def check_email(email):
     pass
 
@@ -81,9 +87,3 @@ def verify_password():
         return redirect(url_for('auth.profile'))
 
     return render_template('login.html')
-
-
-
-@auth.route('/profile')
-def profile():
-    return render_template("profile.html")
