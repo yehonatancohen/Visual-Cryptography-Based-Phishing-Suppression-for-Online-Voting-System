@@ -28,6 +28,10 @@ def signup_post():
 def login_get():
     return render_template('login.html')
 
+@auth.route('/checkemail', method=['POST'])
+def check_email(email):
+    pass
+
 @auth.route('/submitshare', methods=['POST'])
 def submit_share():
 
