@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="{{ url_for('home.static', filename='home.css') }}">
+
+<style>
+    :root {
+        --background-url: "{{ url_for('static', filename='assets/back.png')}}"
+    }
+</style>
+
+<head>
+    <title>Home Page</title>
+
+</head>
+
+<body>
+    <header  id="LoggedOut" class="header">
+        <img style="cursor: pointer;" href="/" id="logo" src="{{ url_for('static', filename='assets/logo.png') }}" >
+
+        <nav class="navbar">
+            <a href="/">Home</a>
+            <a href="{{ url_for('home.about') }}">About</a>
+            <a href="{{ url_for('home.contact') }}">Contact</a>
+            <a href="{{ url_for('auth.login') }}" class="start">Get Started</a>
+        </nav>
+    </header>
+    <header style="display: none;" id="loggedIn" class="header">
+        <img style="cursor: pointer;" href="/" id="logo" src="{{ url_for('static', filename='assets/logo.png') }}" >
+
+        <nav class="navbar">
+            <a href="/">Home</a>
+            <a href="{{ url_for('home.about') }}">About</a>
+            <a href="{{ url_for('home.contact') }}">Contact</a>
+            <a href="{{ url_for('polls.mypolls') }}">My Polls</a>
+            <a href="{{ url_for('polls.createpoll') }}">Create a Poll</a>
+            <a href="{{ url_for('polls.vote') }}">Vote a Poll</a>
+            <a href="{{ url_for('auth.logout') }}" class="start">Log Out</a>
+        </nav>
+    </header>
+    <section class="home">
+        <div class="home-content">
+            <h1>THANK YOU FOR VOTING WITH US</h2>
+            <h2>We are the world's most secure voting site</h2>
+            <h3>Start today and protect your assets in the best way you can</h3>
+            <br>
+            <a href="/"></a><button id="start" style="height: 50px; width: 150px; font-size: 1.2em; cursor: pointer;">Get Started</button></a>
+        </div>
+    </section>
+</body>
+</html>
