@@ -13,15 +13,16 @@ auth = Blueprint('auth', __name__,
 @auth.route('/register', methods=['POST'])
 def signup_post():
     #form = RegistrationForm()
-    f_name = request.form.get('f_name')
-    s_name = request.form.get('s_name')
+    name = request.form.get('name')
+    f_name = name.split(" ")[0]
+    s_name = name.split(" ")[1]
     email = request.form.get('email')
     password = request.form.get('password')
-    sec_question = request.form.get('sec_question')
+    sec_question = request.form.get('sec_answer')
     sec_answer = request.form.get('sec_answer')
     server_pass = shortuuid.uuid()[0:6]
-    share_1, share_2 = generate_shares(sec_answer + "@" + server_pass)
-    send_share(share_1)
+    share_1, share_2 = generate_shares(str(sec_answer) + "@" + str(server_pass))
+    #send_share(share_1)
     db.add_user(email, f_name, s_name, share_2, password, server_pass,sec_question)
 
     return redirect('login')
