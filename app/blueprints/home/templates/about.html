@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+    <link rel="stylesheet" href="{{ url_for('home.static', filename='about.css') }}">
     
     <head>
         <title>Home Page</title>
@@ -9,27 +9,27 @@
     
     <body>
         <header class="header">
-            <img style="cursor: pointer;" href="{{ url_for('home') }}" id="logo" src="{{ url_for('static', filename='assets/logo.png') }}" >
+            <img style="cursor: pointer;" onclick="window.location.href='/'" id="logo" src="{{ url_for('static', filename='assets/logo.png') }}" >
     
             <nav class="navbar">
-                <a href="{{ url_for(home) }}">Home</a>
-                <a href="{{ url_for(about) }}">About</a>
-                <a href="{{ url_for(contact) }}">Contact</a>
-                <a href="{{ url_for(login) }}" class="start">Get Started</a>
+                <a href="/">Home</a>
+                <a href="{{ url_for('home.about') }}">About</a>
+                <a href="{{ url_for('home.contact') }}">Contact</a>
+                <a href="{{ url_for('auth.login') }}" class="start">Get Started</a>
             </nav>
         </header>
 
         <header style="display: none;" id="loggedIn" class="header">
-            <img style="cursor: pointer;" href="{{ url_for('home') }}" id="logo" src="{{ url_for('static', filename='assets/logo.png') }}" >
+            <img style="cursor: pointer;" onclick="window.location.href='/'" id="logo" src="{{ url_for('static', filename='assets/logo.png') }}" >
     
             <nav class="navbar">
-                <a href="{{ url_for(home) }}">Home</a>
-                <a href="{{ url_for(about) }}">About</a>
-                <a href="{{ url_for(contact) }}">Contact</a>
-                <a href="{{ url_for(myPolls) }}">My Polls</a>
-                <a href="{{ url_for(createPoll) }}">Create a Poll</a>
-                <a href="{{ url_for(vote) }}">Vote a Poll</a>
-                <a href="{{ url_for(logout) }}" class="start">Log Out</a>
+                <a href="/">Home</a>
+                <a href="{{ url_for('home.about') }}">About</a>
+                <a href="{{ url_for('home.contact') }}">Contact</a>
+                <a href="{{ url_for('polls.mypolls') }}">My Polls</a>
+                <a href="{{ url_for('polls.createpoll') }}">Create a Poll</a>
+                <a href="{{ url_for('polls.vote') }}">Vote a Poll</a>
+                <a href="{{ url_for('auth.logout') }}" class="start">Log Out</a>
             </nav>
         </header>
         
@@ -50,21 +50,21 @@
                 <br>
                 <div class="devs">
                     <div class="dev">
-                        <img src="{{ url_for('static', filename='assets/Yuval.png') }}" alt="Yuval">
+                        <img src="{{ url_for('home.static', filename='Yuval.png') }}" alt="Yuval">
                         <div class="dev-info">
                             <p class="dev-name">Yuval</p>
                             <p class="dev-description">Frontend & Backend</p>
                         </div>
                     </div>
                     <div class="dev">
-                        <img src="{{ url_for('static', filename='assets/Gur.png') }}" alt="Gur">
+                        <img src="{{ url_for('home.static', filename='Gur.png') }}" alt="Gur">
                         <div class="dev-info">
                             <p class="dev-name">Gur</p>
                             <p class="dev-description">Database & Backend</p>
                         </div>
                     </div>
                     <div class="dev">
-                        <img src="{{ url_for('static', filename='assets/Yehonatan.png') }}" alt="Yehonatan">
+                        <img src="{{ url_for('home.static', filename='Yehonatan.png') }}" alt="Yehonatan">
                         <div class="dev-info">
                             <p class="dev-name">Yehonatan</p>
                             <p class="dev-description">Backend</p>
@@ -96,6 +96,6 @@
         </p>
         </div>
     </div>
-    <script src="{{ url_for('static', filename='js/about.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/about.js') }}"></script>
 </html>
 

@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" href="login.css">
+<link rel="stylesheet" href="{{ url_for('auth.static', filename='login.css') }}">
 
 <head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Registration Page</title>
 </head>
 
 <body>
     <header>
-        <img style="cursor: pointer;" onclick="window.location.href='home.html'" id="logo" src="LOGO.png" >
+        <img style="cursor: pointer;" onclick="window.location.href='/'" id="logo" src="{{ url_for('static', filename='assets/logo.png') }}" >
     </header>
     <div class="wrapper">
         <div class="form-box admin">
             <h2>Register</h2>
-            <form action="home.html">
+            <form action="{{ url_for('auth.signup_post') }}">
                 <div class="input-box">
                     <span class="icon"><ion-icon name="person"></ion-icon></span>
                     <input type="text" required>
@@ -45,17 +46,17 @@
 
         <div class="form-box login">
             <h2>Login</h2>
-            <form action="#">
+            <form action="javascript:validate_email();">
                 <div class="input-box">
                     <span class="icon"><ion-icon name="mail"></ion-icon></span>
                     <input type="email" id="emailField" required>
                     <Label>Email</Label>
                 </div>
                 <br>
-                <button type="button" class="btn" id="continueButton">Continue</button>
+                <button onclick="validate_email();" type="button" class="btn" id="continueButton">Continue</button>
                 <div class="login-register">
                     <p>Don't have an account?
-                        <a href="#" class="login-link">Register</a>
+                        <a href="/" class="login-link">Register</a>
                     </p>
                 </div>
             </form>
@@ -63,7 +64,7 @@
 
         <div class="form-box photo">
             <h2>Verify its you</h2>
-            <form action="home.html">
+            <form action="{{ url_for('auth.signup_post') }}">
                 <br>
                 <label for="image" id="Upload">Upload key</label>
                 <input type="file" name="image" id="image" accept="image/*"/>
@@ -78,13 +79,13 @@
                 <button type="submit" class="btn">Login</button>
                 <div class="login-register">
                     <p>Used the wrong email?
-                        <a href="#" class="photo-link">Go back</a>
+                        <a href="javascript:void(0)" onclick="goback();" class="photo-link">Go back</a>
                     </p>
                 </div>
             </form>
         </div>
     </div>
-    <script src="script.js"></script>
+    <script src="{{ url_for('auth.static', filename='auth.js') }}"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>

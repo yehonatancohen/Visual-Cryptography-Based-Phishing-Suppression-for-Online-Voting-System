@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html>
-    <link rel="stylesheet" href="contact.css">
+    <link rel="stylesheet" href="{{ url_for('home.static', filename='contact.css') }}">
     <head>
         <title>Contact</title>
     </head>
     <body>
         <header class="header">
-            <img style="cursor: pointer;" onclick="window.location.href='home.html'" id="logo" src="LOGO.png" >
+            <img style="cursor: pointer;" onclick="window.location.href='/'" id="logo" src="{{ url_for('static', filename='assets/logo.png') }}" >
     
             <nav class="navbar">
-                <a href="home.html">Home</a>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
-                <a href="login.html" class="start">Get Started</a>
+                <a href="/">Home</a>
+                <a href="{{ url_for('home.about') }}">About</a>
+                <a href="{{ url_for('home.contact') }}">Contact</a>
+                <a href="{{ url_for('auth.login') }}" class="start">Get Started</a>
             </nav>
         </header>
 
         <header style="display: none;" id="loggedIn" class="header">
-            <img style="cursor: pointer;" onclick="window.location.href='home.html'" id="logo" src="LOGO.png" >
+            <img style="cursor: pointer;" onclick="window.location.href='/'" id="logo" src="{{ url_for('static', filename='assets/logo.png') }}" >
     
             <nav class="navbar">
-                <a href="home.html">Home</a>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
-                <a href="myPolls.html">My Polls</a>
-                <a href="createPoll.html">Create a Poll</a>
-                <a href="vote.html">Vote a Poll</a>
-                <a href="login.html" class="start">Log Out</a>
+                <a href="/">Home</a>
+                <a href="{{ url_for('home.about') }}">About</a>
+                <a href="{{ url_for('home.contact') }}">Contact</a>
+                <a href="{{ url_for('polls.mypolls') }}">My Polls</a>
+                <a href="{{ url_for('polls.createpoll') }}">Create a Poll</a>
+                <a href="{{ url_for('polls.vote') }}">Vote a Poll</a>
+                <a href="{{ url_for('auth.logout') }}" class="start">Log Out</a>
             </nav>
         </header>
         <div class="wrapper">
