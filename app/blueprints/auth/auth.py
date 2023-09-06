@@ -1,4 +1,4 @@
-from flask import render_template, request, Blueprint, redirect, url_for
+from flask import render_template, request, Blueprint, redirect, url_for, jsonify
 import database as db
 from PIL import Image
 from UTIL.captcha import generate_shares, create_combination
@@ -7,7 +7,7 @@ from UTIL.email import send_share
 
 auth = Blueprint('auth', __name__,
     template_folder='templates',
-    static_folder='static', static_url_path='/assets')
+    static_folder='static/auth')
 
 
 @auth.route('/register', methods=['POST'])
@@ -35,8 +35,31 @@ def logout():
     pass
 
 @auth.route('/checkemail', methods=['POST'])
-def check_email(email):
-    pass
+def check_email():
+    form = request.form
+
+    response = {
+        'succeed': True,
+        'message': ""
+    }
+
+    email = request.form.get('email')
+    
+    if (not db.does_user_exist(email)):
+        response['succeed'] = False
+        response['message'] = 'User does not exist'
+        return jsonify(response)
+    
+    user = db.get_user(email)
+    
+    if(user):
+        response = email
+    
+    # send the user share to the user
+    # save the server share, salt and hash to the database 
+    # Redirect to a success page or user profile page
+    # return redirect(url_for('auth.loginshare'))
+    return jsonify(response)
 
 @auth.route('/submitshare', methods=['POST'])
 def submit_share():
@@ -52,26 +75,7 @@ def submit_share():
     combined_image = create_combination(server_share, user_share)
 
     #if db.does_user_exist()
-    """form = LoginForm()
-
-    if form.validate_on_submit():
-        email = form.email.data
-        
-        if (not db.does_user_exist(email)):
-            flash("User does not exist")
-            return redirect(url_for(auth.login))
-
-        user = db.get_user(email)
-        
-        if(user):
-            #flask.session['email'] = email
-            pass
-        
-        # send the user share to the user
-        # save the server share, salt and hash to the database 
-
-        # Redirect to a success page or user profile page
-        return redirect(url_for('auth.loginshare'))"""
+    
 
     return render_template('login.html')
 
