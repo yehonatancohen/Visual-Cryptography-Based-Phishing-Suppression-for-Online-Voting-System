@@ -2,10 +2,21 @@ const emailButton = document.getElementById('continueButton');
 const wrapper = document.querySelector('.wrapper');
 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]/;
 const email = document.getElementById('emailField');
+const loginLink = document.querySelector('.login-link');
 
-function goback()
+function goto(page, from)
 {
-    wrapper.classList.remove('photo');
+    if (page == 'email')
+    {
+        if (from == 'verify')
+            wrapper.classList.remove('photo');
+        if (from == 'register')
+            wrapper.classList.remove('active');
+    }
+    if (page == 'register')
+    {
+        wrapper.classList.add('active');
+    }
 }
 
 function validate_email()
