@@ -14,7 +14,7 @@ def save_share(img: Image):
     """
     if not os.path.isdir(SHARES_FOLDER_PATH):
         os.mkdir(SHARES_FOLDER_PATH)
-    img_path = os.path.join(SHARES_FOLDER_PATH, str(uuid.uuid4())+ '.' + img.format.lower()).replace('\\','/')
+    img_path = os.path.join(SHARES_FOLDER_PATH, str(uuid.uuid4())+ '.png').replace('\\','/')
     img.save(img_path)
     return img_path
 
@@ -27,6 +27,6 @@ def save_candidate_img(img: Image):
     """
     if not os.path.isdir(CANDIDATES_IMG_FOLDER_PATH):
         os.mkdir(CANDIDATES_IMG_FOLDER_PATH)
-    img_path = os.path.join(CANDIDATES_IMG_FOLDER_PATH, str(uuid.uuid4())+ '.' + img.format.lower()).replace('\\','/')
+    img_path = os.path.join(CANDIDATES_IMG_FOLDER_PATH, str(uuid.uuid4())+ '.png').replace('\\','/')
     img.save(img_path)
     return img_path
