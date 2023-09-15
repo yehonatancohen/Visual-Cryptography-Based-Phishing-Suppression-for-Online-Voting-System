@@ -23,9 +23,6 @@ adminLink.addEventListener('click',()=> {
     wrapper.classList.remove('active');
 });
 
-
-
-
 photoLink.addEventListener('click',()=> {
     wrapper.classList.remove('photo');
 });

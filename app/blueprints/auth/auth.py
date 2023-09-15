@@ -3,7 +3,7 @@ import database as db
 from PIL import Image
 from UTIL.captcha import generate_shares, create_combination
 import shortuuid
-from UTIL.email import send_share
+#from UTIL.smtp import send_share
 
 auth = Blueprint('auth', __name__,
     template_folder='templates',
