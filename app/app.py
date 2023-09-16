@@ -1,5 +1,5 @@
 from flask import Flask
-import sqlite3
+import sqlite3, os
 import database as db
 from blueprints.auth.auth import auth
 from blueprints.home.home import home
@@ -7,6 +7,8 @@ from blueprints.polls.polls import polls
 
 def create_app():
     app = Flask(__name__, static_folder="blueprints/static")
+
+    app.config['UPLOAD'] = app.static_folder + '/uploads'
 
     app.register_blueprint(auth, url_prefix='/')
     app.register_blueprint(home, url_prefix='/')

@@ -1,14 +1,13 @@
-from flask import render_template, request, Blueprint, redirect, url_for, jsonify
+from flask import render_template, request, Blueprint, redirect, url_for, jsonify, current_app
 import database as db
 from PIL import Image
 from UTIL.captcha import generate_shares, create_combination
-import shortuuid
+import shortuuid, io, uuid, os, json
 #from UTIL.smtp import send_share
 
 auth = Blueprint('auth', __name__,
     template_folder='templates',
     static_folder='static/auth')
-
 
 @auth.route('/register', methods=['POST'])
 def signup_post():
@@ -67,18 +66,19 @@ def submit_share():
 
     email = request.form.get('email')
     user_share = request.files['image']
-    PILimage = Image.open(user_share)
-    PILimage.show()
+    if user_share.filename != '' and user_share.filename.endswith(('.png', '.jpg', '.jpeg', '.gif')):
+            PILimage = Image.open(io.BytesIO(user_share.read()))
 
     server_share = db.get_share(email)
     
     # This is the combined image that needs to be viewed to the user
-    combined_image = create_combination(server_share, user_share)
+    combined_image = create_combination(server_share, PILimage)
 
-    #if db.does_user_exist()
-    
+    filename = str(uuid.uuid4()) + '.png'
+    combined_image.save(os.path.join(current_app.config['UPLOAD'], filename))
 
-    return render_template('login.html')
+    return jsonify(os.path.join('/static/uploads', filename))
+
 
 @auth.route('/verifypassword', methods=['POST'])
 def verify_password():

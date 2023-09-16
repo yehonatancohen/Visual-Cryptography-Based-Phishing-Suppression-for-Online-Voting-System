@@ -7,6 +7,7 @@ const loginLink = document.querySelector('.login-link');
 const displayImg = document.getElementById('display');
 imageUpload.addEventListener('change', uploadImage);
 
+var currentUser = "";
 
 function goto(page, from)
 {
@@ -47,6 +48,7 @@ function validate_email()
             }
             else
             {
+                currentUser = data;
                 wrapper.classList.add('photo');
             }
         })
@@ -62,30 +64,32 @@ function uploadImage(event)
     //const form = URL.createObjectURL(event.target.files[0]);
     const files = event.target.files
     var requestBody = new FormData();
-    requestBody.append('image', files[0])
+    requestBody.append('image', files[0]);
+    requestBody.append('email', currentUser);
         
-        fetch(url, {
-            method: 'POST',
-            body: requestBody
-        })
-        .then(function(response) {
-            return response.text();
-        })
-        .then(function(data) {
-            data = JSON.parse(data);
-            succeed = data.succeed;
-            result = data.message;
-            if (succeed == false){
-                alert(result)
-            }
-            else
-            {
-                displayImg.src = result
-                displayImg.style.display = 'block';
-            }
-        })
-        .catch(function(error) {
-            console.error('Fetch error:', error);
-        });
+    fetch(url, {
+        method: 'POST',
+        body: requestBody
+    })
+    .then(function(response) {
+        return response.text();
+    })
+    .then(function(data) {
+        data = JSON.parse(data);
+        succeed = data.succeed;
+        result = data.message;
+        if (succeed == false){
+            alert(result)
+        }
+        else
+        {
+            displayImg.src = data
+            displayImg.style.display = 'block';
+        }
+    })
+    .catch(function(error) {
+        console.error('Fetch error:', error);
+    });
+
     event.preventDefault();
 }
