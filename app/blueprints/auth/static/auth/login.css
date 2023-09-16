@@ -199,7 +199,6 @@ input[type="file"] {
 .display{
     color: rgba(37,62,84,255);
     font-weight: 500;
-    display: none;
     max-width: 300px;
     max-height: 150px;
     font-size: 1.2em;

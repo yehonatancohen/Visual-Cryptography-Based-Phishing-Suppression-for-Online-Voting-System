@@ -4,6 +4,7 @@ const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]/;
 const email = document.getElementById('emailField');
 const imageUpload = document.getElementById('userShareImage');
 const loginLink = document.querySelector('.login-link');
+const displayImg = document.getElementById('display');
 imageUpload.addEventListener('change', uploadImage);
 
 
@@ -58,8 +59,10 @@ function validate_email()
 function uploadImage(event)
 {
     var url = new URL(window.location.href).origin + "/submitshare";
-    const form = event.currentTarget;
-    var requestBody = new FormData(form);
+    //const form = URL.createObjectURL(event.target.files[0]);
+    const files = event.target.files
+    var requestBody = new FormData();
+    requestBody.append('image', files[0])
         
         fetch(url, {
             method: 'POST',
@@ -77,7 +80,8 @@ function uploadImage(event)
             }
             else
             {
-                wrapper.classList.add('photo');
+                displayImg.src = result
+                displayImg.style.display = 'block';
             }
         })
         .catch(function(error) {
