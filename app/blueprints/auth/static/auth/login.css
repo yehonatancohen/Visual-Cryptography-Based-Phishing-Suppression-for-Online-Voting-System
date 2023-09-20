@@ -51,13 +51,13 @@ body {
 .wrapper .form-box.photo{
     position: absolute;
     transition: 1s ease;
-    transform: translateY(500px);
+    transform: translateY(600px);
 }
 .wrapper.active{
     height: 540px;
 }
 .wrapper.photo{
-    height: 550px;
+    height: 600px;
 }
 
 .wrapper {
