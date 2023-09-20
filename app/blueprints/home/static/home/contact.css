@@ -71,6 +71,7 @@ body {
     box-shadow: 0 0 30px rgba(0, 0, 0, .5);
     align-items: center;
     justify-content: center;
+    text-align: center;
     overflow: hidden;
     transition: 1s ease;
 }
@@ -90,6 +91,10 @@ h1{
     color: rgba(37,62,84,255);
     line-height: 35px;
 }
+.box{
+    text-align: left;
+}
+
 .box a{
     color: rgba(37,62,84,255);
     font-size: 1.2em;
