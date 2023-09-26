@@ -7,7 +7,7 @@ from blueprints.polls.polls import polls
 
 def create_app():
     app = Flask(__name__, static_folder="blueprints/static")
-
+    app.secret_key = 'your_secret_key_here'
     app.config['UPLOAD'] = app.static_folder + '/uploads'
 
     app.register_blueprint(auth, url_prefix='/')
@@ -21,7 +21,7 @@ def create_app():
         # TABLES ALREADY INITIATED
         pass
     
-    app.run(host='0.0.0.0', debug=True)
+    app.run(debug=True)
 
     return app
 
