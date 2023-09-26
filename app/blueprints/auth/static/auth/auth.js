@@ -93,3 +93,29 @@ function uploadImage(event)
 
     event.preventDefault();
 }
+
+function validate_login()
+{
+    var url = new URL(window.location.href).origin + "/verifypassword";
+    var requestBody = new FormData();
+    requestBody.append('password', document.getElementById('loginpassword').value);
+    requestBody.append('sec_answer', document.getElementById('sec_answer').value);
+    fetch(url, {
+        method: 'POST',
+        body: requestBody
+    })
+    .then(function(response) {
+        return response.text();
+    })
+    .then(function(data) {
+        data = JSON.parse(data);
+        succeed = data.succeed;
+        result = data.message;
+        if (succeed == false){
+            alert(result)
+        }
+    })
+    .catch(function(error) {
+        console.error('Fetch error:', error);
+    });
+}
