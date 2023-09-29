@@ -20,96 +20,13 @@
         </header>
         <h2>My Polls</h2>
         <div class="wrapper">
-            <div class="item">
-                <p class="pollName">name</p>
-                <p class="dateRange">Date Range</p>
-                <button class="results">Results</button>
-            </div>
-            <div class="item">
-                <p class="pollName">name</p>
-                <p class="dateRange">Date Range</p>
-                <button class="results">Results</button>
-            </div>
-            <div class="item">
-                <p class="pollName">name</p>
-                <p class="dateRange">Date Range</p>
-                <button class="results">Results</button>
-            </div>
-            <div class="item">
-                <p class="pollName">name</p>
-                <p class="dateRange">Date Range</p>
-                <button class="results">Results</button>
-            </div>
-            <div class="item">
-                <p class="pollName">name</p>
-                <p class="dateRange">Date Range</p>
-                <button class="results">Results</button>
-            </div>
-            <div class="item">
-                <p class="pollName">name</p>
-                <p class="dateRange">Date Range</p>
-                <button class="results">Results</button>
-            </div>
-            <div class="item">
-                <p class="pollName">name</p>
-                <p class="dateRange">Date Range</p>
-                <button class="results">Results</button>
-            </div>
-            <div class="item">
-                <p class="pollName">name</p>
-                <p class="dateRange">Date Range</p>
-                <button class="results">Results</button>
-            </div>
-            <div class="item">
-                <p class="pollName">name</p>
-                <p class="dateRange">Date Range</p>
-                <button class="results">Results</button>
-            </div>
-            <div class="item">
-                <p class="pollName">name</p>
-                <p class="dateRange">Date Range</p>
-                <button class="results">Results</button>
-            </div>
-            <div class="item">
-                <p class="pollName">name</p>
-                <p class="dateRange">Date Range</p>
-                <button class="results">Results</button>
-            </div>
-            <div class="item">
-                <p class="pollName">name</p>
-                <p class="dateRange">Date Range</p>
-                <button class="results">Results</button>
-            </div>
-            <div class="item">
-                <p class="pollName">name</p>
-                <p class="dateRange">Date Range</p>
-                <button class="results">Results</button>
-            </div>
-            <div class="item">
-                <p class="pollName">name</p>
-                <p class="dateRange">Date Range</p>
-                <button class="results">Results</button>
-            </div>
-            <div class="item">
-                <p class="pollName">name</p>
-                <p class="dateRange">Date Range</p>
-                <button class="results">Results</button>
-            </div>
-            <div class="item">
-                <p class="pollName">name</p>
-                <p class="dateRange">Date Range</p>
-                <button class="results">Results</button>
-            </div>
-            <div class="item">
-                <p class="pollName">name</p>
-                <p class="dateRange">Date Range</p>
-                <button class="results">Results</button>
-            </div>
-            <div class="item">
-                <p class="pollName">name</p>
-                <p class="dateRange">Date Range</p>
-                <button class="results">Results</button>
-            </div>
+            {% for poll in user_polls %}
+                <div class="item">
+                    <p class="pollName">{{ poll.name }}</p>
+                    <p class="dateRange"> {{ poll.start_date }} - {{ poll.end_date }}</p>
+                    <button class="results">Results</button>
+                </div>
+            {% endfor %}
         </div>
     </body>
 </html>
