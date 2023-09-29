@@ -11,12 +11,24 @@
     <header  id="LoggedOut" class="header">
         <img style="cursor: pointer;" onclick="window.location.href='/'" id="logo" src="{{ url_for('static', filename='assets/logo.png') }}" >
 
-        <nav class="navbar">
-            <a href="/">Home</a>
-            <a href="{{ url_for('home.about') }}">About</a>
-            <a href="{{ url_for('home.contact') }}">Contact</a>
-            <a href="{{ url_for('auth.login') }}" class="start">Get Started</a>
-        </nav>
+        {% if current_user.is_authenticated %}
+            <nav class="navbar">
+                <a href="/">Home</a>
+                <a href="{{ url_for('home.about') }}">About</a>
+                <a href="{{ url_for('home.contact') }}">Contact</a>
+                <a href="{{ url_for('polls.mypolls') }}">My Polls</a>
+                <a href="{{ url_for('polls.createpoll') }}">Create</a>
+                <a href="{{ url_for('polls.vote') }}">Vote</a>
+                <a href="{{ url_for('auth.logout') }}" class="start">Log Out</a>
+            </nav>
+            {% else %}
+            <nav class="navbar">
+                <a href="/">Home</a>
+                <a href="{{ url_for('home.about') }}">About</a>
+                <a href="{{ url_for('home.contact') }}">Contact</a>
+                <a href="{{ url_for('auth.login') }}" class="start">Get Started</a>
+            </nav>
+            {% endif %}
     </header>
     <header style="display: none;" id="loggedIn" class="header">
         <img style="cursor: pointer;" onclick="window.location.href='/'" id="logo" src="{{ url_for('static', filename='assets/logo.png') }}" >
