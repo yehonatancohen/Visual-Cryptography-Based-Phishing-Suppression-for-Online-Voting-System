@@ -114,6 +114,10 @@ function validate_login()
         if (succeed == false){
             alert(result)
         }
+        else
+        {
+            window.location.href = result
+        }
     })
     .catch(function(error) {
         console.error('Fetch error:', error);

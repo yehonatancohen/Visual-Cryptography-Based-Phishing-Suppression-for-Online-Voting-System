@@ -3,16 +3,16 @@ import database as db
 
 polls = Blueprint('polls', __name__,
     template_folder='templates',
-    static_folder='static', static_url_path='/assets')
+    static_folder='static/polls')
 
 
-@polls.route('/CreatePoll')
+@polls.route('/createpoll')
 def createpoll():
     return render_template('createPoll.html')
 
-@polls.route('/mypolls')
+@polls.route('/mypolls', methods=['GET'])
 def mypolls():
-    return render_template('myPolls.html')
+    return render_template('mypolls.html')
 
 @polls.route('/vote')
 def vote():
