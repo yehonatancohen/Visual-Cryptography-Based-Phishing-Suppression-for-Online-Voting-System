@@ -1,4 +1,6 @@
 from flask import render_template, request, Blueprint, redirect, url_for, jsonify, current_app, Response, send_file, session, flash
+from flask_login import login_user, logout_user, login_required
+from flask import current_app as app
 import database as db
 from PIL import Image
 from UTIL.captcha import generate_shares, create_combination
@@ -106,11 +108,19 @@ def verify_password():
         email = session['email']
         password = request.form.get('password')
         sec_question = request.form.get('sec_answer')
+        user = load_user(email)
         is_valid = db.validate_user(email, password, sec_question)
 
         if(is_valid):
-            return redirect(url_for('polls.mypolls'))
+            response['succeed'] = True
+            response['message'] = '/mypolls'
+            login_user(user)
+            return jsonify(response)
         else:
             response['succeed'] = False
             response['message'] = 'Invalid email, password, or security question answer.'
             return jsonify(response)
+
+@app.login_manager.user_loader
+def load_user(email):
+    return db.get_user(email)

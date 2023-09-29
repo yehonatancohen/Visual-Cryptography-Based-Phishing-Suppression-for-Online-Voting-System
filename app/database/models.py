@@ -1,8 +1,10 @@
 from PIL import Image
+from flask_login import UserMixin
 
-class User:
+class User(UserMixin):
     def __init__(self, email, f_name, s_name, share_path,
                 hashed_password, hashed_server_code, security_question) -> None:
+        self.id = email
         self.email = email
         self.f_name = f_name
         self.s_name = s_name
@@ -10,6 +12,9 @@ class User:
         self.hashed_password = hashed_password
         self.hashed_server_code = hashed_server_code
         self.security_question = security_question
+
+    def get_id(self):
+        return str(self.id)
     
     def __repr__(self) -> str:
         return f"{self.email}: {self.f_name} {self.s_name}. \
