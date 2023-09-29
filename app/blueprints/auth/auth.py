@@ -35,9 +35,10 @@ def signup_post():
 def login():
     return render_template('login.html')
 
-@auth.route('/logout', methods=['POST'])
+@auth.route('/logout', methods=['GET'])
 def logout():
-    pass
+    logout_user()
+    return redirect(url_for('home.index'))
 
 @auth.route('/checkemail', methods=['POST'])
 def check_email():
