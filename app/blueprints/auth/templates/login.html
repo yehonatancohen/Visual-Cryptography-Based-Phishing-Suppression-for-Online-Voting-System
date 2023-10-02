@@ -46,7 +46,7 @@
 
         <div class="form-box login">
             <h2>Login</h2>
-            <form>
+            <form action="javascript:validate_email();">
                 <div class="input-box">
                     <span class="icon"><ion-icon name="mail"></ion-icon></span>
                     <input type="email" id="emailField" required>
@@ -63,8 +63,17 @@
         </div>
 
         <div class="form-box photo">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class="flashes">
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
             <h2>Verify its you</h2>
-            <form action="{{ url_for('auth.signup_post') }}">
+            <form action="javascript:validate_login();" method="post">
                 <br>
                 <input type="file" name="image" id="userShareImage" accept="image/*"/>
                 <label for="userShareImage" id="Upload">Upload key</label>
@@ -74,14 +83,21 @@
                 <label class="display" id="display1">Please enter the code:</label>
                 <div class="input-box">
                     <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-                    <input type="password" id="finalPass" required>
+                    <input type="text" name="sec_answer" id="sec_answer" required>
+                    <Label>The code in the image</Label>
+                </div>
+                <br>
+                <label class="display" id="display1">Please enter your password:</label>
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                    <input type="password" name="loginpassword" id="loginpassword" required>
                     <Label>Password</Label>
                 </div>
                 <br>
                 <button type="submit" class="btn">Login</button>
                 <div class="login-register">
                     <p>Used the wrong email?
-                        <a href="javascript:void(0)" onclick="goto('email', 'verify');" class="photo-link">Go back</a>
+                        <a href="javascript:void(0)" onclick="validate_login()" class="photo-link">Go back</a>
                     </p>
                 </div>
             </form>
