@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <link rel="stylesheet" href="myPolls.css">
+    <link rel="stylesheet" href="vote.css">
     <head>
         <title>vote</title>
     </head>
@@ -18,5 +18,102 @@
                 <a href="login.html" class="start">Log Out</a>
             </nav>
         </header>
+
+        <div style="display: none;" class="closed">
+            This Poll is Closed.
+        </div>
+
+        <div style="display: none;"  class="waiting">
+            <div class="pollOpen">
+                The Poll will open in:
+            </div>
+            <div class="countdown">
+                <div class="items1">
+                    <p>Days</p>
+                    <p>Hours</p>
+                    <p>Minutes</p>
+                    <p>Seconds</p>
+                </div>
+                <div class="items2">
+                    <p id="days">12</p>
+                    :
+                    <p id="hours">23</p>
+                    :
+                    <p id="minutes">34</p>
+                    :
+                    <p id="seconds">45</p>
+                </div>
+            </div>
+        </div>
+        <div class="wrap">
+            <div class="open">
+                <div class="wrapper">
+                    <div class="name">
+                        The name of The Poll
+                    </div>
+                    <div class="waiting">
+                        <div class="pollOpen">
+                            The Poll will closeA in:
+                        </div>
+                        <div class="countdown">
+                            <div class="items1">
+                                <p>Days</p>
+                                <p>Hours</p>
+                                <p>Minutes</p>
+                                <p>Seconds</p>
+                            </div>
+                            <div class="items2">
+                                <p id="days">12</p>
+                                :
+                                <p id="hours">23</p>
+                                :
+                                <p id="minutes">34</p>
+                                :
+                                <p id="seconds">45</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-container">
+                        <div class="grid-item">1</div>
+                        <div class="grid-item">2</div>
+                        <div class="grid-item">3</div>  
+                        <div class="grid-item">4</div>
+                        <div class="grid-item">5</div>
+                        <div class="grid-item">6</div>  
+                        <div class="grid-item">7</div>
+                        <div class="grid-item">8</div>
+                        <div class="grid-item">9</div>  
+                    </div>
+                    <button id="voteSubmit" style="height: 50px; width: 200px; margin: 20px;" class="btn">Vote</button>
+                </div>
+            </div>
+        </div>
+        <div class="popup">
+            <div class="form-box photo">
+                <h2>Verify its you</h2>
+                <form action="vote.html">
+                    <br>
+                    <label for="image" id="Upload">Upload key</label>
+                    <input type="file" name="image" id="image" accept="image/*"/>
+                    <img class="display" id="display" src="#"/>
+                    <label class="display" id="display1">Please enter the code:</label>
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                        <input type="password" id="finalPass" required>
+                        <Label>Password</Label>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn">Vote</button>
+                    <div class="login-register">
+                        <p>Want to chage your vote?
+                            <a href="#" class="photo-link">Click here</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+          </div>
     </body>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="vote.js"></script>
 </html>
