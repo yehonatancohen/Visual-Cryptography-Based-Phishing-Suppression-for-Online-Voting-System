@@ -2,6 +2,7 @@ from flask import Flask
 from flask_login import LoginManager
 import sqlite3, os
 import database as db
+from UTIL.decorators import guest_required 
 from blueprints.home.home import home
 from blueprints.polls.polls import polls
 
@@ -13,7 +14,7 @@ def create_app():
 
     login_manager = LoginManager(app)
     login_manager.init_app(app)
-    login_manager.login_view = 'login' 
+    login_manager.login_view = 'auth.login' 
 
     with app.app_context():
         from blueprints.auth.auth import auth

@@ -1,6 +1,7 @@
 from flask import render_template, request, Blueprint, redirect, url_for, jsonify, current_app, Response, send_file, session, flash
 from flask_login import login_user, logout_user, login_required
 from flask import current_app as app
+from UTIL.decorators import guest_required
 import database as db
 from PIL import Image
 from UTIL.captcha import generate_shares, create_combination
@@ -32,15 +33,18 @@ def signup_post():
     return redirect(url_for('auth.login'))
 
 @auth.route('/login', methods=['GET'])
+@guest_required
 def login():
     return render_template('login.html')
 
 @auth.route('/logout', methods=['GET'])
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('home.index'))
 
 @auth.route('/checkemail', methods=['POST'])
+@guest_required
 def check_email():
     form = request.form
 
@@ -69,6 +73,7 @@ def check_email():
     return jsonify(response)
 
 @auth.route('/submitshare', methods=['POST'])
+@guest_required
 def submit_share():
 
     email = session['email']
@@ -87,6 +92,7 @@ def submit_share():
     return jsonify(os.path.join('/static/uploads', filename))
 
 @auth.route('/download', methods=['POST'])
+@guest_required
 def convert_and_download(sample_image, filename):
     try:
         # Convert the PIL image to PNG format
@@ -100,6 +106,7 @@ def convert_and_download(sample_image, filename):
 
 
 @auth.route('/verifypassword', methods=['POST','GET'])
+@guest_required
 def verify_password():
     response = {
         'succeed': True,

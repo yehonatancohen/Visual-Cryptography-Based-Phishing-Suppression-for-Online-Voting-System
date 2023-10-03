@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session, jsonify
+from flask import Blueprint, render_template, request, redirect, url_for, session
+from flask_login import login_required
 import database as db
 
 polls = Blueprint('polls', __name__,
@@ -7,6 +8,7 @@ polls = Blueprint('polls', __name__,
 
 
 @polls.route('/createpoll', methods=['GET','POST'])
+@login_required
 def createpoll():
     if request.method == 'POST':
         poll_name = request.form.get('pollname')
@@ -28,10 +30,12 @@ def createpoll():
         return render_template('createPoll.html')
 
 @polls.route('/mypolls', methods=['GET'])
+@login_required
 def mypolls():
     user_polls = db.get_user_surveys(session.get('email'))
     return render_template('mypolls.html',user_polls=user_polls)
 
 @polls.route('/vote')
+@login_required
 def vote():
     return render_template('vote.html')
