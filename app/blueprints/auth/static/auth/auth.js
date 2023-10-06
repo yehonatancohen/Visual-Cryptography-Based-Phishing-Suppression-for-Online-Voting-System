@@ -7,6 +7,7 @@ const loginLink = document.querySelector('.login-link');
 const displayImg = document.getElementById('display');
 imageUpload.addEventListener('change', uploadImage);
 
+
 var currentUser = "";
 
 function goto(page, from)

@@ -56,7 +56,7 @@
                 <button onclick="validate_email();" type="button" class="btn" id="continueButton">Continue</button>
                 <div class="login-register">
                     <p>Don't have an account?
-                        <a href="javascript:void(0)" onclick="goto('register', 'login');" class="login-link">Register</a>
+                        <a href="javascript:void(0)" onclick="goto('register', 'email');" class="login-link">Register</a>
                     </p>
                 </div>
             </form>
@@ -97,7 +97,7 @@
                 <button type="submit" class="btn">Login</button>
                 <div class="login-register">
                     <p>Used the wrong email?
-                        <a href="javascript:void(0)" onclick="validate_login()" class="photo-link">Go back</a>
+                        <a href="javascript:void(0)" onclick="goto('email', 'verify')" class="photo-link">Go back</a>
                     </p>
                 </div>
             </form>
