@@ -8,7 +8,7 @@ function openPoll(evt, name) {
     for (i = 0; i < tablinks.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
-    tabcharts = document.getElementsByClassName("tabcharts")
+    tabcharts = document.getElementsByClassName("tabcharts");
     for(i = 0; i< tabcharts.length; i++){
         tabcharts[i].style.display = "none"
     }
