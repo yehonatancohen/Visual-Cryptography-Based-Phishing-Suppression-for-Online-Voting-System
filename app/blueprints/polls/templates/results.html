@@ -22,12 +22,12 @@
 
         <div class="wrapper">
             <div class="tab">
-                <button class="tablinks" onclick="openPoll(event, 'Pie')">Pie</button>
+                <button class="tablinks active" onclick="openPoll(event, 'Pie')">Pie</button>
                 <button class="tablinks" onclick="openPoll(event, 'Polls')">Polls</button>
                 <button class="tablinks" onclick="openPoll(event, 'Votes')">Votes</button>
             </div>
 
-            <div id="PieChart" class="tabcharts">
+            <div style="display: block;" id="PieChart" class="tabcharts">
                 <div class="slice"></div>
             </div>
 
@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-        <div id="Pie" class="tabcontent">
+        <div style="display: block;" id="Pie" class="tabcontent">
             <h3>Pie</h3>
             <p>This is a Pie Chart</p>
           </div>

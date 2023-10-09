@@ -116,6 +116,10 @@ body {
     border-top: none;
 }
 
+.tabcharts{
+    display: none;
+}
+
 #PieChart {
     margin: 20px;
     width: 700px;
