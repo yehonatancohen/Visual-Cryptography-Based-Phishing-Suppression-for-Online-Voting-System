@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html>
-    <link rel="stylesheet" href="vote.css">
+    <link rel="stylesheet" href="{{ url_for('polls.static', filename='vote.css') }}">
     <head>
         <title>vote</title>
     </head>
     <body>
         <header id="loggedIn" class="header">
-            <img style="cursor: pointer;" onclick="window.location.href='home.html'" id="logo" src="LOGO.png" >
+            <img style="cursor: pointer;" onclick="window.location.href='/'" id="logo" src="{{ url_for('static', filename='assets/logo.png') }}" >
     
             <nav class="navbar">
-                <a href="home.html">Home</a>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
-                <a href="myPolls.html">My Polls</a>
-                <a href="createPoll.html">Create</a>
-                <a href="vote.html">Vote</a>
-                <a href="login.html" class="start">Log Out</a>
+                <a href="/">Home</a>
+                <a href="{{ url_for('home.about') }}">About</a>
+                <a href="{{ url_for('home.contact') }}">Contact</a>
+                <a href="{{ url_for('polls.mypolls') }}">My Polls</a>
+                <a href="{{ url_for('polls.createpoll') }}">Create</a>
+                <a href="{{ url_for('polls.vote') }}">Vote</a>
+                <a href="{{ url_for('auth.logout') }}" class="start">Log Out</a>
             </nav>
         </header>
 
@@ -115,5 +115,5 @@
     </body>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="vote.js"></script>
+    <script src="{{ url_for('polls.static', filename='vote.js') }}"></script>
 </html>
