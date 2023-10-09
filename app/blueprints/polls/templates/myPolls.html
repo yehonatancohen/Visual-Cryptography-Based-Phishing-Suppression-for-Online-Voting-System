@@ -24,7 +24,7 @@
                 <div class="item">
                     <p class="pollName">{{ poll.name }}</p>
                     <p class="dateRange"> {{ poll.start_date }} - {{ poll.end_date }}</p>
-                    <button class="results">Results</button>
+                    <a class="results" href="{{ url_for('polls.results') }}">Results</a>
                 </div>
             {% endfor %}
         </div>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('polls.static', filename='results.css') }}">
+        <title>results</title>  
+    </head>
+
+    <body>
+        <header id="loggedIn" class="header">
+            <img style="cursor: pointer;" onclick="window.location.href='/'" id="logo" src="{{ url_for('static', filename='assets/logo.png') }}" >
+    
+            <nav class="navbar">
+                <a href="/">Home</a>
+                <a href="{{ url_for('home.about') }}">About</a>
+                <a href="{{ url_for('home.contact') }}">Contact</a>
+                <a href="{{ url_for('polls.mypolls') }}">My Polls</a>
+                <a href="{{ url_for('polls.createpoll') }}">Create</a>
+                <a href="{{ url_for('polls.vote') }}">Vote</a>
+                <a href="{{ url_for('auth.logout') }}" class="start">Log Out</a>
+            </nav>
+        </header>
+
+        <div class="wrapper">
+            <div class="tab">
+                <button class="tablinks" onclick="openPoll(event, 'Pie')">Pie</button>
+                <button class="tablinks" onclick="openPoll(event, 'Polls')">Polls</button>
+                <button class="tablinks" onclick="openPoll(event, 'Votes')">Votes</button>
+              </div>
+
+              <div id="PieChart" class="tabchart">
+                <div class="slice"></div>
+            </div>
+        </div>
+        <div id="Pie" class="tabcontent">
+            <h3>Pie</h3>
+            <p>This is a Pie Chart</p>
+          </div>
+          
+          <div id="Polls" class="tabcontent">
+            <h3>Polls</h3>
+            <p>This is a Poll Chart</p> 
+          </div>
+          
+          <div id="Votes" class="tabcontent">
+            <h3>Votes</h3>
+            <p>This is the voters</p>
+          </div>
+
+    </body>
+    <script src="{{ url_for('polls.static', filename='results.js') }}"></script>
+</html>

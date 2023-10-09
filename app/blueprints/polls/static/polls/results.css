@@ -61,62 +61,96 @@ body {
 }
 
 .wrapper {
-    position: relative;
-    width: 500px;
-    height: 600px;
+    position: absolute;
+    top: 120px;
+    left: 100px;
+    width: 750px;
+    height: 750px;
     background: transparent;
     border: 2px solid rgba(255, 255, 255, .05);
+    box-shadow: 0 0 30px rgba(0, 0, 0, .5);
     border-radius: 20px;
     backdrop-filter: blur(20px);
-    box-shadow: 0 0 30px rgba(0, 0, 0, .5);
-    overflow: scroll;
     transition: 1s ease;
 }
-.wrapper .form-box{
-    width: 80%;
-}
-::-webkit-scrollbar {
-    display: none;
-}
 
-.item{
-    justify-content: center;
-    position: relative;
-    height: 60px;
-    width: 100%;
-    border-bottom: 2px solid rgba(37,62,84,255);
+.tab{
+    position: absolute;
+    top: -45px;
+    left: 10px;
     display: flex;
-    align-items: center;
+
 }
 
-.item p{
-    margin: 20px;
-}
-
-.item a{
-    display: flex;
-    margin: 20px;
-    background-color: rgba(37,62,84,255);
+.tablinks{
+    background-color: transparent;
     height: 40px;
     width: 100px;
-    border: none;
-    outline: none;
     border-radius: 6px;
+    border: none;
     cursor: pointer;
-    color: white;
     font-size: 1em;
     font-weight: 500;
     justify-content: center;
     align-items: center;
     text-align: center;
     text-decoration: none;
+    color: (37,62,84,255);
+    transition: 0.3s;
 }
 
+.tablinks:hover{
+    transition: 0.3s;
+    color:white;
+}
 
-
-h2{
+.tab button.active {
+    transition: 0.3s;
+    color:white;
+  }
+  
+.tabcontent {
     position: absolute;
-    top: 10%;
-    color: rgba(37,62,84,255);
-    font-size: 3em;
+    top: 120px;
+    display: none;
+    border-top: none;
+}
+
+#PieChart {
+    margin: 20px;
+    width: 700px;
+    height: 700px;
+    border-radius: 50%;
+    background: conic-gradient(
+        rgba(37,62,84,255) 50% 83%,    /* Red, 25% */
+        white 50% 25%  /* Green, 25% */
+    );
+}
+
+.slice {
+    width: 50%;
+    height: 100%;
+    clip-path: polygon(100% 100%, 0 100%, 0 0, 100% 0);
+    background-color: transparent;
+}
+
+.poll {
+    width: 300px;
+    margin: 0 auto;
+}
+
+.option {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+}
+
+.bar {
+    background-color: #3498db;
+    height: 20px;
+    border-radius: 5px;
+}
+
+.option p {
+    margin-left: 10px;
 }

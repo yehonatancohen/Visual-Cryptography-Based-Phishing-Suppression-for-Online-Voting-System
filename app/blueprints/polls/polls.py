@@ -39,3 +39,8 @@ def mypolls():
 @login_required
 def vote():
     return render_template('vote.html')
+
+@polls.route('/results')
+@login_required
+def results():
+    return render_template('results.html')
