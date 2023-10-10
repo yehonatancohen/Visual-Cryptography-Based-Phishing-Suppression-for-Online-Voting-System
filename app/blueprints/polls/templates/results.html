@@ -22,23 +22,39 @@
 
         <div class="wrapper">
             <div class="tab">
-                <button class="tablinks active" onclick="openPoll(event, 'Pie')">Pie</button>
-                <button class="tablinks" onclick="openPoll(event, 'Polls')">Polls</button>
-                <button class="tablinks" onclick="openPoll(event, 'Votes')">Votes</button>
+                <a class="tablinks active" onclick="openPoll(event, 'Pie')">Pie</a>
+                <a class="tablinks" onclick="openPoll(event, 'Polls')">Polls</a>
+                <a class="tablinks" onclick="openPoll(event, 'Votes')">Votes</a>
             </div>
 
             <div style="display: block;" id="PieChart" class="tabcharts">
                 <div class="slice"></div>
             </div>
 
-            <div id="PollsChart" class="tabcharts">
-                <div class="option">
-                    <div class="bar" style="width: 60%;"></div>
-                    <p>Option 1</p>
+            <div style="display: none;" id="PollsChart" class="tabcharts">
+                <div class="poll">
+                    <div class="bar" style="height: 60%;"></div>
+                    <p>poll1</p>
                 </div>
-                <div class="option">
-                    <div class="bar" style="width: 40%;"></div>
-                    <p>Option 2</p>
+                <div class="poll" style="height: 40%;">
+                    <div class="bar"></div>
+                    <p>poll2</p>
+                </div>
+                <div class="poll">
+                    <div class="bar" style="height: 80%;"></div>
+                    <p>poll3</p>
+                </div>
+                <div class="poll" style="height: 20%;">
+                    <div class="bar"></div>
+                    <p>poll4</p>
+                </div>
+                <div class="poll">
+                    <div class="bar" style="height: 60%;"></div>
+                    <p>poll5</p>
+                </div>
+                <div class="poll" style="height: 100%;">
+                    <div class="bar"></div>
+                    <p>poll6</p>
                 </div>
             </div>
         </div>
