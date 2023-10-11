@@ -19,56 +19,56 @@ body {
 
 .wrapper .form-box.login{
     transition: 1s ease;
-    transform: translateX(0);
+    transform: translateX(0vw);
 }
 
 .wrapper.active .form-box.login{
    transition: 1s ease;
-   transform: translateX(-400px);
+   transform: translateX(-20vw);
 }
 
 .wrapper.photo .form-box.login{
     transition: 1s ease;
-    transform: translateY(-600px);
+    transform: translateY(-30vw);
  }
 
 .wrapper.photo .form-box.photo{
     transition: 1s ease;
-    transform: translateY(0);
+    transform: translateY(0vw);
  }
 
 .wrapper .form-box.admin {
     position: absolute;
     transition: 1s ease;
-    transform: translateX(400px);
+    transform: translateX(20vw);
 }
 
 .wrapper.active .form-box.admin {
     transition: 1s ease;
-    transform: translateX(0);
+    transform: translateX(0vw);
 }
 
 .wrapper .form-box.photo{
     position: absolute;
     transition: 1s ease;
-    transform: translateY(600px);
+    transform: translateY(30vw);
 }
 .wrapper.active{
-    height: 540px;
+    height: 27vw;
 }
 .wrapper.photo{
-    height: 750px;
+    height: 37.5vw;
 }
 
 .wrapper {
     position: relative;
-    width: 400px;
-    height: 320px;
+    width: 20vw;
+    height: 16vw;
     background: transparent;
-    border: 2px solid rgba(255, 255, 255, .05);
-    border-radius: 20px;
-    backdrop-filter: blur(20px);
-    box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+    border: 0.1vw solid rgba(255, 255, 255, .05);
+    border-radius: 1vw;
+    backdrop-filter: blur(1vw);
+    box-shadow: 0 0 1.5vw rgba(0, 0, 0, .5);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -78,11 +78,11 @@ body {
 
 .wrapper .form-box{
     width: 80%;
-    padding: 40px;
+    padding: 2vw;
 }
 
 .form-box h2{
-    font-size: 2em;
+    font-size: 1.8vw;
     color: rgba(37,62,84,255);
     text-align: center;
 }
@@ -90,18 +90,18 @@ body {
 .input-box {
     position: relative;
     width: 100%;
-    height: 50px;
-    border-bottom: 2px solid rgba(37,62,84,255);
-    margin: 30px 0;
+    height: 2.5vw;
+    border-bottom: 0.1vw solid rgba(37,62,84,255);
+    margin: 1.5vw 0;
     
 }
 
 .input-box label {
     position: absolute;
     top: 50%;
-    left: 5px;
+    left: 0.25vw;
     transform: translateY(-50%);
-    font-size: 1em;
+    font-size: 0.8vw;
     color: rgba(37,62,84,255);
     font-weight: 500;
     pointer-events: none;
@@ -110,7 +110,7 @@ body {
 
 .input-box input:focus~label,
 .input-box input:valid~label{
-    top: -5px;
+    top: -0.25vw;
 }
 
 
@@ -120,24 +120,24 @@ body {
     background: transparent;
     border: none;
     outline: none;
-    font-size: 1em;
+    font-size: 0.8vw;
     color: rgba(37,62,84,255);
     font-weight: 600;
-    padding-left: 5px;   
+    padding-left: 0.25vw;   
 }
 
 .input-box .icon {
     position: absolute;
-    right: 8px;
-    font-size: 1em;
+    right: 0.4vw;
+    font-size: 0.8vw;
     color: rgba(37,62,84,255);
-    line-height: 57px;
+    line-height: 2.85vw;
 }
 
 .forgot {
-    font-size: .9em;
+    font-size: 0.7vw;
     color: rgba(37,62,84,255);
-    margin: -15px 0 15px;
+    margin: -0.75vw 0 0.75vw;
 }
 
 .forgot a {
@@ -151,23 +151,23 @@ body {
 
 .btn {
     width: 100%;
-    height: 45px;
+    height: 2.25vw;
     background: rgba(37,62,84,255);
     border: none;
     outline: none;
-    border-radius: 6px;
+    border-radius: 0.3vw;
     cursor: pointer;
     color: white;
-    font-size: 1em;
+    font-size: 0.8vw;
     font-weight: 500;
 }
 
 .login-register {
-    font-size: .9em;
+    font-size: 0.7vw;
     color: rgba(37,62,84,255);
     text-align: center;
     font-weight: 500;
-    margin: 25px 0 10px;
+    margin: 1.25vw 0 0.5vw;
 }
 
 .login-register p a{
@@ -187,44 +187,44 @@ input[type="file"] {
 }
 
 #Upload{
-    margin-bottom: 20px;
+    margin-bottom: 1vw;
     color: rgba(37,62,84,255);
     font-weight: 500;
     display: block;
-    padding: 10px 20px;
-    border: 3px solid rgba(37,62,84,255);
+    padding: 0.5vw 1vw;
+    border: 0.15vw solid rgba(37,62,84,255);
     background-color: transparent;
     text-align: center;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 0.25vw;
 }
 
 .display{
     color: rgba(37,62,84,255);
     font-weight: 500;
-    max-width: 300px;
-    max-height: 150px;
-    font-size: 1.2em;
-    border-radius: 5px;
+    max-width: 15vw;
+    max-height: 7.5vw;
+    font-size: 1vw;
+    border-radius: 0.25vw;
 }
 
 #logo{
-    width: 200px;
+    width: 10vw;
     position: absolute;
     left: 5%;
-    top: 20px;
+    top: 1vw;
 }
 
 .flashes {
     list-style-type: none;
-    padding: 10px;
-    margin: 10px;
-    border: 1px solid #ccc;
+    padding: 0.5vw;
+    margin: 0.5vw;
+    border: 0.05vw solid #ccc;
     background-color: #f9f9f9;
 }
 
 .flashes li {
-    margin: 5px 0;
+    margin: 0.25vw 0;
 }
 
 .flashes.error {

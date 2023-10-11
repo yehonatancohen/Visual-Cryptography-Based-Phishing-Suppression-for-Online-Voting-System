@@ -21,7 +21,7 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    padding: 20px 5%;
+    padding: 1vw 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -29,14 +29,14 @@ body {
 }
 
 #logo{
-    width: 200px;
+    width: 10vw;
 }
 .navbar a{
-    font-size: 18px;
+    font-size: 1vw;
     color: rgba(37,62,84,255);
     text-decoration: none;
     font-weight: 500;
-    margin-left: 35px;
+    margin-left: 1.75vw;
     transition: .3s;
 }
 
@@ -47,9 +47,9 @@ body {
 .start{
     background-color: rgba(37,62,84,255);
     color: rgba(147,213,239,255) !important;
-    border: 3px;
-    border-radius: 12px;
-    padding: 10px 10px;
+    border: 0.15vw;
+    border-radius: 0.6vw;
+    padding: 0.5vw 0.5vw;
 }
 
 .start:hover{
@@ -58,13 +58,13 @@ body {
 }
 
 h1{
-    font-size: 4em;
+    font-size: 3.8vw;
 }
 h2{
-    font-size: 2em;
+    font-size: 1.8vw;
 }
 h3{
-    font-size: 2em;
+    font-size: 1.8vw;
 }
 .home{
     height: 70vh;
@@ -76,9 +76,9 @@ h3{
 #start{
     background-color: rgba(37,62,84,255);
     color: white !important;
-    border: 3px;
-    border-radius: 12px;
-    padding: 10px 10px;
+    border: 0.15vw;
+    border-radius: 0.6vw;
+    padding: 0.5vw 0.5vw;
     transition: .3s;
 }
 

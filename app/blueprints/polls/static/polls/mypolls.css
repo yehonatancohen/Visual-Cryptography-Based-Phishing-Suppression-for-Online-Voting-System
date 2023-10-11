@@ -12,7 +12,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    padding: 20px 5%;
+    padding: 1vw 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -20,14 +20,14 @@
 }
 
 #logo{
-    width: 200px;
+    width: 10vw;
 }
 .navbar a{
-    font-size: 18px;
+    font-size: 1vw;
     color: rgba(37,62,84,255);
     text-decoration: none;
     font-weight: 500;
-    margin-left: 35px;
+    margin-left: 1.75vw;
     transition: .3s;
 }
 
@@ -39,16 +39,15 @@
 .start{
     background-color: rgba(37,62,84,255);
     color: rgba(147,213,239,255) !important;
-    border: 3px;
-    border-radius: 12px;
-    padding: 10px 10px;
+    border: 0.15vw;
+    border-radius: 0.6vw;
+    padding: 0.5vw 0.5vw;
 }
 
 .start:hover{
     background-color: white !important;
     color: rgba(37,62,84,255) !important;
 }
-
 
 body {
     display: flex;
@@ -62,13 +61,13 @@ body {
 
 .wrapper {
     position: relative;
-    width: 500px;
-    height: 600px;
+    width: 25vw;
+    height: 30vw;
     background: transparent;
-    border: 2px solid rgba(255, 255, 255, .05);
-    border-radius: 20px;
-    backdrop-filter: blur(20px);
-    box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+    border: 0.1vw solid rgba(255, 255, 255, .05);
+    border-radius: 1vw;
+    backdrop-filter: blur(1vw);
+    box-shadow: 0 0 1.5vw rgba(0, 0, 0, .5);
     overflow: scroll;
     transition: 1s ease;
 }
@@ -82,29 +81,29 @@ body {
 .item{
     justify-content: center;
     position: relative;
-    height: 60px;
+    height: 3vw;
     width: 100%;
-    border-bottom: 2px solid rgba(37,62,84,255);
+    border-bottom: 0.1vw solid rgba(37,62,84,255);
     display: flex;
     align-items: center;
 }
 
 .item p{
-    margin: 20px;
+    margin: 1vw;
 }
 
 .item a{
     display: flex;
-    margin: 20px;
+    margin: 1vw;
     background-color: rgba(37,62,84,255);
-    height: 40px;
-    width: 100px;
+    height: 2vw;
+    width: 5vw;
     border: none;
     outline: none;
-    border-radius: 6px;
+    border-radius: 0.3vw;
     cursor: pointer;
     color: white;
-    font-size: 1em;
+    font-size: 0.8vw;
     font-weight: 500;
     justify-content: center;
     align-items: center;
@@ -118,5 +117,5 @@ h2{
     position: absolute;
     top: 10%;
     color: rgba(37,62,84,255);
-    font-size: 3em;
+    font-size: 2.8vw;
 }
