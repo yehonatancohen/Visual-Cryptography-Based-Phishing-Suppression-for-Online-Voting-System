@@ -79,6 +79,8 @@ body {
 }
 
 .item{
+    font-size: 0.8vw;
+    color: rgba(37,62,84,255);
     justify-content: center;
     position: relative;
     height: 3vw;
