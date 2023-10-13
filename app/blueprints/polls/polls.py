@@ -15,6 +15,8 @@ def createpoll():
         from_date = request.form.get('fromdate')
         to_date = request.form.get('todate')
         invitees = request.form.get('invitees')
+        cleaned_mails = invitees.replace('\r\n', '')
+        email_list = cleaned_mails.split(',')
         owner = session.get('email')
         fromdate_parts = from_date.split('-')
         todate_parts = to_date.split('-')
@@ -24,7 +26,8 @@ def createpoll():
         to_day = int(todate_parts[2])
         to_month = int(todate_parts[1])
         to_year = int(todate_parts[0])
-        db.add_survey(poll_name, from_day, from_month, from_year, to_day, to_month, to_year, owner)
+        id = db.add_survey(poll_name, from_day, from_month, from_year, to_day, to_month, to_year, owner)
+        db.add_voters(emails=email_list,survey_id=id)
         return redirect(url_for('polls.mypolls'))
     elif request.method == 'GET':
         return render_template('createPoll.html')
