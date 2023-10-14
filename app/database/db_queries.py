@@ -44,7 +44,7 @@ def __add_user__(conn, email: str,
     hashed_pswd = generate_password_hash(password, method="scrypt", salt_length=128)
     hashed_code = generate_password_hash(server_code, method="scrypt", salt_length=128)
     curr.execute(f'INSERT INTO {USERS_TABLE_NAME} (email, f_name, s_name, share_path, pass, server_code) \
-                 VALUES (?, ?, ?, ?, ?, ?, ?) ', (email, f_name, s_name, share_path, hashed_pswd, hashed_code))
+                 VALUES (?, ?, ?, ?, ?, ?) ', (email, f_name, s_name, share_path, hashed_pswd, hashed_code))
     conn.commit()
     conn.close()
 
@@ -60,7 +60,7 @@ def __get_user__(conn, email):
         return None
     row = rows[0]
     conn.close()
-    return User(row[0], row[1], row[2], row[3], row[4], row[5], row[6])
+    return User(row[0], row[1], row[2], row[3], row[4], row[5])
     
 
 def __add_survey__(conn, name: str, start_day: int, start_month: int, start_year: int,
@@ -262,8 +262,8 @@ def __voter_vote__(conn, email: str, survey_id: str, candidate_id: int) -> bool:
     new_votes = int(cur.fetchall()[0][0]) + 1
     cur.execute(f'UPDATE {CANDIDATE_TABLE_NAME} SET votes = ? WHERE survey_id = ? AND candidate_id = ?',
                 (new_votes, survey_id, candidate_id,))
-    cur.execute(f'UPDATE {VOTERS_TABLE_NAME} SET voted = ? WHERE user = ?',
-                (1, email,))
+    cur.execute(f'UPDATE {VOTERS_TABLE_NAME} SET voted = ? WHERE user = ? AND survey_id = ?',
+                (1, email, survey_id))
     conn.commit()
     conn.close()
     return True
