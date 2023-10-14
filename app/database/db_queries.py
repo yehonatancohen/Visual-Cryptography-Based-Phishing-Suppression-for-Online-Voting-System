@@ -14,11 +14,11 @@ from database.db_tables import USERS_TABLE_NAME, VOTERS_TABLE_NAME,\
 
 def __add_user__(conn, email: str,
                 f_name: str, s_name: str, share2: Image,
-                password: str, server_code: str, sec_question: str,
+                password: str, server_code: str,
                 email_size_limit: int = -1,
                 f_name_size_limit: int = -1,
                 s_name_size_limit: int = -1,
-                sec_question_size_limit: int = -1):
+                ):
     curr = conn.cursor()
 
     try:
@@ -39,15 +39,12 @@ def __add_user__(conn, email: str,
         raise ValueError(f"Sur name larger the allowed length \
                          (len({s_name}) = {len(s_name)} > {s_name_size_limit})\n")
 
-    if sec_question_size_limit != -1 and len(sec_question) > sec_question_size_limit:
-        raise ValueError(f"Security question larger the allowed length \
-                         (len({sec_question}) = {len(sec_question)} > {sec_question_size_limit})\n")
     
     share_path = save_share(share2)
     hashed_pswd = generate_password_hash(password, method="scrypt", salt_length=128)
     hashed_code = generate_password_hash(server_code, method="scrypt", salt_length=128)
-    curr.execute(f'INSERT INTO {USERS_TABLE_NAME} (email, f_name, s_name, share_path, pass, server_code, sec_question) \
-                 VALUES (?, ?, ?, ?, ?, ?, ?) ', (email, f_name, s_name, share_path, hashed_pswd, hashed_code, sec_question))
+    curr.execute(f'INSERT INTO {USERS_TABLE_NAME} (email, f_name, s_name, share_path, pass, server_code) \
+                 VALUES (?, ?, ?, ?, ?, ?, ?) ', (email, f_name, s_name, share_path, hashed_pswd, hashed_code))
     conn.commit()
     conn.close()
 

@@ -13,8 +13,7 @@ users_table_init_query = f"""
         s_name TEXT,
         share_path TEXT,
         pass TEXT,
-        server_code TEXT,
-        sec_question TEXT
+        server_code TEXT
     )
 """
 
