@@ -38,7 +38,7 @@ def add_survey(name: str, start_day: int, start_month: int, start_year: int,
     
 
 def get_user_surveys(email: str) -> list[Survey]:
-    """Returns all survey's where email given is their owner
+    """Returns all surveys where email given is their owner
     Args:
         email (str)
 

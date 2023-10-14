@@ -1,6 +1,6 @@
 from database.db_tables import get_connection
 from database.db_queries import __add_voter__, __get_voter__, \
-    __get_all_voters__, __remove_voter__, __voter_vote__
+    __get_all_voters__, __remove_voter__, __voter_vote__, __get_participating_surveys__
 from database.models import Voter
 
 
@@ -71,3 +71,15 @@ def voter_vote(email: str, survey_id: str, candidate_id: int) -> bool:
     """
     conn = get_connection()
     return __voter_vote__(conn, email, survey_id, candidate_id)
+
+def get_participating_surveys(email: str) -> list[Voter]:
+    """Returns all surveys where email given is allowed to vote.
+
+    Args:
+        email (str)
+
+    Returns:
+        list[Survey]
+    """
+    conn = get_connection()
+    return __get_participating_surveys__(conn, email)

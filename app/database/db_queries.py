@@ -110,6 +110,21 @@ def __get_surveys__(conn, email: str) -> list[Survey]:
     conn.close()
     return result
 
+
+def __get_participating_surveys__(conn, email: str) -> list[Voter]:
+    cur = conn.cursor()
+    cur.execute(f'SELECT * FROM {VOTERS_TABLE_NAME} where user = ?', (email,))
+    rows = cur.fetchall()
+    if len(rows) == 0:
+        return []
+    result = []
+    for row in rows:
+        voter = Voter(row[0], row[1], row[2])
+        result.append(voter)
+    conn.close()
+    return result
+
+
 def __delete_survey__(conn, id: str) -> None:
     cur = conn.cursor()
     cur.execute(f"DELETE FROM {SURVEYS_TABLE_NAME} WHERE id = ?", (id,))
