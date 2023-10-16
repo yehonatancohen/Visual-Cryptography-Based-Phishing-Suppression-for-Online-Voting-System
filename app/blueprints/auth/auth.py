@@ -20,11 +20,10 @@ def signup_post():
     s_name = name.split(" ")[1]
     email = request.form.get('email')
     password = request.form.get('password')
-    sec_question = request.form.get('sec_answer')
     sec_answer = request.form.get('sec_answer')
     server_pass = shortuuid.uuid()[0:6]
     share_1, share_2 = generate_shares(str(sec_answer) + "@" + str(server_pass))
-    db.add_user(email, f_name, s_name, share_2, password, server_pass,sec_question)
+    db.add_user(email, f_name, s_name, share_2, password, server_pass)
     session['email'] = email
     image_io = io.BytesIO()
     share_1.save(image_io, format='PNG')
