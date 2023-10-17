@@ -83,3 +83,31 @@ def get_participating_surveys(email: str) -> list[Voter]:
     """
     conn = get_connection()
     return __get_participating_surveys__(conn, email)
+
+def get_all_surveys_per_voter(voter_email: str) -> list[dict]:
+    """
+    Args:
+        voter_email (str)
+
+    Returns:
+        A list where each entry (one entry for each survey a user participates in) contains
+            a dictionary with "survey_id", "survey_name", "start_date", "end_date", "has_user_voted"
+            
+    """
+    voter_objects = get_participating_surveys(voter_email)
+    result = []
+    from .surveys import get_survey
+    for voter in voter_objects:
+        voted = False
+        if voter.has_voted == 1:
+            voted = True
+        survey = get_survey(voter.survey_id)
+        dict = {"survey_id":survey.id,
+                "survey_name":survey.name,
+                "start_date":survey.start_date,
+                "end_date": survey.end_date,
+                "has_user_voted": voted}
+        result.append(dict)
+    return result
+    
+    
