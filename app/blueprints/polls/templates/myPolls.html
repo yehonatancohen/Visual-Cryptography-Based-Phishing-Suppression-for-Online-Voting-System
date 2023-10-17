@@ -21,12 +21,28 @@
         <h2>My Polls</h2>
         <div class="wrapper">
             {% for poll in user_polls %}
-                <div class="item">
-                    <p class="pollName">{{ poll.name }}</p>
-                    <p class="dateRange"> {{ poll.start_date }} - {{ poll.end_date }}</p>
-                    <a class="results" href="{{ url_for('polls.results') }}">Results</a>
-                </div>
-            {% endfor %}
+                {% if poll.has_user_voted == -1 %}
+                    <div class="item">
+                        <p class="pollName">{{ poll.survey_name }}</p>
+                        <p class="dateRange"> {{ poll.start_date }} - {{ poll.end_date }}</p>
+                        <a class="results" href="{{ url_for('polls.results') }}">Results</a>
+                    </div>
+                {% endif %}
+                {% if poll.has_user_voted == 0 %}
+                    <div class="item">
+                        <p class="pollName">{{ poll.survey_name }}</p>
+                        <p class="dateRange"> {{ poll.start_date }} - {{ poll.end_date }}</p>
+                        <a class="results" href="{{ url_for('polls.vote') }}">Vote</a>
+                    </div>
+                {% endif %}
+                {% if poll.has_user_voted == 1 %}
+                    <div class="item">
+                        <p class="pollName">{{ poll.survey_name }}</p>
+                        <p class="dateRange"> {{ poll.start_date }} - {{ poll.end_date }}</p>
+                        <a class="results" style="pointer-events: none;">Voted</a>
+                    </div>
+                {% endif %}                
+           {% endfor %}
         </div>
     </body>
 </html>

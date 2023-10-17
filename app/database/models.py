@@ -3,7 +3,7 @@ from flask_login import UserMixin
 
 class User(UserMixin):
     def __init__(self, email, f_name, s_name, share_path,
-                hashed_password, hashed_server_code, security_question) -> None:
+                hashed_password, hashed_server_code) -> None:
         self.id = email
         self.email = email
         self.f_name = f_name
@@ -11,14 +11,13 @@ class User(UserMixin):
         self.share_path = share_path
         self.hashed_password = hashed_password
         self.hashed_server_code = hashed_server_code
-        self.security_question = security_question
 
     def get_id(self):
         return str(self.id)
     
     def __repr__(self) -> str:
         return f"{self.email}: {self.f_name} {self.s_name}. \
-            Share: {self.share_path}.\nQuestion: {self.security_question}\nPass: {self.hashed_password}\nCode: {self.hashed_server_code}\n"
+            Share: {self.share_path}.\nPass: {self.hashed_password}\nCode: {self.hashed_server_code}\n"
 
 class Survey:
     def __init__(self, id, name, start_date, end_date, owner_email) -> None:

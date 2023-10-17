@@ -1,6 +1,6 @@
 from database.db_tables import get_connection
 from database.db_queries import __add_voter__, __get_voter__, \
-    __get_all_voters__, __remove_voter__, __voter_vote__
+    __get_all_voters__, __remove_voter__, __voter_vote__, __get_participating_surveys__
 from database.models import Voter
 
 
@@ -71,3 +71,64 @@ def voter_vote(email: str, survey_id: str, candidate_id: int) -> bool:
     """
     conn = get_connection()
     return __voter_vote__(conn, email, survey_id, candidate_id)
+
+def get_participating_surveys(email: str) -> list[Voter]:
+    """Returns all surveys where email given is allowed to vote.
+
+    Args:
+        email (str)
+
+    Returns:
+        list[Survey]
+    """
+    conn = get_connection()
+    return __get_participating_surveys__(conn, email)
+
+def get_all_surveys_per_voter(voter_email: str) -> list[dict]:
+    """
+    Args:
+        voter_email (str)
+
+    Returns:
+        A list where each entry (one entry for each survey a user participates in) contains
+            a dictionary with "survey_id", "survey_name", "start_date", "end_date", "has_user_voted"
+            
+    """
+    voter_objects = get_participating_surveys(voter_email)
+    result = []
+    from .surveys import get_survey
+    for voter in voter_objects:
+        voted = False
+        if voter.has_voted == 1:
+            voted = True
+        survey = get_survey(voter.survey_id)
+        dict = {"survey_id":survey.id,
+                "survey_name":survey.name,
+                "start_date":survey.start_date,
+                "end_date": survey.end_date,
+                "has_user_voted": voted}
+        result.append(dict)
+    return result
+    
+    
+def get_surveys_related_to_user(user_email: str) -> list[dict]:
+    """
+    Args:
+        user_email (str)
+
+    Returns:
+        list[dict]: A list where each entry (one entry for each survey a user participates in AND the user owns) contains
+            a dictionary with "survey_id", "survey_name", "start_date", "end_date", "has_user_voted"
+    """
+    list1 = get_all_surveys_per_voter(user_email)
+    from .surveys import get_user_surveys
+    owned = get_user_surveys(user_email)
+    result = list1
+    for survey in owned:
+        dict = {"survey_id":survey.id,
+                "survey_name":survey.name,
+                "start_date":survey.start_date,
+                "end_date": survey.end_date,
+                "has_user_voted": -1}
+        result.append(dict)
+    return result

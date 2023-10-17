@@ -38,7 +38,7 @@ def add_survey(name: str, start_day: int, start_month: int, start_year: int,
     
 
 def get_user_surveys(email: str) -> list[Survey]:
-    """Returns all survey's where email given is their owner
+    """Returns all surveys where email given is their owner
     Args:
         email (str)
 
@@ -69,3 +69,30 @@ def get_results(survey_id: str) -> dict:
     """
     conn = get_connection()
     return __get_results__(conn, survey_id)
+
+
+def requirements_to_vote(survey_id: str, voter_email: str) -> dict:
+    """
+
+    Args:
+        survey_id (str): 
+        voter_email (str):
+
+    Returns:
+        dict: contain "survey_name", "start_date", "end_date", "has_user_voted"
+    """
+    conn = get_connection()
+    from .voters import get_voter
+    voter = get_voter(voter_email, survey_id)
+    from .surveys import get_survey
+    survey = get_survey(survey_id)
+
+    has_voted = False
+    if voter.has_voted == 1:
+        has_voted = True
+    result = {"survey_name": survey.name,
+              "start_date": survey.start_date,
+              "end_date": survey.end_date,
+              "has_user_voted": has_voted}
+    return result
+    
