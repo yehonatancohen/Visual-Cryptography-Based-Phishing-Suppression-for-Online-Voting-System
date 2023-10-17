@@ -21,6 +21,7 @@
         <h2>My Polls</h2>
         <div class="wrapper">
             {% for poll in user_polls %}
+                
                 <div class="item">
                     <p class="pollName">{{ poll.name }}</p>
                     <p class="dateRange"> {{ poll.start_date }} - {{ poll.end_date }}</p>
