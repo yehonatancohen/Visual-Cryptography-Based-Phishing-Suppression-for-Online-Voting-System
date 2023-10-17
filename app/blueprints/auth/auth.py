@@ -6,6 +6,7 @@ import database as db
 from PIL import Image
 from UTIL.captcha import generate_shares, create_combination
 import shortuuid, io, uuid, os, json
+import requests
 #from UTIL.smtp import send_share
 
 auth = Blueprint('auth', __name__,
@@ -14,10 +15,12 @@ auth = Blueprint('auth', __name__,
 
 @auth.route('/register', methods=['POST'])
 def signup_post():
-    #form = RegistrationForm()
     name = request.form.get('name')
-    f_name = name.split(" ")[0]
-    s_name = name.split(" ")[1]
+    try:
+        f_name = name.split(" ")[0]
+        s_name = name.split(" ")[1]
+    except:
+        return flash('Please enter your first and last name.', 'error')
     email = request.form.get('email')
     password = request.form.get('password')
     sec_question = request.form.get('sec_answer')
@@ -52,6 +55,7 @@ def check_email():
         'succeed': True,
         'message': ""
     }
+    check_ip()
 
     email = request.form.get('email')
     
@@ -132,3 +136,19 @@ def verify_password():
 @app.login_manager.user_loader
 def load_user(email):
     return db.get_user(email)
+
+def check_ip():
+    remote_addr = request.remote_addr
+    print("Remote Address: " + remote_addr)
+    try:
+        response = requests.get(f"http://{remote_addr}")
+        if response.status_code == 200:
+            print("IP is valid")
+            # Check for phishing
+        else:
+            # perform reverse dns
+            print("IP is not valid")
+        pass
+    except requests.exceptions.RequestException:
+        print(f"Failed to connect to IP Address: {remote_addr} .")
+    return remote_addr

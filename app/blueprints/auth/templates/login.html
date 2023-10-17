@@ -11,18 +11,22 @@
     <header>
         <img style="cursor: pointer;" onclick="window.location.href='/'" id="logo" src="{{ url_for('static', filename='assets/logo.png') }}" >
     </header>
+    <div class="loader">
+        <div class="loader-wheel" display="block"></div>
+        <div class="loader-text"></div>
+    </div>
     <div class="wrapper">
         <div class="form-box admin">
             <h2>Register</h2>
             <form action="{{ url_for('auth.signup_post') }}" method="post">
                 <div class="input-box">
                     <span class="icon"><ion-icon name="person"></ion-icon></span>
-                    <input type="text" name="name" required>
-                    <Label>Name</Label>
+                    <input type="text" name="full-name" class="full-name" pattern="^[A-Za-z]+( [A-Za-z]+){0,2}$" required>
+                    <Label>Full Name</Label>
                 </div>
                 <div class="input-box">
                     <span class="icon"><ion-icon name="mail"></ion-icon></span>
-                    <input type="email" name="email" required>
+                    <input type="text" name="email" required>
                     <Label>Email</Label>
                 </div>
                 <div class="input-box">

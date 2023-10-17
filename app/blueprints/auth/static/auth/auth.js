@@ -25,9 +25,23 @@ function goto(page, from)
     }
 }
 
+function display_loading()
+{
+    document.getElementsByClassName('loader')[0].style.display = 'block';
+    //document.getElementsByClassName('overlay')[].style.display = 'block';
+}
+
+function hide_loading()
+{
+    document.getElementsByClassName('loader')[0].style.display = 'none';
+    //document.getElementById('overlay').style.display = 'none';
+}
+
 function validate_email()
 {
     var url = new URL(window.location.href).origin + "/checkemail";
+
+    display_loading();
 
     if (emailRegex.test(email.value)) {
         var requestBody = new FormData();
@@ -51,6 +65,7 @@ function validate_email()
             {
                 currentUser = data;
                 wrapper.classList.add('photo');
+                hide_loading();
             }
         })
         .catch(function(error) {
