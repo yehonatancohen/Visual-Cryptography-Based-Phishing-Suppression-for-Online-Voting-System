@@ -61,7 +61,7 @@ body {
 
 .wrapper {
     position: relative;
-    width: 25vw;
+    width: 35vw;
     height: 30vw;
     background: transparent;
     border: 0.1vw solid rgba(255, 255, 255, .05);
@@ -97,14 +97,14 @@ body {
 .item a{
     display: flex;
     margin: 1vw;
-    background-color: rgba(37,62,84,255);
+    background-color: transparent;
     height: 2vw;
     width: 5vw;
-    border: none;
+    border: 0.15vw solid rgba(37,62,84,255);
     outline: none;
     border-radius: 0.3vw;
     cursor: pointer;
-    color: white;
+    color:  rgba(37,62,84,255);
     font-size: 0.8vw;
     font-weight: 500;
     justify-content: center;
@@ -113,7 +113,10 @@ body {
     text-decoration: none;
 }
 
-
+.item a:hover{
+    background-color:  rgba(37,62,84,255);
+    color: white;
+}
 
 h2{
     position: absolute;
