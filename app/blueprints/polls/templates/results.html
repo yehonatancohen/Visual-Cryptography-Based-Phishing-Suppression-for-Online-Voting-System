@@ -27,45 +27,31 @@
                 <a class="tablinks" onclick="openPoll(event, 'Votes')">Votes</a>
             </div>
 
-            <div style="display: block;" id="PieChart" class="tabcharts">
+            <div id="PieChart" class="tabcharts" style="display: flex;">
                 <div class="slice"></div>
             </div>
 
             <div style="display: none;" id="PollsChart" class="tabcharts">
+                {% for result in results %}    
                     <div class="poll">
-                        <div class="bar" style="height: 60%;"></div>
-                        <p>poll1</p>
+                        <div class="bar" style="height: {{result.candidate_results}}%"></div>
+                        <p>{{ result.candidate_name }}</p>
                     </div>
-                    <div class="poll">
-                        <div class="bar" style="height: 40%;"></div>
-                        <p>poll2</p>
-                    </div>
-                    <div class="poll">
-                        <div class="bar" style="height: 80%;"></div>
-                        <p>poll3</p>
-                    </div>
-                    <div class="poll" >
-                        <div class="bar" style="height: 20%;"></div>
-                        <p>poll4</p>
-                    </div>
-                    <div class="poll">
-                        <div class="bar" style="height: 60%;"></div>
-                        <p>poll5</p>
-                    </div>
-                    <div class="poll" style="height: 100%;">
-                        <div class="bar"></div>
-                        <p>poll6</p>
-                    </div>
+                {% endfor %}
             </div>
         </div>
         <div style="display: block;" id="Pie" class="tabcontent">
-            <h3>Pie</h3>
-            <p>This is a Pie Chart</p>
+            <h3>Results:</h3>
+            {% for result in results%}
+                <p>{{result.candidate_name}} : {{result.candidate_results}}%</p>
+            {% endfor %}
           </div>
           
           <div id="Polls" class="tabcontent">
-            <h3>Polls</h3>
-            <p>This is a Poll Chart</p> 
+            <h3>Results:</h3>
+            {% for result in results%}
+                <p>{{result.candidate_name}} : {{result.candidate_results}}%</p>
+            {% endfor %}
           </div>
           
           <div id="Votes" class="tabcontent">
@@ -75,4 +61,48 @@
 
     </body>
     <script src="{{ url_for('polls.static', filename='results.js') }}"></script>
+    <script>
+        
+        const pieChart = document.getElementById('PieChart');
+
+        function randomColor(baseColor, variation = 20) {
+            const baseRGB = parseInt(baseColor.slice(1), 16);
+            const red = (baseRGB >> 16) & 255;
+            const green = (baseRGB >> 8) & 255;
+            const blue = baseRGB & 255;
+
+            const randomRed = (red + Math.floor(Math.random() * (variation * 2) - variation)) & 255;
+            const randomGreen = (green + Math.floor(Math.random() * (variation * 2) - variation)) & 255;
+            const randomBlue = (blue + Math.floor(Math.random() * (variation * 2) - variation)) & 255;
+
+            const randomColor = `#${(1 << 24 | randomRed << 16 | randomGreen << 8 | randomBlue).toString(16).slice(1)}`;
+
+            return randomColor;
+        }
+
+
+
+
+        function updateChart() {
+            let gradient = '';
+            let colors = '';
+            let i = 0;
+            {% for result in results %}
+                var percentage = {{result.candidate_results}};
+                var color = randomColor('#253e54');
+
+                gradient += `${color} 0% ${percentage}%`;
+                if (i !== {{results|length}} - 1) {
+                    gradient += ', ';
+                }
+                colors += `var(--color${i + 1}: ${color}); `;
+                i++;
+            {% endfor %}
+
+            pieChart.style.setProperty('--colors', gradient);
+            alert(gradient)
+        }
+
+        updateChart()
+    </script>
 </html>

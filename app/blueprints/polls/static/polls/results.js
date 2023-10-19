@@ -15,4 +15,4 @@ function openPoll(evt, name) {
     document.getElementById(name).style.display = "block";
     document.getElementById(name+'Chart').style.display = "flex";
     evt.currentTarget.className += " active";
-  }
+}
