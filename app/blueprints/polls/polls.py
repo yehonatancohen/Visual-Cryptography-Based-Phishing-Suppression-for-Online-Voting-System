@@ -36,7 +36,6 @@ def createpoll():
 @login_required
 def mypolls():
     polls = db.get_surveys_related_to_user(session.get('email'))
-    print(polls)
     return render_template('mypolls.html',user_polls=polls)
 
 @polls.route('/vote')
@@ -44,7 +43,8 @@ def mypolls():
 def vote():
     return render_template('vote.html')
 
-@polls.route('/results')
+@polls.route('/results/<survey_id>')
 @login_required
-def results():
-    return render_template('results.html')
+def results(survey_id):
+    results= db.get_results(survey_id=survey_id)
+    return render_template('results.html',results=results)

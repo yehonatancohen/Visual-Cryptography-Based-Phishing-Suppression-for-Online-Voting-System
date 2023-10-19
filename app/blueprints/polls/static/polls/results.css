@@ -124,8 +124,8 @@ body {
     height: 35vw;
     border-radius: 50%;
     background: conic-gradient(
-        rgba(37,62,84,255) 50% 83%,    /* Red, 25% */
-        white 50% 25%  /* Green, 25% */
+        rgba(37,62,84,255) 50% 83%,
+        white 50% 25%
     );
 }
 
