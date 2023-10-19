@@ -52,3 +52,30 @@ def remove_candidate(survey_id: str, candidate_id: int) -> None:
     """
     conn = get_connection()
     __remove_candidate__(conn, survey_id, candidate_id)
+
+
+def get_candidates_results_per_servey(survey_id: str) -> list[dict]:
+    """
+    Args:
+        survey_id (str)
+
+    Returns:
+        list[dict]: each entry in the list is a dictionary representing a candidate with the values
+                    "candidate_id", "candidate_results", "candidate_name"
+
+                    note that "candidate_results" is a precentage!
+    """
+    from .surveys import get_results
+    survey_results = get_results(survey_id)
+    total_votes = sum(int(val) for val in survey_results.values())
+    results = [] 
+    for cand_id in survey_results.keys():
+        candidate = get_candidate(survey_id, cand_id)
+        dict = {
+            "candidate_id": cand_id,
+            "candidate_results": (float(candidate.votes) / float(total_votes)) * 100,
+            "candidate_name": candidate.cand_name
+        }
+        results.append(dict)
+    return results
+    

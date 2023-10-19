@@ -11,4 +11,5 @@ from database.users import add_user, get_user, does_user_exist, \
 from database.voters import add_voter, get_voter, get_all_voters, remove_voter, \
                             add_voters, voter_vote, get_participating_surveys, \
                             get_all_surveys_per_voter, get_surveys_related_to_user
-from database.candidates import add_candidate, get_candidate, get_all_candidates, remove_candidate
+from database.candidates import add_candidate, get_candidate, get_all_candidates, \
+                                 remove_candidate, get_candidates_results_per_servey
