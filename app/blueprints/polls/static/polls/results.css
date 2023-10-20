@@ -171,3 +171,33 @@ body {
 h3{
     font-size: 1vw;
 }
+
+#VotesChart{
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    color: rgba(37,62,84,255);
+}
+
+.menu{
+    position: absolute;
+    display: flex;
+    top: 6vw;
+    right: 5vw;
+    width: 50vw;
+    height: 37.5vw;
+    background: transparent;
+    flex-direction: column;
+}
+
+.menu button{
+    height: 5vw;
+    width: 10vw;
+    background: rgba(37,62,84,255);
+    color: white;
+    border: none;
+    border-radius: 0.25vw;
+    margin: 3vw;
+    cursor: pointer;
+
+}
