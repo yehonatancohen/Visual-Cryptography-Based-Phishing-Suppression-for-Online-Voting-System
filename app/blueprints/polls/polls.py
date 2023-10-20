@@ -12,6 +12,8 @@ polls = Blueprint('polls', __name__,
 def createpoll():
     if request.method == 'POST':
         poll_name = request.form.get('pollname')
+        options = request.form.getlist('choises')
+        print(options)
         from_date = request.form.get('fromdate')
         to_date = request.form.get('todate')
         invitees = request.form.get('invitees')

@@ -61,7 +61,8 @@ body {
 }
 
 .wrapper {
-    position: relative;
+    position: absolute;
+    left: 25vw;
     width: 20vw;
     height: 30vw;
     background: transparent;
@@ -183,3 +184,53 @@ body {
     font-weight: 500;
 }
 
+Label{
+    font-size: 1vw;
+}
+
+.choises{
+    position: absolute;
+    right: 20vw;
+    width: 30vw;
+    height: 30vw;
+    background: transparent;
+    border: 0.1vw solid rgba(255, 255, 255, .05);
+    border-radius: 1vw;
+    backdrop-filter: blur(1vw);
+    box-shadow: 0vw 0vw 1.5vw rgba(0, 0, 0, .5);
+    overflow: hidden;
+    transition: 1s ease;
+}
+
+.choises .form-box{
+    position: absolute;
+    top: 3vw;
+    left: 3vw;
+    width: 24vw;
+}
+
+.choises button{
+    height: 2vw;
+    width: 5vw;
+    background-color: rgba(37,62,84,255);
+    color: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 0.3vw;
+}
+
+#optionList{
+    width: 24vw;
+    height: 16vw;
+    color: rgba(37,62,84,255);
+    overflow: scroll;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+#optionList li{
+    margin-top: 0.5vw;
+    font-size: 0.8vw;
+}
