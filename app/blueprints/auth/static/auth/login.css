@@ -238,25 +238,18 @@ input[type="file"] {
 
 .loader {
   width: 60px;
+  z-index: 1;
 }
 
 .loader-wheel {
   animation: spin 1s infinite linear;
   position:absolute;
   border: 2px solid rgba(30, 30, 30, 0.5);
-  border-left: 4px solid #0000ff;
+  border-left: 4px solid rgba(37,62,84,255);
   border-radius: 50%;
   height: 50px;
   margin-bottom: 10px;
   width: 50px;
-  z-index: -1;
-}
-
-.loader-text {
-  color: rgb(0, 0, 0)000;
-  font-family: arial, sans-serif;
-  position:relative;
-  z-index: -1;
 }
 
 .loader-text:after {
