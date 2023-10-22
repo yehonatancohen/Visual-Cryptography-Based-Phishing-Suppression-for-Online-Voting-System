@@ -14,7 +14,6 @@
                 <a href="{{ url_for('home.contact') }}">Contact</a>
                 <a href="{{ url_for('polls.mypolls') }}">My Polls</a>
                 <a href="{{ url_for('polls.createpoll') }}">Create</a>
-                <a href="{{ url_for('polls.vote') }}">Vote</a>
                 <a href="{{ url_for('auth.logout') }}" class="start">Log Out</a>
             </nav>
         </header>
@@ -29,19 +28,17 @@
             </div>
             <div class="countdown">
                 <div class="items1">
+                    
                     <p>Days</p>
                     <p>Hours</p>
                     <p>Minutes</p>
                     <p>Seconds</p>
                 </div>
                 <div class="items2">
-                    <p id="days">12</p>
-                    :
-                    <p id="hours">23</p>
-                    :
-                    <p id="minutes">34</p>
-                    :
-                    <p id="seconds">45</p>
+                    <p id="days">0</p> :
+                    <p id="hours">0</p> :
+                    <p id="minutes">0</p> :
+                    <p id="seconds">0</p>
                 </div>
             </div>
         </div>
@@ -49,11 +46,11 @@
             <div class="open">
                 <div class="wrapper">
                     <div class="name">
-                        The name of The Poll
+                        {{ survey_name }}
                     </div>
                     <div class="waiting">
                         <div class="pollOpen">
-                            The Poll will closeA in:
+                            The Poll will close in:
                         </div>
                         <div class="countdown">
                             <div class="items1">
@@ -63,26 +60,26 @@
                                 <p>Seconds</p>
                             </div>
                             <div class="items2">
-                                <p id="days">12</p>
+                                <p id="days1">0</p>
                                 :
-                                <p id="hours">23</p>
+                                <p id="hours1">0</p>
                                 :
-                                <p id="minutes">34</p>
+                                <p id="minutes1">0</p>
                                 :
-                                <p id="seconds">45</p>
+                                <p id="seconds1">0</p>
                             </div>
                         </div>
                     </div>
                     <div class="grid-container">
-                        <div class="grid-item">1</div>
-                        <div class="grid-item">2</div>
-                        <div class="grid-item">3</div>  
-                        <div class="grid-item">4</div>
-                        <div class="grid-item">5</div>
-                        <div class="grid-item">6</div>  
-                        <div class="grid-item">7</div>
-                        <div class="grid-item">8</div>
-                        <div class="grid-item">9</div>  
+                        <div class="grid-item" id="1">1</div>
+                        <div class="grid-item" id="2">2</div>
+                        <div class="grid-item" id="3">3</div>  
+                        <div class="grid-item" id="4">4</div>
+                        <div class="grid-item" id="5">5</div>
+                        <div class="grid-item" id="6">6</div>  
+                        <div class="grid-item" id="7">7</div>
+                        <div class="grid-item" id="9">8</div>
+                        <div class="grid-item" id="9">9</div>  
                     </div>
                     <button id="voteSubmit" class="btn">Vote</button>
                 </div>
@@ -91,18 +88,17 @@
         <div class="popup">
             <div class="form-box photo">
                 <h2>Verify its you</h2>
-                <form action="vote.html">
+                <form action="javascript:submitvote();" method="post">
                     <br>
-                    <label for="image" id="Upload">Upload key</label>
-                    <input type="file" name="image" id="image" accept="image/*"/>
-                    <img class="display" id="display" src="#"/>
+                    <input type="file" name="image" id="userShareImage" accept="image/*"/>
+                    <label for="userShareImage" id="Upload">Upload key</label>
+                    <img class="display" id="display" src="#" style="display:none"/>
                     <label class="display" id="display1">Please enter the code:</label>
                     <div class="input-box">
                         <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-                        <input type="password" id="finalPass" required>
-                        <Label>Password</Label>
+                        <input type="text" name="sec_answer" id="sec_answer" required>
+                        <Label>The code in the image</Label>
                     </div>
-                    <br>
                     <button type="submit" class="btn">Vote</button>
                     <div class="login-register">
                         <p>Want to chage your vote?
@@ -112,6 +108,7 @@
                 </form>
             </div>
           </div>
+        <script>var endDate = "{{ end_date }}";</script>
     </body>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

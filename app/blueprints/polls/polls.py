@@ -1,5 +1,9 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session
+from flask import Blueprint, render_template, request, redirect, url_for, session, jsonify
 from flask_login import login_required
+from UTIL.captcha import create_combination
+from flask import current_app
+import io, uuid, os
+from PIL import Image
 import database as db
 
 polls = Blueprint('polls', __name__,
@@ -40,13 +44,53 @@ def mypolls():
     polls = db.get_surveys_related_to_user(session.get('email'))
     return render_template('mypolls.html',user_polls=polls)
 
-@polls.route('/vote')
+@polls.route('/vote/<survey_id>')
 @login_required
-def vote():
-    return render_template('vote.html')
+def vote(survey_id):
+    session['survey_id'] = survey_id
+    survey = db.get_survey(survey_id)
+    survey_name = survey.name
+    end_date = survey.end_date
+    return render_template('vote.html',survey_id=survey_id, survey_name=survey_name, end_date=end_date)
+
+@polls.route('/submitvote', methods=['POST'])
+@login_required
+def submitvote():
+    survey_id = session.get('survey_id')
+    candidate_id = int(request.form.get('candidate_id'))
+    if candidate_id == 0:
+        #flash("Please select a candidate.", "warning")
+        return redirect(url_for('polls.vote', survey_id=survey_id))
+    sec_answer = request.form.get('sec_answer')
+    is_valid = True #db.validate_user(email, password, sec_answer).
+    if not is_valid:
+        #flash("Invalid credentials.", "warning")
+        return redirect(url_for('polls.vote', survey_id=survey_id))
+    voter_email = session.get('email')
+    db.voter_vote(survey_id, voter_email, candidate_id)
+    return redirect(url_for('polls.mypolls'))
 
 @polls.route('/results/<survey_id>')
 @login_required
 def results(survey_id):
     results= db.get_candidates_results_per_servey(survey_id=survey_id)
     return render_template('results.html',results=results)
+
+@polls.route('/submitshare_poll', methods=['POST'])
+def submit_share():
+    email = session.get('email')
+    user_share = request.files['image']
+    if user_share.filename != '' and user_share.filename.endswith(('.png', '.jpg', '.jpeg', '.gif')):
+            PILimage = Image.open(io.BytesIO(user_share.read()))
+
+    server_share = db.get_share(email)
+    
+    # This is the combined image that needs to be viewed to the user
+    combined_image = create_combination(server_share, PILimage)
+
+    filename = str(uuid.uuid4()) + '.png'
+    combined_image.save(os.path.join(current_app.config['UPLOAD'], filename))
+
+    return jsonify(os.path.join('/static/uploads', filename))
+
+
