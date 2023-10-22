@@ -14,7 +14,6 @@
                 <a href="{{ url_for('home.contact') }}">Contact</a>
                 <a href="{{ url_for('polls.mypolls') }}">My Polls</a>
                 <a href="{{ url_for('polls.createpoll') }}">Create</a>
-                <a href="{{ url_for('polls.vote') }}">Vote</a>
                 <a href="{{ url_for('auth.logout') }}" class="start">Log Out</a>
             </nav>
         </header>
@@ -32,7 +31,7 @@
                     <div class="item">
                         <p class="pollName">{{ poll.survey_name }}</p>
                         <p class="dateRange"> {{ poll.start_date }} - {{ poll.end_date }}</p>
-                        <a class="results" href="{{ url_for('polls.vote') }}">Vote</a>
+                        <a class="results" href="{{ url_for('polls.vote' , survey_id=poll['survey_id'])}}">Vote</a>
                     </div>
                 {% endif %}
                 {% if poll.has_user_voted == 1 %}
