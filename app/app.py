@@ -6,7 +6,6 @@ from UTIL.decorators import guest_required
 from blueprints.home.home import home
 from blueprints.polls.polls import polls
 
-
 def create_app():
     app = Flask(__name__, static_folder="blueprints/static")
     app.secret_key = 'your_secret_key_here'
