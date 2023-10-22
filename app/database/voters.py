@@ -91,8 +91,7 @@ def get_all_surveys_per_voter(voter_email: str) -> list[dict]:
 
     Returns:
         A list where each entry (one entry for each survey a user participates in) contains
-            a dictionary with "survey_id", "survey_name", "start_date", "end_date", "has_user_voted"
-            
+            a dictionary with "survey_id", "survey_name", "start_date", "end_date", "has_user_voted"            
     """
     voter_objects = get_participating_surveys(voter_email)
     result = []
@@ -111,24 +110,3 @@ def get_all_surveys_per_voter(voter_email: str) -> list[dict]:
     return result
     
     
-def get_surveys_related_to_user(user_email: str) -> list[dict]:
-    """
-    Args:
-        user_email (str)
-
-    Returns:
-        list[dict]: A list where each entry (one entry for each survey a user participates in AND the user owns) contains
-            a dictionary with "survey_id", "survey_name", "start_date", "end_date", "has_user_voted"
-    """
-    list1 = get_all_surveys_per_voter(user_email)
-    from .surveys import get_user_surveys
-    owned = get_user_surveys(user_email)
-    result = list1
-    for survey in owned:
-        dict = {"survey_id":survey.id,
-                "survey_name":survey.name,
-                "start_date":survey.start_date,
-                "end_date": survey.end_date,
-                "has_user_voted": -1}
-        result.append(dict)
-    return result

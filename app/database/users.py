@@ -73,6 +73,24 @@ def validate_user(email: str, password: str, server_code: str) -> bool:
     return (password and code)
     
 
+def validate_user_share(email: str, server_code: str) -> bool:
+    """ Returns true if the plain server code given is a match to the saved one.
+    for user with email given
+
+    Args:
+        email (str)
+        server_code (str)
+
+    Returns:
+        bool
+    """
+    user = get_user(email)
+    if user is None:
+        raise ValueError(f"email \"{email}\" doesn't exist")
+    codeVarify = check_password_hash(user.hashed_server_code, server_code)
+    return codeVarify
+
+
 def get_share(email: str) -> Image:
     """Returns a PIL image file containing the given user's share 2
     Args:
@@ -86,3 +104,25 @@ def get_share(email: str) -> Image:
     share = Image2.open(user.share_path)
     return share
 
+def get_surveys_related_to_user(user_email: str) -> list[dict]:
+    """
+    Args:
+        user_email (str)
+
+    Returns:
+        list[dict]: A list where each entry (one entry for each survey a user participates in AND the user owns) contains
+            a dictionary with "survey_id", "survey_name", "start_date", "end_date", "has_user_voted"
+    """
+    from .voters import get_all_surveys_per_voter
+    list1 = get_all_surveys_per_voter(user_email)
+    from .surveys import get_user_surveys
+    owned = get_user_surveys(user_email)
+    result = list1
+    for survey in owned:
+        dict = {"survey_id":survey.id,
+                "survey_name":survey.name,
+                "start_date":survey.start_date,
+                "end_date": survey.end_date,
+                "has_user_voted": -1}
+        result.append(dict)
+    return result
