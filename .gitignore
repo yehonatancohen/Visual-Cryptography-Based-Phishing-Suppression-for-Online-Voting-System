@@ -11,3 +11,4 @@ __pycache__
 /app/database/shares
 /app/database/candidates
 /app/blueprints/static/uploads
+app/temp.py

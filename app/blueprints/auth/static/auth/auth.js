@@ -5,6 +5,8 @@ const email = document.getElementById('emailField');
 const imageUpload = document.getElementById('userShareImage');
 const loginLink = document.querySelector('.login-link');
 const displayImg = document.getElementById('display');
+const logo = document.getElementById('logo');
+const loader =  document.getElementById('loader');
 imageUpload.addEventListener('change', uploadImage);
 
 
@@ -27,13 +29,22 @@ function goto(page, from)
 
 function display_loading()
 {
-    document.getElementsByClassName('loader')[0].style.display = 'block';
+    loader.style.opacity='1';
+    loader.style.height = '6vw';
+    loader.style.width = '6vw';
+    wrapper.style.pointerEvents = "none";
+    logo.style.pointerEvents = "none";
+    
     //document.getElementsByClassName('overlay')[].style.display = 'block';
 }
 
 function hide_loading()
 {
-    document.getElementsByClassName('loader')[0].style.display = 'none';
+    loader.style.opacity='0';
+    loader.style.height = '3vw';
+    loader.style.width = '3vw';
+    wrapper.style.pointerEvents = "auto";
+    logo.style.pointerEvents = "auto";
     //document.getElementById('overlay').style.display = 'none';
 }
 
