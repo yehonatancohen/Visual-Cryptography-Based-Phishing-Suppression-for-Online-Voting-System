@@ -15,7 +15,7 @@ auth = Blueprint('auth', __name__,
 
 @auth.route('/register', methods=['POST'])
 def signup_post():
-    name = request.form.get('name')
+    name = request.form.get('full-name')
     try:
         f_name = name.split(" ")[0]
         s_name = name.split(" ")[1]
@@ -78,7 +78,6 @@ def check_email():
 @auth.route('/submitshare', methods=['POST'])
 @guest_required
 def submit_share():
-
     email = session['email']
     user_share = request.files['image']
     if user_share.filename != '' and user_share.filename.endswith(('.png', '.jpg', '.jpeg', '.gif')):
@@ -118,9 +117,9 @@ def verify_password():
     if request.method == 'POST':
         email = session['email']
         password = request.form.get('password')
-        sec_question = request.form.get('sec_answer')
+        sec_answer = request.form.get('sec_answer')
         user = load_user(email)
-        is_valid = db.validate_user(email, password, sec_question)
+        is_valid = db.validate_user(email, password, sec_answer)
 
         if(is_valid):
             response['succeed'] = True
