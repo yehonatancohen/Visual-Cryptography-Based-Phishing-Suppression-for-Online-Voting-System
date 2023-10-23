@@ -122,14 +122,6 @@ body {
     position: relative;
     width: 35vw;
     height: 35vw;
-    border-radius: 50%;
-    background: conic-gradient(var(--colors));
-}
-
-.slice {
-    width: 50%;
-    height: 100%;
-    clip-path: polygon(100% 100%, 0 100%, 0 0, 100% 0);
     background-color: transparent;
 }
 
