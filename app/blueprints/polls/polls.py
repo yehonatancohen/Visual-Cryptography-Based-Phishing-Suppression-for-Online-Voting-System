@@ -49,9 +49,10 @@ def mypolls():
 def vote(survey_id):
     session['survey_id'] = survey_id
     survey = db.get_survey(survey_id)
+    candidates = db.get_all_candidates(survey_id)
     survey_name = survey.name
     end_date = survey.end_date
-    return render_template('vote.html',survey_id=survey_id, survey_name=survey_name, end_date=end_date)
+    return render_template('vote.html',survey_id=survey_id, survey_name=survey_name, end_date=end_date, candidates=candidates)
 
 @polls.route('/submitvote', methods=['POST'])
 @login_required
