@@ -22,20 +22,10 @@
         <div class="wrapper">
             <div class="tab">
                 <a class="tablinks active" onclick="openPoll(event, 'Pie')">Pie</a>
-                <a class="tablinks" onclick="openPoll(event, 'Polls')">Polls</a>
                 <a class="tablinks" onclick="openPoll(event, 'Votes')">Votes</a>
             </div>
 
             <div id="PieChart" class="tabcharts" style="display: flex;"></div>
-
-            <div style="display: none;" id="PollsChart" class="tabcharts">
-                {% for result in results %}    
-                    <div class="poll">
-                        <div class="bar" style="height: {{result.candidate_results}}%"></div>
-                        <p>{{ result.candidate_name }}</p>
-                    </div>
-                {% endfor %}
-            </div>
 
             <div style="display: none;" class="tabcharts" id="VotesChart">
                 <h3>Results:</h3>
