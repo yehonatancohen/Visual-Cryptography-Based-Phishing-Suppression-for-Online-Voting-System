@@ -15,7 +15,6 @@
                 <a href="{{ url_for('home.contact') }}">Contact</a>
                 <a href="{{ url_for('polls.mypolls') }}">My Polls</a>
                 <a href="{{ url_for('polls.createpoll') }}">Create</a>
-                <a href="{{ url_for('polls.vote') }}">Vote</a>
                 <a href="{{ url_for('auth.logout') }}" class="start">Log Out</a>
             </nav>
         </header>
@@ -27,9 +26,7 @@
                 <a class="tablinks" onclick="openPoll(event, 'Votes')">Votes</a>
             </div>
 
-            <div id="PieChart" class="tabcharts" style="display: flex;">
-                <div class="slice"></div>
-            </div>
+            <div id="PieChart" class="tabcharts" style="display: flex;"></div>
 
             <div style="display: none;" id="PollsChart" class="tabcharts">
                 {% for result in results %}    
@@ -56,47 +53,28 @@
 
     </body>
     <script src="{{ url_for('polls.static', filename='results.js') }}"></script>
-    <script>
-        
-        const pieChart = document.getElementById('PieChart');
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
 
-        function randomColor(baseColor, variation = 20) {
-            const baseRGB = parseInt(baseColor.slice(1), 16);
-            const red = (baseRGB >> 16) & 255;
-            const green = (baseRGB >> 8) & 255;
-            const blue = baseRGB & 255;
+        function drawChart() {
 
-            const randomRed = (red + Math.floor(Math.random() * (variation * 2) - variation)) & 255;
-            const randomGreen = (green + Math.floor(Math.random() * (variation * 2) - variation)) & 255;
-            const randomBlue = (blue + Math.floor(Math.random() * (variation * 2) - variation)) & 255;
+            var data = google.visualization.arrayToDataTable([
+            ['Task', 'Hours per Day'],
+            {% for key in results.keys()%}
+                    ['{{key}}',{{results[key]}}],
+                {% endfor %}
+            ]);
 
-            const randomColor = `#${(1 << 24 | randomRed << 16 | randomGreen << 8 | randomBlue).toString(16).slice(1)}`;
+            var options = {
+                backgroundColor: 'transparent' ,
 
-            return randomColor;
+                title: 'Results'
+            };
+            
+            var chart = new google.visualization.PieChart(document.getElementById('PieChart'));
+            chart.draw(data, options);
         }
-
-
-
-
-        function updateChart() {
-            let gradient = '';
-            let colors = '';
-            let i = 0;
-            {% for result in results %}
-                var percentage = {{result.candidate_results}};
-                var color = randomColor('#253e54');
-
-                gradient += `${color} 0% ${percentage}%`;
-                if (i !== {{results|length}} - 1) {
-                    gradient += ', ';
-                }
-                colors += `var(--color${i + 1}: ${color}); `;
-                i++;
-            {% endfor %}
-
-            pieChart.style.setProperty('--colors', gradient);
-        }
-
-        updateChart()
     </script>
 </html>
