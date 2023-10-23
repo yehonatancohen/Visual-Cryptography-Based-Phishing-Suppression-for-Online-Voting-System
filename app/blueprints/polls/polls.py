@@ -56,19 +56,27 @@ def vote(survey_id):
 @polls.route('/submitvote', methods=['POST'])
 @login_required
 def submitvote():
+    response = {
+        'succeed': False,
+        'message': ""
+    }
     survey_id = session.get('survey_id')
     candidate_id = int(request.form.get('candidate_id'))
     if candidate_id == 0:
         #flash("Please select a candidate.", "warning")
-        return redirect(url_for('polls.vote', survey_id=survey_id))
+        response['message'] = "Please select a candidate."
+        return jsonify(response)
     sec_answer = request.form.get('sec_answer')
     is_valid = True #db.validate_user(email, password, sec_answer).
     if not is_valid:
         #flash("Invalid credentials.", "warning")
-        return redirect(url_for('polls.vote', survey_id=survey_id))
+        response['message'] = "Invalid credentials"
+        return jsonify(response)
     voter_email = session.get('email')
     db.voter_vote(survey_id, voter_email, candidate_id)
-    return redirect(url_for('polls.mypolls'))
+    response['succeed'] = True
+    response['message'] = '/mypolls'
+    return jsonify(response)
 
 @polls.route('/results/<survey_id>')
 @login_required
