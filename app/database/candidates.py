@@ -54,11 +54,13 @@ def remove_candidate(survey_id: str, candidate_id: int) -> None:
     __remove_candidate__(conn, survey_id, candidate_id)
 
 
-def get_candidates_results_per_servey(survey_id: str) -> list[dict]:
+def get_candidates_results_per_servey(survey_id: str, get_in_precentage=True) -> list[dict]:
     """
     Args:
         survey_id (str)
-
+        optional Args:
+            get_in_precentage (boolean): if true, cand_results will be a precentage of the total votes
+                if false, will returns the amount of votes per candidate.
     Returns:
         list[dict]: each entry in the list is a dictionary representing a candidate with the values
                     "candidate_id", "candidate_results", "candidate_name"
@@ -71,9 +73,13 @@ def get_candidates_results_per_servey(survey_id: str) -> list[dict]:
     results = [] 
     for cand_id in survey_results.keys():
         candidate = get_candidate(survey_id, cand_id)
+        if get_in_precentage:
+            cand_results = (float(candidate.votes) / float(total_votes)) * 100
+        else:
+            cand_results = candidate.votes
         dict = {
             "candidate_id": cand_id,
-            "candidate_results": (float(candidate.votes) / float(total_votes)) * 100,
+            "candidate_results": cand_results,
             "candidate_name": candidate.cand_name
         }
         results.append(dict)

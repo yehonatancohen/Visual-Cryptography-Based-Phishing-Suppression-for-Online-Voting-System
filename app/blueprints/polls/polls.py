@@ -81,7 +81,7 @@ def submitvote():
 @polls.route('/results/<survey_id>')
 @login_required
 def results(survey_id):
-    results= db.get_candidates_results_per_servey(survey_id=survey_id)
+    results= db.get_results(survey_id=survey_id)
     return render_template('results.html',results=results)
 
 @polls.route('/submitshare_poll', methods=['POST'])

@@ -122,50 +122,7 @@ body {
     position: relative;
     width: 35vw;
     height: 35vw;
-    border-radius: 50%;
-    background: conic-gradient(var(--colors));
-}
-
-.slice {
-    width: 50%;
-    height: 100%;
-    clip-path: polygon(100% 100%, 0 100%, 0 0, 100% 0);
     background-color: transparent;
-}
-
-#PollsChart{
-    position: relative;
-    display: flex;
-    width: 35vw;
-    height: 35vw;
-}
-
-.poll{
-    position: relative;
-    margin: 0.5vw;
-    height: auto;
-    max-height: 34vw;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-
-.bar{
-    position: absolute;
-    bottom: 0;
-    height: 35vw;
-    max-height: 30vw;
-    width: 50%;
-    max-width: 2.5vw;
-    background-color: rgba(37,62,84,255);
-    border-radius: 0.25vw;
-}
-
-.poll p{
-    font-size: 1vw;
-    margin-top: 0.25vw;
-    color: rgba(37,62,84,255);
 }
 
 h3{

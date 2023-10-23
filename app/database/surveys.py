@@ -69,7 +69,7 @@ def get_results(survey_id: str) -> dict:
     """
     conn = get_connection()
     return __get_results__(conn, survey_id)
-
+    
 
 def requirements_to_vote(survey_id: str, voter_email: str) -> dict:
     """
