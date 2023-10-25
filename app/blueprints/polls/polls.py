@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, sessio
 from flask_login import login_required
 from UTIL.captcha import create_combination
 from flask import current_app
-import io, uuid, os
+import io, uuid, os, json
 from PIL import Image
 import database as db
 
@@ -16,8 +16,9 @@ polls = Blueprint('polls', __name__,
 def createpoll():
     if request.method == 'POST':
         poll_name = request.form.get('pollname')
-        options = request.form.getlist('choises')
-        print(options)
+        #options = request.form.getlist('optionList')
+        optionList_json = request.form['optionList']
+        optionList = json.loads(optionList_json )
         from_date = request.form.get('fromdate')
         to_date = request.form.get('todate')
         invitees = request.form.get('invitees')
@@ -33,6 +34,8 @@ def createpoll():
         to_month = int(todate_parts[1])
         to_year = int(todate_parts[0])
         id = db.add_survey(poll_name, from_day, from_month, from_year, to_day, to_month, to_year, owner)
+        for candidate in optionList:
+            db.add_candidate(id, candidate, '')
         db.add_voters(emails=email_list,survey_id=id)
         return redirect(url_for('polls.mypolls'))
     elif request.method == 'GET':
@@ -62,7 +65,7 @@ def submitvote():
         'message': ""
     }
     survey_id = session.get('survey_id')
-    candidate_id = int(request.form.get('candidate_id'))
+    candidate_id = int(request.form.get('candidate_id').split('-')[1])
     if candidate_id == 0:
         #flash("Please select a candidate.", "warning")
         response['message'] = "Please select a candidate."
@@ -74,9 +77,12 @@ def submitvote():
         response['message'] = "Invalid credentials"
         return jsonify(response)
     voter_email = session.get('email')
-    db.voter_vote(survey_id, voter_email, candidate_id)
-    response['succeed'] = True
-    response['message'] = '/mypolls'
+    result = db.voter_vote(voter_email, survey_id, candidate_id)
+    response['succeed'] = result
+    if not result:
+        response['message'] = "An error occured while voting."
+    else:
+        response['message'] = '/mypolls'
     return jsonify(response)
 
 @polls.route('/results/<survey_id>')

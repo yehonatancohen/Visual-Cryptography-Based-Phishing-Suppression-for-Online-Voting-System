@@ -28,6 +28,7 @@ votes.forEach(vote => {
             currentPressedButton = vote;
             vote.style.color = 'white';
             vote.style.backgroundColor = 'rgba(37,62,84,255)';
+            candidate_id = vote.id;
         }else if(currentPressedButton != vote){
             currentPressedButton.style.color = 'rgba(37,62,84,255)';
             currentPressedButton.style.backgroundColor = 'transparent';
