@@ -124,3 +124,13 @@ h2{
     color: rgba(37,62,84,255);
     font-size: 2.8vw;
 }
+
+.navbar p{
+    display: inline;
+    font-size: 0.8rem;
+    color: rgba(37,62,84,255);
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 1.75vw;
+    transition: .3s;
+}

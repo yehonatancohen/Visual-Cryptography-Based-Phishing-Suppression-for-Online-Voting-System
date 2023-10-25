@@ -14,6 +14,7 @@ var currentUser = "";
 
 function goto(page, from)
 {
+    clearErrors();
     if (page == 'email')
     {
         if (from == 'verify')
@@ -70,12 +71,14 @@ function validate_email()
             succeed = data.succeed;
             result = data.message;
             if (succeed == false){
-                alert(result)
+                hide_loading();
+                showError(result)
             }
             else
             {
                 currentUser = data;
                 wrapper.classList.add('photo');
+                clearErrors(result);
                 hide_loading();
             }
         })
@@ -106,12 +109,13 @@ function uploadImage(event)
         succeed = data.succeed;
         result = data.message;
         if (succeed == false){
-            alert(result)
+            showError(result)
         }
         else
         {
             displayImg.src = data
             displayImg.style.display = 'block';
+            clearErrors(message);
         }
     })
     .catch(function(error) {
@@ -139,7 +143,7 @@ function validate_login()
         succeed = data.succeed;
         result = data.message;
         if (succeed == false){
-            alert(result)
+            showError(result)
         }
         else
         {
@@ -149,4 +153,24 @@ function validate_login()
     .catch(function(error) {
         console.error('Fetch error:', error);
     });
+}
+
+function showError(message)
+{
+    var errors = document.getElementsByClassName('error-message');
+    
+    for (var i = 0; i < errors.length; i++) {
+        errors[i].innerHTML = message;
+        errors[i].style.display = 'block';
+    }
+}
+
+function clearErrors()
+{
+    var errors = document.getElementsByClassName('error-message');
+    
+    for (var i = 0; i < errors.length; i++) {
+        errors[i].innerHTML = '';
+        errors[i].style.display = 'none';
+    }
 }

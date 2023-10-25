@@ -141,7 +141,7 @@ body {
 }
 
 .grid-item:hover{
-    background-color: rgba(37,62,84,255);
+    background-color: rgba(65,110,150,255);
     color: white;
 }
 .name{
@@ -313,4 +313,14 @@ input[type="file"] {
     height: 2.5vw; 
     width: 10vw; 
     margin: 1vw;
+}
+
+.navbar p{
+    display: inline;
+    font-size: 0.8rem;
+    color: rgba(37,62,84,255);
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 1.75vw;
+    transition: .3s;
 }

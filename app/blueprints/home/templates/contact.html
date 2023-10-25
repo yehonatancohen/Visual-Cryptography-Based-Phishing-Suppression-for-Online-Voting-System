@@ -14,8 +14,8 @@
                 <a href="{{ url_for('home.about') }}">About</a>
                 <a href="{{ url_for('home.contact') }}">Contact</a>
                 <a href="{{ url_for('polls.mypolls') }}">My Polls</a>
-                <a href="{{ url_for('polls.createpoll') }}">Create</a>
                 <a href="{{ url_for('auth.logout') }}" class="start">Log Out</a>
+                <p>Hello {{current_user.f_name}}!</p>
             </nav>
             {% else %}
             <nav class="navbar">

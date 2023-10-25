@@ -46,6 +46,10 @@ changeVote.addEventListener('click',()=> {
 });
 
 submit.addEventListener('click',()=> {
+    if (candidate_id == "0"){
+        alert("Please select a candidate")
+        return;
+    }
     popup.classList.add('active');
     wrap.style.pointerEvents='auto';
     wrap.style.userSelect = 'auto';
@@ -103,6 +107,7 @@ function uploadImage(event)
 
 function submitvote()
 {
+    
     // TODO: Make sure user chose an option
     var url = new URL(window.location.href).origin + "/submitvote";
     var requestBody = new FormData();

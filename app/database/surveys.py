@@ -18,7 +18,7 @@ def get_survey(survey_id: str) -> Survey:
 
 
 def add_survey(name: str, start_day: int, start_month: int, start_year: int,
-                end_day: int, end_month: int, end_year: int, owner_email: str) -> str:
+                end_day: int, end_month: int, end_year: int,  owner_email: str, start_hour = 0, end_hour = 0) -> str:
     """This methods creates a survey with a unique id and retuns the id.
     Args:
         name (str): _description_
@@ -33,8 +33,8 @@ def add_survey(name: str, start_day: int, start_month: int, start_year: int,
         str: survey id
     """
     conn = get_connection()
-    return __add_survey__(conn, name, start_day, start_month, start_year,
-                   end_day, end_month, end_year, owner_email, SURVEY_NAME_LENGTH_LIMIT)
+    return __add_survey__(conn, name, start_day, start_month, start_year, start_hour,
+                   end_day, end_month, end_year, end_hour, owner_email, SURVEY_NAME_LENGTH_LIMIT)
     
 
 def get_user_surveys(email: str) -> list[Survey]:
