@@ -52,8 +52,8 @@
 
             var data = google.visualization.arrayToDataTable([
             ['Task', 'Hours per Day'],
-            {% for key in results.keys()%}
-                    ['{{key}}',{{results[key]}}],
+            {% for result in results%}
+                    ['{{result.candidate_name}}',{{result.candidate_results}}],
                 {% endfor %}
             ]);
 
