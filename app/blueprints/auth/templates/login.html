@@ -55,6 +55,7 @@
                     <input type="email" id="emailField" required>
                     <Label>Email</Label>
                 </div>
+                <p class="error-message" id="error-message" style="display: none;">Error Message</p>
                 <br>
                 <button onclick="validate_email();" type="button" class="btn" id="continueButton">Continue</button>
                 <div class="login-register">
@@ -66,15 +67,6 @@
         </div>
 
         <div class="form-box photo">
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    <ul class="flashes">
-                        {% for message in messages %}
-                            <li>{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            {% endwith %}
             <h2>Verify its you</h2>
             <form action="javascript:validate_login();" method="post">
                 <br>
@@ -96,6 +88,7 @@
                     <input type="password" name="loginpassword" id="loginpassword" required>
                     <Label>Password</Label>
                 </div>
+                <p class="error-message" style="display: none;">Error Message</p>
                 <br>
                 <button type="submit" class="btn">Login</button>
                 <div class="login-register">
