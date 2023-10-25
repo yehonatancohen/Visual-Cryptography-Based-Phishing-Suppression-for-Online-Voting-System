@@ -21,8 +21,8 @@ survey_table_init_query = f"""
     CREATE TABLE {SURVEYS_TABLE_NAME}(
         id TEXT PRIMARY KEY,
         name TEXT,
-        start date,
-        end date,
+        start time,
+        end time,
         owner TEXT,
         FOREIGN KEY (owner) REFERENCES {USERS_TABLE_NAME} (email)
     )
