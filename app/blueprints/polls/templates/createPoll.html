@@ -16,6 +16,7 @@
                 <a href="{{ url_for('home.contact') }}">Contact</a>
                 <a href="{{ url_for('polls.mypolls') }}">My Polls</a>
                 <a href="{{ url_for('auth.logout') }}" class="start">Log Out</a>
+                <p>Hello {{current_user.f_name}}!</p>
             </nav>
         </header>
         <div class="wrapper">
