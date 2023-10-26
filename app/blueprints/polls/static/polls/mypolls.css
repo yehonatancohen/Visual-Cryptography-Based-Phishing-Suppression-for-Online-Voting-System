@@ -125,6 +125,23 @@ h2{
     font-size: 2.8vw;
 }
 
+#createPoll{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    top: 15%;
+    right: 32.5%;
+    color: white;
+    font-size: 0.8vw;
+    text-decoration: none;
+    height: 2vw;
+    width: 7vw;
+    background-color:  rgba(37,62,84,255);
+    border-radius: 0.5vw;
+}
+
 .navbar p{
     display: inline;
     font-size: 0.8rem;

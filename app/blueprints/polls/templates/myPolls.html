@@ -18,6 +18,7 @@
             </nav>
         </header>
         <h2>My Polls</h2>
+        <a id="createPoll" href="{{ url_for('polls.createpoll') }}" >Create Poll</a>
         <div class="wrapper">
             {% for poll in user_polls %}
                 {% if poll.has_user_voted == -1 %}
@@ -43,6 +44,6 @@
                 {% endif %}                
            {% endfor %}
         </div>
-        <a href="{{ url_for('polls.createpoll') }}" >Create Poll</a>
+        
     </body>
 </html>
