@@ -94,11 +94,10 @@ h3{
 
 .navbar p{
     display: inline;
-    font-size: 0.8rem;
+    font-size: 1vw;
     color: rgba(37,62,84,255);
     text-decoration: none;
     font-weight: 500;
     margin-left: 1.75vw;
     transition: .3s;
-}
 }

@@ -16,12 +16,14 @@
                 <a href="{{ url_for('home.contact') }}">Contact</a>
                 <a href="{{ url_for('polls.mypolls') }}">My Polls</a>
                 <a href="{{ url_for('auth.logout') }}" class="start">Log Out</a>
+                <p>Hello {{current_user.f_name}}!</p>
             </nav>
         </header>
         <div class="wrapper">
             <div class="form-box">
                 <h2>Create Poll</h2>
                 <form action="{{ url_for('polls.createpoll') }}" method="post">
+                    <input type="hidden" name="optionList" id="optionListInput">
                     <div class="input-box">
                         <span class="icon"><ion-icon name="person"></ion-icon></span>
                         <input type="text" name="pollname" required>
@@ -52,14 +54,15 @@
                     <label for="option" >Option</label>
                 </div>
                 <button type="button" id="addOption">Add</button>
-                <ul id="optionList" ></ul>
+                <ul id="optionTable" ></ul>
         </div>
         </div>
     </body>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script>
-
+        localStorage.removeItem("optionList");
+        var optionList = JSON.parse(localStorage.getItem("optionList")) || [];
         function addOption() {
             const optionInput = document.getElementById('option');
             const optionText = optionInput.value.trim();
@@ -69,12 +72,23 @@
                 return;
             }
 
-            const optionList = document.getElementById('optionList');
+            const optionTable = document.getElementById('optionTable');
             const li = document.createElement('li');
             li.textContent = optionText;
-            optionList.appendChild(li);
+            optionTable.appendChild(li);
+            updateOptionList(optionText);
 
             optionInput.value = '';
+        }
+
+        function updateOptionList(candidate) {
+            optionList.push(candidate);
+
+            // Update the hidden input field with the updated optionList
+            document.getElementById("optionListInput").value = JSON.stringify(optionList);
+
+            // Store the updated optionList in local storage
+            localStorage.setItem("optionList", JSON.stringify(optionList));
         }
 
         const addButton = document.getElementById('addOption');

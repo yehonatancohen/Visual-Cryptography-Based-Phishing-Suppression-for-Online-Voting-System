@@ -28,6 +28,7 @@ votes.forEach(vote => {
             currentPressedButton = vote;
             vote.style.color = 'white';
             vote.style.backgroundColor = 'rgba(37,62,84,255)';
+            candidate_id = vote.id;
         }else if(currentPressedButton != vote){
             currentPressedButton.style.color = 'rgba(37,62,84,255)';
             currentPressedButton.style.backgroundColor = 'transparent';
@@ -46,6 +47,10 @@ changeVote.addEventListener('click',()=> {
 });
 
 submit.addEventListener('click',()=> {
+    if (candidate_id == "0"){
+        alert("Please select a candidate")
+        return;
+    }
     popup.classList.add('active');
     wrap.style.pointerEvents='auto';
     wrap.style.userSelect = 'auto';
@@ -103,6 +108,7 @@ function uploadImage(event)
 
 function submitvote()
 {
+    
     // TODO: Make sure user chose an option
     var url = new URL(window.location.href).origin + "/submitvote";
     var requestBody = new FormData();

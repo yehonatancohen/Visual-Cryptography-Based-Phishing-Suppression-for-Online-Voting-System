@@ -128,7 +128,7 @@ def verify_password():
             return jsonify(response)
         else:
             response['succeed'] = False
-            response['message'] = 'Invalid email, password, or security question answer.'
+            response['message'] = 'Invalid credentials'
             return jsonify(response)
 
 @app.login_manager.user_loader
@@ -150,3 +150,7 @@ def check_ip():
     except requests.exceptions.RequestException:
         print(f"Failed to connect to IP Address: {remote_addr} .")
     return remote_addr
+
+@auth.route('/clearflash', methods=['POST'])
+def clear_flash():
+    session.pop('_flashes', None)
