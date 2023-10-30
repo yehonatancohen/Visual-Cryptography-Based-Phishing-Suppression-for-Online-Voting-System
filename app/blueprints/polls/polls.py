@@ -33,6 +33,8 @@ def createpoll():
         to_day = int(todate_parts[2])
         to_month = int(todate_parts[1])
         to_year = int(todate_parts[0])
+        if(owner not in email_list):
+            email_list.append(owner)
         id = db.add_survey(poll_name, from_day, from_month, from_year, to_day, to_month, to_year, owner)
         for candidate in optionList:
             db.add_candidate(id, candidate, '')
@@ -88,8 +90,9 @@ def submitvote():
 @polls.route('/results/<survey_id>')
 @login_required
 def results(survey_id):
-    results= db.get_candidates_results_per_servey(survey_id=survey_id, get_in_precentage=False)
-    return render_template('results.html',results=results)
+    results_votes= db.get_candidates_results_per_servey(survey_id=survey_id, get_in_precentage=False)
+    results_precentage= db.get_candidates_results_per_servey(survey_id=survey_id, get_in_precentage=True)
+    return render_template('results.html',results_votes=results_votes, results_precentage=results_precentage)
 
 @polls.route('/submitshare_poll', methods=['POST'])
 def submit_share():

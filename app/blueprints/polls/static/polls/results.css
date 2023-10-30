@@ -60,7 +60,6 @@ body {
 }
 
 .wrapper {
-    position: absolute;
     display: flex;
     top: 6vw;
     left: 5vw;
@@ -136,18 +135,14 @@ h3{
     color: rgba(37,62,84,255);
 }
 
-.menu{
-    position: absolute;
-    display: flex;
-    top: 6vw;
-    right: 5vw;
-    width: 50vw;
-    height: 37.5vw;
+#SettingsChart{
+    width: 35vw;
+    height: 35vw;
     background: transparent;
     flex-direction: column;
 }
 
-.menu button{
+#SettingsChart button{
     height: 5vw;
     width: 10vw;
     background: rgba(37,62,84,255);

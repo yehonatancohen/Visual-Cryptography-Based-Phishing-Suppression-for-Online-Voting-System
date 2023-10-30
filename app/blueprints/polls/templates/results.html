@@ -23,22 +23,24 @@
             <div class="tab">
                 <a class="tablinks active" onclick="openPoll(event, 'Pie')">Pie</a>
                 <a class="tablinks" onclick="openPoll(event, 'Votes')">Votes</a>
+                <a class="tablinks" onclick="openPoll(event, 'Settings')">Settings</a>
             </div>
 
             <div id="PieChart" class="tabcharts" style="display: flex;"></div>
 
             <div style="display: none;" class="tabcharts" id="VotesChart">
                 <h3>Results:</h3>
-                {% for result in results%}
+                {% for result in results_precentage%}
                     <p>{{result.candidate_name}} : {{result.candidate_results}}%</p>
                 {% endfor %}
             </div>
-        </div>
-        <div class="menu">
-            <button>Add Voter</button>
-            <button>Remove Voter</button>
-            <button>Change Date</button>
-            <button>Delete Survey</button>
+
+            <div style="display: none;" class="tabcharts" id="SettingsChart">
+                <button>Add Voter</button>
+                <button>Remove Voter</button>
+                <button>Change Date</button>
+                <button>Delete Survey</button>
+            </div>
         </div>
 
     </body>
@@ -52,7 +54,7 @@
 
             var data = google.visualization.arrayToDataTable([
             ['Task', 'Hours per Day'],
-            {% for result in results%}
+            {% for result in results_votes%}
                     ['{{result.candidate_name}}',{{result.candidate_results}}],
                 {% endfor %}
             ]);
