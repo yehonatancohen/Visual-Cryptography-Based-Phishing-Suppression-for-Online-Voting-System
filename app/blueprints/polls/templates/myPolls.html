@@ -21,7 +21,7 @@
         <a id="createPoll" href="{{ url_for('polls.createpoll') }}" >Create Poll</a>
         <div class="wrapper">
             {% for poll in user_polls %}
-                {% if poll.has_user_voted == -1 %}
+                {% if poll.is_owner %}
                     <div class="item">
                         <p class="pollName">{{ poll.survey_name }}</p>
                         <p class="dateRange"> {{ poll.start_date }} - {{ poll.end_date }}</p>

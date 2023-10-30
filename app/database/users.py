@@ -125,7 +125,6 @@ def get_surveys_related_to_user(user_email: str) -> list[dict]:
                 "survey_name":survey.name,
                 "start_date":survey.start_date,
                 "end_date": survey.end_date,
-                "has_user_voted": -1,
                 "is_owner": True
                 }
         result.append(dict)
