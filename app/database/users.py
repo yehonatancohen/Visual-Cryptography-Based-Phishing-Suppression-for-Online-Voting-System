@@ -120,7 +120,19 @@ def get_surveys_related_to_user(user_email: str) -> list[dict]:
     from .surveys import get_user_surveys
     owned = get_user_surveys(user_email)
     result = list1
+
+
+
     for survey in owned:
+        # Check for duplicate surveys
+        existsInResult = False
+        for li in result:
+            if survey.id == li['survey_id']:
+                existsInResult = True
+                li['is_owner'] = True
+                break
+        if existsInResult: continue
+
         dict = {"survey_id":survey.id,
                 "survey_name":survey.name,
                 "start_date":survey.start_date,
