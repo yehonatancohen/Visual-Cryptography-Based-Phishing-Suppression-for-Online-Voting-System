@@ -121,6 +121,8 @@ def get_surveys_related_to_user(user_email: str) -> list[dict]:
     owned = get_user_surveys(user_email)
     result = list1
     for survey in owned:
+        if survey.id in [li["survey_id"] for li in list1]:
+            continue
         dict = {"survey_id":survey.id,
                 "survey_name":survey.name,
                 "start_date":survey.start_date,
