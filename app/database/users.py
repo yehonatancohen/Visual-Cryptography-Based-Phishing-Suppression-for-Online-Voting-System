@@ -111,10 +111,12 @@ def get_surveys_related_to_user(user_email: str) -> list[dict]:
 
     Returns:
         list[dict]: A list where each entry (one entry for each survey a user participates in AND the user owns) contains
-            a dictionary with "survey_id", "survey_name", "start_date", "end_date", "has_user_voted"
+            a dictionary with "survey_id", "survey_name", "start_date", "end_date", "has_user_voted", "is_owner"
     """
     from .voters import get_all_surveys_per_voter
     list1 = get_all_surveys_per_voter(user_email)
+    [li.__setitem__("is_owner", False) for li in list1]
+    
     from .surveys import get_user_surveys
     owned = get_user_surveys(user_email)
     result = list1
@@ -123,6 +125,8 @@ def get_surveys_related_to_user(user_email: str) -> list[dict]:
                 "survey_name":survey.name,
                 "start_date":survey.start_date,
                 "end_date": survey.end_date,
-                "has_user_voted": -1}
+                "has_user_voted": -1,
+                "is_owner": True
+                }
         result.append(dict)
     return result
