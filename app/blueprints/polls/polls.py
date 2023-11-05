@@ -54,6 +54,14 @@ def mypolls():
 def vote(survey_id):
     session['survey_id'] = survey_id
     survey = db.get_survey(survey_id)
+
+    # Check if survey is active
+    if not survey.is_active():
+        if survey.has_ended():
+            return "This poll has ended"
+        else:
+            return "This poll will be active at " + survey.start_date
+    
     candidates = db.get_all_candidates(survey_id)
     survey_name = survey.name
     end_date = survey.end_date

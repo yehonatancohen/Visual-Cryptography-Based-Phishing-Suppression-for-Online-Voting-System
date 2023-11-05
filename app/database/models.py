@@ -29,6 +29,21 @@ class Survey:
     
     def __repr__(self) -> str:
         return f"Survey number {self.id}: {self.name} from {self.start_date} to {self.end_date}.\nOwned by {self.owner_email}\n"
+    
+    def is_active(self):
+        from datetime import datetime
+        startDateObj = datetime.strptime(self.start_date, '%Y-%m-%d %H:%M')
+        endDateObj = datetime.strptime(self.end_date, '%Y-%m-%d %H:%M')
+        is_active = (datetime.now() >= startDateObj) and (datetime.now() <= endDateObj)
+        return is_active
+    
+    def has_ended(self):
+        from datetime import datetime
+        endDateObj = datetime.strptime(self.end_date, '%Y-%m-%d %H:%M')
+        has_ended = (datetime.now() <= endDateObj)
+        return has_ended
+    
+
         
 class Voter:
     def __init__(self, survey_id, email, has_voted) -> None:

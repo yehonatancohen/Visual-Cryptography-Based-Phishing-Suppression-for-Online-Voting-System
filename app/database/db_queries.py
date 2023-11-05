@@ -253,8 +253,12 @@ def __voter_vote__(conn, email: str, survey_id: str, candidate_id: int) -> bool:
     from database.voters import get_voter
     voter = get_voter(email, survey_id)
     if voter is None or voter.has_voted == 1:
-        return False
+        raise ValueError(f"Voter {email} invalid in survey {survey_id}")
     
+    from . import surveys
+    if surveys.get_survey(survey_id).is_active() is False:
+        raise ValueError(f"Survey {survey_id} is not active")
+
     from database.candidates import get_candidate
     if get_candidate(survey_id, candidate_id) is None:
         raise ValueError(f"Candidate {candidate_id} does not exist is survey {survey_id}")
