@@ -74,7 +74,10 @@ def get_candidates_results_per_servey(survey_id: str, get_in_precentage=True) ->
     for cand_id in survey_results.keys():
         candidate = get_candidate(survey_id, cand_id)
         if get_in_precentage:
-            cand_results = (float(candidate.votes) / float(total_votes)) * 100
+            if total_votes != 0:
+                cand_results = (float(candidate.votes) / float(total_votes)) * 100
+            else:
+                cand_results = 0
         else:
             cand_results = candidate.votes
         dict = {
