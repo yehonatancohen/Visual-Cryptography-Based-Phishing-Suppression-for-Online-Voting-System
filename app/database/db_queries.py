@@ -63,8 +63,8 @@ def __get_user__(conn, email):
     return User(row[0], row[1], row[2], row[3], row[4], row[5])
     
 
-def __add_survey__(conn, name: str, start_day: int, start_month: int, start_year: int, start_hour: int,
-                    end_day: int, end_month: int, end_year: int, end_hour: int, owner_mail, name_length_limit = -1):
+def __add_survey__(conn, name: str, start_day: int, start_month: int, start_year: int, start_hour: int, start_minute: int,
+                    end_day: int, end_month: int, end_year: int, end_hour: int, end_minute: int, owner_mail, name_length_limit = -1):
     curr = conn.cursor()
     from database.users import get_user
     if get_user(owner_mail) is None:
@@ -72,8 +72,8 @@ def __add_survey__(conn, name: str, start_day: int, start_month: int, start_year
     id_ = shortuuid.uuid()
     # YYYY-MM-DD HH:MM 
 
-    start_time = f'{start_year:04d}-{start_month:02d}-{start_day:02d} {start_hour:02d}:00'
-    end_time = f'{end_year:04d}-{end_month:02d}-{end_day:02d} {end_hour:02d}:00'
+    start_time = f'{start_year:04d}-{start_month:02d}-{start_day:02d} {start_hour:02d}:{start_minute:02d}'
+    end_time = f'{end_year:04d}-{end_month:02d}-{end_day:02d} {end_hour:02d}:{end_minute:02d}'
     if name_length_limit != -1 and len(name) > name_length_limit:
         return ValueError(f"survey name {name} longer than allowed length ({name_length_limit})")
     curr.execute(f'INSERT INTO {SURVEYS_TABLE_NAME} (id, name, start, end, owner) VALUES (?, ?, ?, ?, ?) ', (id_, name, start_time, end_time, owner_mail,))

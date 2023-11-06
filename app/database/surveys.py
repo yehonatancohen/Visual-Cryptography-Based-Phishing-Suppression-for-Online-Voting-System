@@ -18,23 +18,28 @@ def get_survey(survey_id: str) -> Survey:
 
 
 def add_survey(name: str, start_day: int, start_month: int, start_year: int,
-                end_day: int, end_month: int, end_year: int,  owner_email: str, start_hour = 0, end_hour = 0) -> str:
+                end_day: int, end_month: int, end_year: int,  owner_email: str,
+                start_hour = 0, start_minute = 0, end_hour = 0, end_minute = 0) -> str:
     """This methods creates a survey with a unique id and retuns the id.
     Args:
-        name (str): _description_
-        start_day (int): _description_
-        start_month (int): _description_
-        start_year (int): _description_
-        end_day (int): _description_
-        end_month (int): _description_
-        end_year (int): _description_
-        owner_email (str): _description_
+        name (str): 
+        start_day (int): 
+        start_month (int): 
+        start_year (int): 
+        end_day (int): 
+        end_month (int): 
+        end_year (int): 
+        owner_email (str): 
+        start_hour (int, optional): Defaults to 0.
+        start_minute (int, optional): Defaults to 0.
+        end_hour (int, optional): Defaults to 0.
+        end_minute (int, optional): efaults to 0.
     Returns:
-        str: survey id
+        str: Survey id
     """
     conn = get_connection()
-    return __add_survey__(conn, name, start_day, start_month, start_year, start_hour,
-                   end_day, end_month, end_year, end_hour, owner_email, SURVEY_NAME_LENGTH_LIMIT)
+    return __add_survey__(conn, name, start_day, start_month, start_year, start_hour, start_minute,
+                   end_day, end_month, end_year, end_hour, end_minute,owner_email, SURVEY_NAME_LENGTH_LIMIT)
     
 
 def get_user_surveys(email: str) -> list[Survey]:
