@@ -41,7 +41,7 @@ def createpoll():
         to_year = int(todate_parts[0])
         if(owner not in email_list):
             email_list.append(owner)
-        id = db.add_survey(poll_name, from_day, from_month, from_year, to_day, to_month, to_year, owner, start_hour=from_hour,end_hour=to_hour)
+        id = db.add_survey(poll_name, from_day, from_month, from_year, to_day, to_month, to_year, owner, start_hour=from_hour,end_hour=to_hour, start_minute=from_minutes, end_minute=to_minutes)
         for candidate in optionList:
             db.add_candidate(id, candidate, '')
         db.add_voters(emails=email_list,survey_id=id)
