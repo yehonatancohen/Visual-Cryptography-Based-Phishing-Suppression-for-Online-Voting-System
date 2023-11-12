@@ -126,3 +126,30 @@ def submit_share():
     return jsonify(os.path.join('/static/uploads', filename))
 
 
+@polls.route('/adduser', methods=['POST'])
+@login_required
+def adduser():
+    response = {
+        'succeed': False,
+        'message': ""
+    }
+    survey_id = session.get('survey_id')
+    candidate_id = int(request.form.get('candidate_id').split('-')[1])
+    if candidate_id == 0:
+        #flash("Please select a candidate.", "warning")
+        response['message'] = "Please select a candidate."
+        return jsonify(response)
+    sec_answer = request.form.get('sec_answer')
+    is_valid = True #db.validate_user(email, password, sec_answer).
+    if not is_valid:
+        #flash("Invalid credentials.", "warning")
+        response['message'] = "Invalid credentials"
+        return jsonify(response)
+    voter_email = session.get('email')
+    result = db.voter_vote(voter_email, survey_id, candidate_id)
+    response['succeed'] = result
+    if not result:
+        response['message'] = "An error occured while voting."
+    else:
+        response['message'] = '/mypolls'
+    return jsonify(response)
