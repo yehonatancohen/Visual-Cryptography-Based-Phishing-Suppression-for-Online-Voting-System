@@ -14,8 +14,6 @@ function openPoll(evt, name) {
 
 function submitvote()
 {
-    
-    // TODO: Make sure user chose an option
     var url = new URL(window.location.href).origin + "/submitvote";
     var requestBody = new FormData();
     requestBody.append('sec_answer', document.getElementById('sec_answer').value);
