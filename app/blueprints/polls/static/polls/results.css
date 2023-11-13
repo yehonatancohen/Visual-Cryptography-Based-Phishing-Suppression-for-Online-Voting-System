@@ -75,6 +75,25 @@ body {
     transition: 1s ease;
 }
 
+
+.box{
+    display: flex;
+    flex-direction: column;
+    width: 17.5vw;
+    height: 35vw;
+    background: transparent;
+    justify-content: center;
+    align-items: center;
+    transition: 1s ease;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: column;
+    width: 17.5vw;
+    height: 35vw;
+}
+
 .tab{
     position: absolute;
     top: -1.5vw;
@@ -135,14 +154,8 @@ h3{
     color: rgba(37,62,84,255);
 }
 
-#SettingsChart{
-    width: 35vw;
-    height: 35vw;
-    background: transparent;
-    flex-direction: column;
-}
 
-#SettingsChart button{
+.buttons button{
     height: 5vw;
     width: 10vw;
     background: rgba(37,62,84,255);
@@ -151,7 +164,15 @@ h3{
     border-radius: 0.25vw;
     margin: 3vw;
     cursor: pointer;
+    font-size: 0.8vw;
+    transition: 0.2s ease;
+}
 
+.buttons button:hover{
+    background: transparent;
+    border: 0.15vw solid rgba(37,62,84,255) !important;
+    font-size: 0.9vw;
+    color: rgba(37,62,84,255);
 }
 
 .navbar p{
@@ -162,4 +183,83 @@ h3{
     font-weight: 500;
     margin-left: 1.75vw;
     transition: .3s;
+}
+
+#deleteSurveyButton{
+    background-color: transparent !important;
+    color: red !important;
+    font-size: 1vw !important;
+    transition: 0.2s ease;
+}
+
+#deleteSurveyButton:hover{
+    background-color: transparent !important;
+    border: 0.15vw solid red !important;
+    color: #C21807 !important;
+    font-size: 1.1vw !important;
+}
+
+.box h2{
+    font-size: 1.8vw;
+    color: rgba(37,62,84,255);
+    text-align: center;
+}
+
+.input-box {
+    position: relative;
+    width: 100%;
+    height: 2.5vw;
+    border-bottom: 0.1vw solid rgba(37,62,84,255);
+    margin: 1.5vw 0;
+    
+}
+
+.input-box label {
+    position: absolute;
+    top: 50%;
+    left: 0.25vw;
+    transform: translateY(-50%);
+    font-size: 0.8vw;
+    color: rgba(37,62,84,255);
+    font-weight: 500;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.input-box input:focus~label,
+.input-box input:valid~label{
+    top: -0.25vw;
+}
+
+
+.input-box input {
+    width: 88%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 0.8vw;
+    color: rgba(37,62,84,255);
+    font-weight: 600;
+    padding-left: 0.25vw;   
+}
+
+.input-box .icon {
+    position: absolute;
+    right: 0.4vw;
+    font-size: 0.8vw;
+    color: rgba(37,62,84,255);
+    line-height: 2.85vw;
+}
+
+#changeDate{
+    width: 100%;
+}
+
+.input-box.date input{
+    width: 100%;
+}
+
+.box .form-box{
+    width: 80%;
 }
