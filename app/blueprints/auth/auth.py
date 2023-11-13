@@ -7,6 +7,7 @@ from PIL import Image
 from UTIL.captcha import generate_shares, create_combination
 import shortuuid, io, uuid, os, json
 import requests
+from bs4 import BeautifulSoup
 #from UTIL.smtp import send_share
 
 auth = Blueprint('auth', __name__,
@@ -135,17 +136,26 @@ def verify_password():
 def load_user(email):
     return db.get_user(email)
 
+def check_page(response):
+    soup = BeautifulSoup(response.text, 'html.parser')
+    if soup:
+        print(f"The requester is hosting an HTML page.")
+        page_title = soup.title.string
+        print(f"Page Title: {page_title}")
+    else:
+        print(f"The requester is not hosting an HTML page.")
+
 def check_ip():
     remote_addr = request.remote_addr
+    port = request.environ.get('SERVER_PORT')
     print("Remote Address: " + remote_addr)
     try:
-        response = requests.get(f"http://{remote_addr}")
+        response = requests.get(f"http://{remote_addr}:{port}")
         if response.status_code == 200:
-            print("IP is valid")
-            # Check for phishing
+            check_page(response)
         else:
-            # perform reverse dns
-            print("IP is not valid")
+            pass
+            # IP is not valid
         pass
     except requests.exceptions.RequestException:
         print(f"Failed to connect to IP Address: {remote_addr} .")
