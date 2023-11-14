@@ -1,5 +1,5 @@
 from database.db_queries import __get_survey__, __add_survey__, __get_surveys__, \
-                                __get_results__, __delete_survey__
+                                __get_results__, __delete_survey__, __update_survey_start_time__, __update_survey_end_time__
 from database.db_tables import get_connection
 from database.models import Survey
 
@@ -86,7 +86,6 @@ def requirements_to_vote(survey_id: str, voter_email: str) -> dict:
     Returns:
         dict: contain "survey_name", "start_date", "end_date", "has_user_voted"
     """
-    conn = get_connection()
     from .voters import get_voter
     voter = get_voter(voter_email, survey_id)
     from .surveys import get_survey
@@ -100,4 +99,30 @@ def requirements_to_vote(survey_id: str, voter_email: str) -> dict:
               "end_date": survey.end_date,
               "has_user_voted": has_voted}
     return result
-    
+
+def update_start_date(survey_id: str, start_year: int, start_month: int, start_day: int, start_hour: int, start_minute: int):
+    """This method updates the start date of the survey according to ALL the parameters given
+    Args:
+        survey_id (str)
+        start_year (int)
+        start_month (int)
+        start_day (int)
+        start_hour (int)
+        start_minute (int)
+    """
+    conn = get_connection()
+    __update_survey_start_time__(conn, survey_id, start_year, start_month, start_day, start_hour, start_minute)
+
+def update_end_date(survey_id: str, end_year: int, end_month: int, end_day: int, end_hour: int, end_minute: int):
+    """This method updates the end date of the survey according to ALL the parameters given
+
+    Args:
+        survey_id (str)
+        end_year (int)
+        end_month (int)
+        end_day (int)
+        end_hour (int)
+        end_minute (int)
+    """
+    conn = get_connection()
+    __update_survey_end_time__(conn, survey_id, end_year, end_month, end_day, end_hour, end_minute)
