@@ -284,5 +284,21 @@ def __get_results__(conn, survey_id):
     for row in rows:
         json_obj = json.loads('{"'+str(row[0])+'":"'+str(row[1])+'"}')
         results = {**results, **json_obj}
-
+    conn.close()
     return results
+
+def __update_survey_start_time__(conn, survey_id, start_year, start_month, start_day, start_hour, start_minute):
+    cur = conn.cursor()
+    start_time = f'{start_year:04d}-{start_month:02d}-{start_day:02d} {start_hour:02d}:{start_minute:02d}'
+    cur.execute(f'UPDATE {SURVEYS_TABLE_NAME} SET start = ? WHERE id = ?',
+                (start_time, survey_id,))
+    conn.commit()
+    conn.close()
+    
+def __update_survey_end_time__(conn, survey_id, end_year, end_month, end_day, end_hour, end_minute):
+    cur = conn.cursor()
+    end_time = f'{end_year:04d}-{end_month:02d}-{end_day:02d} {end_hour:02d}:{end_minute:02d}'
+    cur.execute(f'UPDATE {SURVEYS_TABLE_NAME} SET end = ? WHERE id = ?',
+                (end_time, survey_id,))
+    conn.commit()
+    conn.close()
