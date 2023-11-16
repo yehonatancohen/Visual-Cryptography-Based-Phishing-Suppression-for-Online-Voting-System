@@ -67,9 +67,9 @@ def vote(survey_id):
     # Check if survey is active
     if not survey.is_active():
         if survey.has_ended():
-            return "This poll has ended"
+            return render_template('voteClosed.html', endDate=survey.end_date)
         else:
-            return "This poll will be active at " + survey.start_date
+            return render_template('voteWaiting.html', open_date=survey.start_date)
     
     candidates = db.get_all_candidates(survey_id)
     survey_name = survey.name

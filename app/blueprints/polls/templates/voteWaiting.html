@@ -30,14 +30,35 @@
                     <p>Seconds</p>
                 </div>
                 <div class="items2">
-                    <p id="days">0</p> :
+                    <p id="days">{{days_left}}</p> :
                     <p id="hours">0</p> :
                     <p id="minutes">0</p> :
                     <p id="seconds">0</p>
                 </div>
             </div>
         </div>
-        <script>var endDate = "{{ end_date }}";</script>
+        <script>
+            var openDate = "{{ open_date }}";
+            function updateTime(){
+                const daysField = document.getElementById("days");
+                const hoursField = document.getElementById("hours");
+                const minutesField = document.getElementById("minutes");
+                const secondsField = document.getElementById("seconds");
+                const date_now = new Date().getTime();
+                const open_date = new Date(openDate).getTime();
+                const timeRemain = open_date - date_now;
+                const days = Math.floor(timeRemain / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeRemain % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeRemain % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeRemain % (1000 * 60)) / 1000);
+                daysField.innerHTML = days;
+                hoursField.innerHTML = hours;
+                minutesField.innerHTML = minutes;
+                secondsField.innerHTML = seconds;
+                setTimeout(updateTime, 1000)
+            }
+            updateTime();
+        </script>
         
     </body>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
