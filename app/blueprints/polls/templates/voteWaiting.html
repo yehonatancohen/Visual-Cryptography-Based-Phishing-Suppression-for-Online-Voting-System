@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="{{ url_for('polls.static', filename='vote.css') }}">
+    <head>
+        <title>vote</title>
+    </head>
+    <body>
+        <header id="loggedIn" class="header">
+            <img style="cursor: pointer;" onclick="window.location.href='/'" id="logo" src="{{ url_for('static', filename='assets/logo.png') }}" >
+    
+            <nav class="navbar">
+                <a href="/">Home</a>
+                <a href="{{ url_for('home.about') }}">About</a>
+                <a href="{{ url_for('home.contact') }}">Contact</a>
+                <a href="{{ url_for('polls.mypolls') }}">My Polls</a>
+                <a href="{{ url_for('auth.logout') }}" class="start">Log Out</a>
+                <p>Hello {{current_user.f_name}}!</p>
+            </nav>
+        </header>
+
+        <div class="waiting">
+            <div class="pollOpen">
+                The Poll will open in:
+            </div>
+            <div class="countdown">
+                <div class="items1">
+                    <p>Days</p>
+                    <p>Hours</p>
+                    <p>Minutes</p>
+                    <p>Seconds</p>
+                </div>
+                <div class="items2">
+                    <p id="days">0</p> :
+                    <p id="hours">0</p> :
+                    <p id="minutes">0</p> :
+                    <p id="seconds">0</p>
+                </div>
+            </div>
+        </div>
+        <script>var endDate = "{{ end_date }}";</script>
+        
+    </body>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="{{ url_for('polls.static', filename='vote.js') }}"></script>
+</html>
