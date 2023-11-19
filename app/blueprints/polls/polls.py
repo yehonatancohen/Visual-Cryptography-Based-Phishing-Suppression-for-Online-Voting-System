@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, jsonify
-from flask_login import login_required
+from flask_login import login_required, current_user
 from UTIL.captcha import create_combination
 from flask import current_app
 import io, uuid, os, json
@@ -58,6 +58,30 @@ def mypolls():
     polls = db.get_surveys_related_to_user(session.get('email'))
     return render_template('mypolls.html',user_polls=polls)
 
+@polls.route('/editpoll', methods=['GET','POST'])
+@login_required
+def editpoll(*args):
+    # Check if user has permission to edit this poll
+    action = request.form.get('actionType')
+    survey_id = session.get('survey_id')
+    survey = db.get_survey(survey_id)
+    if not survey.id in [obj.id for obj in db.get_user_surveys(session.get('email'))]:
+        return "You do not have permission to edit this poll."
+    match action:
+        case 'add':
+            email = request.form.get('arg1')
+            db.add_voter(email, survey_id)
+        case 'removeuser':
+            email = request.form.get('arg1')
+            db.remove_candidate(email, survey_id)
+        case 'delete':
+            db.delete_survey(survey_id)
+        case 'changedate':
+            from_date = request.form.get('arg1')
+            to_date = request.form.get('arg2')
+    return "OK"
+        
+    
 @polls.route('/vote/<survey_id>')
 @login_required
 def vote(survey_id):
@@ -107,6 +131,7 @@ def submitvote():
 @polls.route('/results/<survey_id>')
 @login_required
 def results(survey_id):
+    session['survey_id'] = survey_id
     results_votes= db.get_candidates_results_per_servey(survey_id=survey_id, get_in_precentage=False)
     results_precentage= db.get_candidates_results_per_servey(survey_id=survey_id, get_in_precentage=True)
     return render_template('results.html',results_votes=results_votes, results_precentage=results_precentage)

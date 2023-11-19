@@ -44,27 +44,50 @@
                 </div>
                 <div class="box">
                     <div class="form-box">
-                        <h2>Hello</h2>
-                        <div class="input-box" id="addUser">
-                            <span class="icon"><ion-icon name="mail"></ion-icon></span>
-                            <input type="text" name="email" required>
-                            <Label>Add User</Label>
-                        </div>
-                        <div class="input-box" id="removeUser">
-                            <span class="icon"><ion-icon name="mail"></ion-icon></span>
-                            <input type="text" name="email" required>
-                            <Label>Remove User</Label>
-                        </div>
-                        <div id="changeDate">
-                            <div class="input-box date" id="startDate">
-                                <input type="datetime-local" name="fromdate" required>
-                                <Label>From Date</Label>
+                        <form id="pollForm" action="{{ url_for('polls.editpoll') }}" method="post">
+                            <h2>Hello</h2>
+                            <div class="input-box" id="addUser">
+                                <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                                <input type="text" name="email" id="emailAdd" required>
+                                <Label>Add User</Label>
+                                <button type="button" onclick="submitForm('add', document.getElementById('emailAdd').value)">Add User</button>
                             </div>
-                            <div class="input-box date" id="endDate">
-                                <input type="datetime-local" name="todate" required>
-                                <Label>To Date</Label>
+                            <div class="input-box" id="removeUser">
+                                <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                                <input type="text" name="email" id="emailRemove" required>
+                                <Label>Remove User</Label>
+                                <button type="button" onclick="submitForm('remove', document.getElementById('emailRemove').value)">Remove User</button>
                             </div>
-                        </div>
+                            <div id="changeDate">
+                                <div class="input-box date" id="startDate">
+                                    <input type="datetime-local" name="fromdate" id="fromDate" required>
+                                    <Label>From Date</Label>
+                                </div>
+                                <div class="input-box date" id="endDate">
+                                    <input type="datetime-local" name="todate" id="toDate" required>
+                                    <Label>To Date</Label>
+                                </div>
+                                <button type="button" onclick="submitForm('date', document.getElementById('fromDate').value, document.getElementById('toDate').value)">Submit Date</button>
+                            </div>
+                            <input type="hidden" id="actionType" name="actionType" value="">
+                        </form>
+                        
+                        <script>
+                            function submitForm(action, ...args) {
+                                document.getElementById('actionType').value = action;
+                                
+                                // Assign arguments to hidden input fields dynamically
+                                for (let i = 0; i < args.length; i++) {
+                                    const argInput = document.createElement('input');
+                                    argInput.type = 'hidden';
+                                    argInput.name = `arg${i + 1}`;
+                                    argInput.value = args[i];
+                                    document.getElementById('pollForm').appendChild(argInput);
+                                }
+                        
+                                document.getElementById('pollForm').submit();
+                            }
+                        </script>
                     </div>
                 </div>
             </div>
