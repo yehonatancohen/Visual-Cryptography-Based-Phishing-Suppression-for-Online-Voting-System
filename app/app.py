@@ -28,7 +28,7 @@ def create_app():
         # TABLES ALREADY INITIATED
         pass
     
-    app.run(debug=True)
+     
 
     return app
 

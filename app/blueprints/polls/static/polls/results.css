@@ -206,6 +206,7 @@ h3{
 }
 
 .input-box {
+    display: none;
     position: relative;
     width: 100%;
     height: 2.5vw;
@@ -231,6 +232,9 @@ h3{
     top: -0.25vw;
 }
 
+.input-box.date label{
+    top: -0.25vw;
+}
 
 .input-box input {
     width: 88%;
