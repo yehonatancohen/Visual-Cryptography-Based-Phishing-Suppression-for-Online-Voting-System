@@ -127,6 +127,8 @@ def __get_participating_surveys__(conn, email: str) -> list[Voter]:
 def __delete_survey__(conn, id: str) -> None:
     cur = conn.cursor()
     cur.execute(f"DELETE FROM {SURVEYS_TABLE_NAME} WHERE id = ?", (id,))
+    cur.execute(f"DELETE FROM {CANDIDATE_TABLE_NAME} WHERE survey_id = ?", (id,))
+    cur.execute(f"DELETE FROM {VOTERS_TABLE_NAME} WHERE survey_id = ?", (id,))
     conn.commit()
     conn.close()
 
