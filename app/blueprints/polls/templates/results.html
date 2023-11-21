@@ -37,44 +37,23 @@
 
             <div style="display: none;" class="tabcharts" id="SettingsChart">
                 <div class="buttons">
-                    <button id="adduser">Add Voter</button>
-                    <button id="removeuser">Remove Voter</button>
-                    <button id="changedate">Change Date</button>
-                    <button id="deletesurvey">Delete Survey</button>
+                    <button id="adduser" onclick="submitForm('add', document.getElementById('emailAdd').value)">Add Voter</button>
+                    <button id="removeuser" onclick="submitForm('remove', document.getElementById('emailRemove').value)">Remove Voter</button>
+                    <button id="changedate" onclick="submitForm('date', document.getElementById('fromDate').value, document.getElementById('toDate').value)">Change Date</button>
+                    <button id="deletesurvey" onclick="submitForm('delete')">Delete Survey</button>
                 </div>
                 <div class="box">
                     <div class="form-box">
                         <form id="pollForm" action="{{ url_for('polls.editpoll') }}" method="post">
-                            <h2>Hello</h2>
                             <div class="input-box" id="addUser">
                                 <span class="icon"><ion-icon name="mail"></ion-icon></span>
                                 <input type="text" name="email" id="emailAdd" required>
                                 <Label>Add User</Label>
-                                <button type="button" onclick="submitForm('add', document.getElementById('emailAdd').value)">Add User</button>
                             </div>
                             <div class="input-box" id="removeUser">
                                 <span class="icon"><ion-icon name="mail"></ion-icon></span>
                                 <input type="text" name="email" id="emailRemove" required>
                                 <Label>Remove User</Label>
-                                <button type="button" onclick="submitForm('remove', document.getElementById('emailRemove').value)">Remove User</button>
-                        <div class="input-box" id="addUser">
-                            <span class="icon"><ion-icon name="mail"></ion-icon></span>
-                            <input type="text" name="email" id="adduserInput" required>
-                            <Label>Add User</Label>
-                        </div>
-                        <div class="input-box" id="removeUser">
-                            <span class="icon"><ion-icon name="mail"></ion-icon></span>
-                            <input type="text" name="email" id="removeuserInput" required>
-                            <Label>Remove User</Label>
-                        </div>
-                        <div id="changeDate">
-                            <div class="input-box date" id="startDate">
-                                <input type="datetime-local" name="fromdate" id="adddateInput" required>
-                                <Label>From Date</Label>
-                            </div>
-                            <div class="input-box date" id="endDate">
-                                <input type="datetime-local" name="todate" id="removedateInput" required>
-                                <Label>To Date</Label>
                             </div>
                             <div id="changeDate">
                                 <div class="input-box date" id="startDate">
@@ -85,9 +64,7 @@
                                     <input type="datetime-local" name="todate" id="toDate" required>
                                     <Label>To Date</Label>
                                 </div>
-                                <button type="button" onclick="submitForm('date', document.getElementById('fromDate').value, document.getElementById('toDate').value)">Submit Date</button>
-                            </div>
-                            <input type="hidden" id="actionType" name="actionType" value="">
+                                <input type="hidden" id="actionType" name="actionType" value="">
                         </form>
                         
                         <script>
