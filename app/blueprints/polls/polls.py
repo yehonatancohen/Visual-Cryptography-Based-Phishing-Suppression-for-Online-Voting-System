@@ -56,7 +56,7 @@ def createpoll():
 @login_required
 def mypolls():
     polls = db.get_surveys_related_to_user(session.get('email'))
-    return render_template('mypolls.html',user_polls=polls)
+    return render_template('myPolls.html',user_polls=polls)
 
 @polls.route('/editpoll', methods=['GET','POST'])
 @login_required
