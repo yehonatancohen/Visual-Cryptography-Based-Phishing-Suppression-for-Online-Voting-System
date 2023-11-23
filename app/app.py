@@ -29,18 +29,18 @@ def create_app():
         pass
     
      
+    @app.errorhandler(500)
+    def onError(error):
+        return render_template('errorHandler.html', message="Sorry, something went wrong on our end<br>Refresh or come back later")
+
+    @app.errorhandler(404)
+    def onError(error):
+        return render_template('errorHandler.html', message="Hey! This page doesn't appear to exist...<br>Go to the home page and try again")
 
     return app
 
 
 app = create_app()
-@app.errorhandler(500)
-def onError(error):
-    return render_template('errorHandler.html', message="Sorry, something went wrong on our end<br>Refresh or come back later")
-
-@app.errorhandler(404)
-def onError(error):
-    return render_template('errorHandler.html', message="Hey! This page doesn't appear to exist...<br>Go to the home page and try again")
 
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0')
