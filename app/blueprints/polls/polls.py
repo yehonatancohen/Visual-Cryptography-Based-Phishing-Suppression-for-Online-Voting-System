@@ -71,15 +71,26 @@ def editpoll(*args):
         case 'add':
             email = request.form.get('arg1')
             db.add_voter(email, survey_id)
-        case 'removeuser':
+        case 'remove':
             email = request.form.get('arg1')
-            db.remove_candidate(email, survey_id)
+            db.remove_voter(survey_id, email)
         case 'delete':
             db.delete_survey(survey_id)
-        case 'changedate':
+            return redirect(url_for('polls.mypolls'))
+        case 'date':
             from_date = request.form.get('arg1')
             to_date = request.form.get('arg2')
-    return "OK"
+            if from_date != '':
+                fromdate_parts = from_date.split('T')[0].split('-').__add__(from_date.split('T')[1].split(':'))
+                fromdate_parts = [int(fromdate_parts[i]) for i in range(len(fromdate_parts))]
+                db.update_start_date(survey_id, fromdate_parts[0], fromdate_parts[1], fromdate_parts[2], fromdate_parts[3], fromdate_parts[4])
+            if to_date != '':
+                todate_parts = to_date.split('T')[0].split('-').__add__(to_date.split('T')[1].split(':'))
+                todate_parts = [int(todate_parts[i]) for i in range(len(todate_parts))]
+                db.update_end_date(survey_id, todate_parts[0], todate_parts[1], todate_parts[2], todate_parts[3], todate_parts[4])
+            
+
+    return redirect(url_for('polls.results', survey_id=survey_id))
         
     
 @polls.route('/vote/<survey_id>')

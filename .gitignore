@@ -12,3 +12,6 @@ __pycache__
 /app/database/candidates
 /app/blueprints/static/uploads
 app/temp.py
+examples/
+logo.jpg
+project.docx

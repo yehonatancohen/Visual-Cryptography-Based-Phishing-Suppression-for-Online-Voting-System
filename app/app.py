@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_login import LoginManager
 import sqlite3, os
 import database as db
@@ -34,4 +34,13 @@ def create_app():
 
 
 if __name__ == "__main__":
-    create_app().run()
+    app = create_app()
+    @app.errorhandler(500)
+    def onError(error):
+        return render_template('errorHandler.html', message="Sorry, something went wrong on our end<br>Refresh or come back later")
+    
+    @app.errorhandler(404)
+    def onError(error):
+        return render_template('errorHandler.html', message="Hey! This page doesn't appear to exist...<br>Go to the home page and try again")
+    
+    app.run(debug=True)
