@@ -16,7 +16,10 @@ def create_original_image(x, y, text):
     font = None
     
     while max_font_size > 0:
-        font = ImageFont.truetype('./app/UTIL/fonts/Arial.ttf', max_font_size)
+        try:
+            font = ImageFont.truetype('./app/UTIL/fonts/Arial.ttf', max_font_size)
+        except Exception as e:
+            font = ImageFont.truetype('./UTIL/fonts/Arial.ttf', max_font_size)
         text_width, text_height = draw.textsize(text, font=font)
         
         # Check if text fits within the image boundaries
