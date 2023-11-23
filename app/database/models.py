@@ -40,7 +40,7 @@ class Survey:
     
     def has_ended(self):
         from datetime import datetime
-        has_ended = (datetime.now() > self.end_date)
+        has_ended = (datetime.now() >= self.end_date)
         return has_ended
     
 

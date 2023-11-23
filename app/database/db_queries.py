@@ -304,7 +304,7 @@ def __update_survey_start_time__(conn, survey_id, start_year, start_month, start
 def __update_survey_end_time__(conn, survey_id, end_year, end_month, end_day, end_hour, end_minute):
     cur = conn.cursor()
     end_time = f'{end_year:04d}-{end_month:02d}-{end_day:02d} {end_hour:02d}:{end_minute:02d}'
-    cur.execute(f'UPDATE {SURVEYS_TABLE_NAME} SET end = %s WHERE id = %s',
+    cur.execute(f'UPDATE {SURVEYS_TABLE_NAME} SET _end = %s WHERE id = %s',
                 (end_time, survey_id,))
     conn.commit()
     conn.close()
