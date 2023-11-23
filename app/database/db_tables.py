@@ -1,6 +1,7 @@
 import sqlite3
 
 DB_PATH = "./app/database/database.db"
+DB_PATH_PROD = "./database/database.db"
 USERS_TABLE_NAME = 'users'
 SURVEYS_TABLE_NAME = 'surveys'
 VOTERS_TABLE_NAME = 'voters'
@@ -65,4 +66,7 @@ def init_tables():
     conn.close()
 
 def get_connection():
-    return sqlite3.connect(DB_PATH)
+    try:
+        return sqlite3.connect(DB_PATH)
+    except Exception as e:
+        return sqlite3.connect(DB_PATH_PROD)
