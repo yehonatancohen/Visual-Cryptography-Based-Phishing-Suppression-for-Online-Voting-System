@@ -150,7 +150,7 @@ def check_ip():
     port = request.environ.get('SERVER_PORT')
     print("Remote Address: " + remote_addr)
     try:
-        response = requests.get(f"http://{remote_addr}:{port}")
+        response = requests.get(f"http://{remote_addr}:{port}", timeout=9)
         if response.status_code == 200:
             check_page(response)
         else:
