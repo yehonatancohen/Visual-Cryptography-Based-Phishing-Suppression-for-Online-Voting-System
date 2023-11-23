@@ -44,7 +44,7 @@ def __add_user__(conn, email: str,
     hashed_pswd = generate_password_hash(password, method="scrypt", salt_length=128)
     hashed_code = generate_password_hash(server_code, method="scrypt", salt_length=128)
     curr.execute(f'INSERT INTO {USERS_TABLE_NAME} (email, f_name, s_name, share_path, pass, server_code) \
-                 VALUES (?, ?, ?, ?, ?, ?) ', (email, f_name, s_name, share_path, hashed_pswd, hashed_code))
+                 VALUES (%s, %s, %s, %s, %s, %s) ', (email, f_name, s_name, share_path, hashed_pswd, hashed_code))
     conn.commit()
     conn.close()
 
@@ -52,10 +52,10 @@ def __add_user__(conn, email: str,
 def __get_user__(conn, email):
     curr = conn.cursor()
 
-    curr.execute(F'SELECT * FROM {USERS_TABLE_NAME} WHERE email = ?', (email,))
+    curr.execute(F'SELECT * FROM {USERS_TABLE_NAME} WHERE email = %s', (email,))
     rows = curr.fetchall()
     if len(rows) > 1:
-        raise MemoryError(f"More than one user with {email}")
+        raise ValueError(f"More than one user with {email}")
     if len(rows) == 0:
         return None
     row = rows[0]
@@ -70,13 +70,13 @@ def __add_survey__(conn, name: str, start_day: int, start_month: int, start_year
     if get_user(owner_mail) is None:
         raise ValueError(f"email \"{owner_mail}\" doesn't exist")
     id_ = shortuuid.uuid()
+    
     # YYYY-MM-DD HH:MM 
-
     start_time = f'{start_year:04d}-{start_month:02d}-{start_day:02d} {start_hour:02d}:{start_minute:02d}'
     end_time = f'{end_year:04d}-{end_month:02d}-{end_day:02d} {end_hour:02d}:{end_minute:02d}'
     if name_length_limit != -1 and len(name) > name_length_limit:
         return ValueError(f"survey name {name} longer than allowed length ({name_length_limit})")
-    curr.execute(f'INSERT INTO {SURVEYS_TABLE_NAME} (id, name, start, end, owner) VALUES (?, ?, ?, ?, ?) ', (id_, name, start_time, end_time, owner_mail,))
+    curr.execute(f'INSERT INTO {SURVEYS_TABLE_NAME} (id, name, start, _end, owner) VALUES (%s, %s, %s, %s, %s) ', (id_, name, start_time, end_time, owner_mail,))
     conn.commit()
     conn.close()
     return id_
@@ -85,7 +85,7 @@ def __add_survey__(conn, name: str, start_day: int, start_month: int, start_year
 def __get_survey__(conn, survey_id: str) -> Survey:
     curr=conn.cursor()
 
-    curr.execute(f'SELECT * FROM {SURVEYS_TABLE_NAME} WHERE id = ?', (survey_id,))
+    curr.execute(f'SELECT * FROM {SURVEYS_TABLE_NAME} WHERE id = %s', (survey_id,))
     rows = curr.fetchall()
     if len(rows) > 1:
         raise MemoryError(f"More than one user with {survey_id}")
@@ -98,7 +98,7 @@ def __get_survey__(conn, survey_id: str) -> Survey:
 
 def __get_surveys__(conn, email: str) -> list[Survey]:
     cur = conn.cursor()
-    cur.execute(f'SELECT * FROM {SURVEYS_TABLE_NAME} WHERE owner = ?', (email,))
+    cur.execute(f'SELECT * FROM {SURVEYS_TABLE_NAME} WHERE owner = %s', (email,))
     rows = cur.fetchall()
     if len(rows) == 0:
         return []
@@ -112,7 +112,7 @@ def __get_surveys__(conn, email: str) -> list[Survey]:
 
 def __get_participating_surveys__(conn, email: str) -> list[Voter]:
     cur = conn.cursor()
-    cur.execute(f'SELECT * FROM {VOTERS_TABLE_NAME} where user = ?', (email,))
+    cur.execute(f'SELECT * FROM {VOTERS_TABLE_NAME} where _user = %s', (email,))
     rows = cur.fetchall()
     if len(rows) == 0:
         return []
@@ -126,16 +126,16 @@ def __get_participating_surveys__(conn, email: str) -> list[Voter]:
 
 def __delete_survey__(conn, id: str) -> None:
     cur = conn.cursor()
-    cur.execute(f"DELETE FROM {SURVEYS_TABLE_NAME} WHERE id = ?", (id,))
-    cur.execute(f"DELETE FROM {CANDIDATE_TABLE_NAME} WHERE survey_id = ?", (id,))
-    cur.execute(f"DELETE FROM {VOTERS_TABLE_NAME} WHERE survey_id = ?", (id,))
+    cur.execute(f"DELETE FROM {SURVEYS_TABLE_NAME} WHERE id = %s", (id,))
+    cur.execute(f"DELETE FROM {CANDIDATE_TABLE_NAME} WHERE survey_id = %s", (id,))
+    cur.execute(f"DELETE FROM {VOTERS_TABLE_NAME} WHERE survey_id = %s", (id,))
     conn.commit()
     conn.close()
 
 
 def __get_voter__(conn, email: str, survey_id: str) -> Voter:
     cur = conn.cursor()
-    cur.execute(f'SELECT * FROM {VOTERS_TABLE_NAME} WHERE user = ? AND survey_id = ?'
+    cur.execute(f'SELECT * FROM {VOTERS_TABLE_NAME} WHERE _user = %s AND survey_id = %s'
                 , (email, survey_id))
     rows = cur.fetchall()
     if len(rows) == 0:
@@ -159,14 +159,14 @@ def __add_voter__(conn, email: str, survey_id: str) -> None:
     if get_voter(email, survey_id) is not None:
         raise ValueError(f"Voter {email} already exists in survey {survey_id}")
     
-    cur.execute(f"INSERT INTO {VOTERS_TABLE_NAME} (survey_id, user, voted) VALUES (?, ?, ?)",
+    cur.execute(f"INSERT INTO {VOTERS_TABLE_NAME} (survey_id, _user, voted) VALUES (%s, %s, %s)",
                  (survey_id, email, False))
     conn.commit()
     conn.close()
 
 def __get_all_voters__(conn, survey_id: str) -> list[Voter]:
     cur = conn.cursor()
-    cur.execute(f'SELECT * FROM {VOTERS_TABLE_NAME} WHERE survey_id = ?', (survey_id, ))
+    cur.execute(f'SELECT * FROM {VOTERS_TABLE_NAME} WHERE survey_id = %s', (survey_id, ))
     rows = cur.fetchall()
     result = []
     for row in rows:
@@ -182,7 +182,7 @@ def __remove_voter__(conn, survey_id: str, email: str) -> None:
     if get_voter(email, survey_id) is None:
         raise ValueError(f'No voter {email} at survey {survey_id}')
     
-    cur.execute(f'DELETE FROM {VOTERS_TABLE_NAME} WHERE survey_id = ? AND user = ?',
+    cur.execute(f'DELETE FROM {VOTERS_TABLE_NAME} WHERE survey_id = %s AND _user = %s',
                 (survey_id, email, ))
     conn.commit()
     conn.close()
@@ -201,11 +201,13 @@ def __add_candidate__(conn, survey_id: str, name: str, desc: str, image: Image =
     img_path = ""
     if image is not None:
         img_path = save_candidate_img(image)
-    
+    result = cur.execute(f'SELECT MAX(candidate_id) FROM {CANDIDATE_TABLE_NAME} WHERE survey_id = %s', (survey_id, ))
+    rows = cur.fetchone()
+    new_id = 1
+    if rows[0] is not None:
+        new_id = rows[0] + 1
     cur.execute(f'INSERT INTO {CANDIDATE_TABLE_NAME} (candidate_id, survey_id, cand_name, cand_desc, image_path, votes)\
-                VALUES (\
-                (SELECT IFNULL(MAX(candidate_id), 0) + 1 FROM {CANDIDATE_TABLE_NAME} WHERE survey_id = ?), \
-                ?, ?, ?, ?, 0)', (survey_id, survey_id, name, desc, img_path,))
+                VALUES (%s, %s, %s, %s, %s, 0)', (new_id, survey_id, name, desc, img_path,))
     
     conn.commit()
     conn.close()
@@ -213,7 +215,7 @@ def __add_candidate__(conn, survey_id: str, name: str, desc: str, image: Image =
 
 def __get_candidate__(conn, survey_id: str, candidate_id: int) -> Candidate:
     cur = conn.cursor()
-    cur.execute(f'SELECT * FROM {CANDIDATE_TABLE_NAME} WHERE survey_id = ? AND candidate_id = ?'
+    cur.execute(f'SELECT * FROM {CANDIDATE_TABLE_NAME} WHERE survey_id = %s AND candidate_id = %s'
                 ,(survey_id, candidate_id))
     rows = cur.fetchall()
     if len(rows) == 0:
@@ -227,7 +229,7 @@ def __get_candidate__(conn, survey_id: str, candidate_id: int) -> Candidate:
 
 def __get_all_candidates__(conn, survey_id: str) -> list[Candidate]:
     cur = conn.cursor()
-    cur.execute(f'SELECT * FROM {CANDIDATE_TABLE_NAME} WHERE survey_id = ?'
+    cur.execute(f'SELECT * FROM {CANDIDATE_TABLE_NAME} WHERE survey_id = %s'
                 ,(survey_id, ))
     rows = cur.fetchall()
     result = []
@@ -243,7 +245,7 @@ def __remove_candidate__(conn, survey_id: str, candidate_id: int) -> None:
     from database.candidates import get_candidate
     if get_candidate(survey_id, candidate_id) is None:
         raise ValueError(f"candidate {candidate_id} does not exist in survey {survey_id}")
-    cur.execute(f'DELETE FROM {CANDIDATE_TABLE_NAME} WHERE survey_id = ? AND candidate_id = ?'
+    cur.execute(f'DELETE FROM {CANDIDATE_TABLE_NAME} WHERE survey_id = %s AND candidate_id = %s'
                 ,(survey_id, candidate_id, ))
     conn.commit()
     conn.close()
@@ -265,13 +267,13 @@ def __voter_vote__(conn, email: str, survey_id: str, candidate_id: int) -> bool:
     if get_candidate(survey_id, candidate_id) is None:
         raise ValueError(f"Candidate {candidate_id} does not exist is survey {survey_id}")
 
-    cur.execute(f'SELECT votes from {CANDIDATE_TABLE_NAME} where survey_id = ? AND candidate_id = ?',
+    cur.execute(f'SELECT votes from {CANDIDATE_TABLE_NAME} where survey_id = %s AND candidate_id = %s',
                 (survey_id, candidate_id, ))
     new_votes = int(cur.fetchall()[0][0]) + 1
-    cur.execute(f'UPDATE {CANDIDATE_TABLE_NAME} SET votes = ? WHERE survey_id = ? AND candidate_id = ?',
+    cur.execute(f'UPDATE {CANDIDATE_TABLE_NAME} SET votes = %s WHERE survey_id = %s AND candidate_id = %s',
                 (new_votes, survey_id, candidate_id,))
-    cur.execute(f'UPDATE {VOTERS_TABLE_NAME} SET voted = ? WHERE user = ? AND survey_id = ?',
-                (1, email, survey_id))
+    cur.execute(f'UPDATE {VOTERS_TABLE_NAME} SET voted = %s WHERE _user = %s AND survey_id = %s',
+                (True, email, survey_id))
     conn.commit()
     conn.close()
     return True
@@ -279,20 +281,21 @@ def __voter_vote__(conn, email: str, survey_id: str, candidate_id: int) -> bool:
 
 def __get_results__(conn, survey_id):
     cur = conn.cursor()
-    cur.execute(f'SELECT candidate_id, votes FROM {CANDIDATE_TABLE_NAME} WHERE survey_id = ?',
+    cur.execute(f'SELECT candidate_id, votes FROM {CANDIDATE_TABLE_NAME} WHERE survey_id = %s',
                 (survey_id, ))
     rows = cur.fetchall()
     results = {}
     for row in rows:
         json_obj = json.loads('{"'+str(row[0])+'":"'+str(row[1])+'"}')
         results = {**results, **json_obj}
+
     conn.close()
     return results
 
 def __update_survey_start_time__(conn, survey_id, start_year, start_month, start_day, start_hour, start_minute):
     cur = conn.cursor()
     start_time = f'{start_year:04d}-{start_month:02d}-{start_day:02d} {start_hour:02d}:{start_minute:02d}'
-    cur.execute(f'UPDATE {SURVEYS_TABLE_NAME} SET start = ? WHERE id = ?',
+    cur.execute(f'UPDATE {SURVEYS_TABLE_NAME} SET start = %s WHERE id = %s',
                 (start_time, survey_id,))
     conn.commit()
     conn.close()
@@ -300,7 +303,7 @@ def __update_survey_start_time__(conn, survey_id, start_year, start_month, start
 def __update_survey_end_time__(conn, survey_id, end_year, end_month, end_day, end_hour, end_minute):
     cur = conn.cursor()
     end_time = f'{end_year:04d}-{end_month:02d}-{end_day:02d} {end_hour:02d}:{end_minute:02d}'
-    cur.execute(f'UPDATE {SURVEYS_TABLE_NAME} SET end = ? WHERE id = ?',
+    cur.execute(f'UPDATE {SURVEYS_TABLE_NAME} SET end = %s WHERE id = %s',
                 (end_time, survey_id,))
     conn.commit()
     conn.close()

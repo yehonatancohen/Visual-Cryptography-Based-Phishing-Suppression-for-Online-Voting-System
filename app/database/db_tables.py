@@ -1,7 +1,6 @@
-import sqlite3
-
+import psycopg2 as pg;
+import os
 DB_PATH = "./app/database/database.db"
-DB_PATH_PROD = "./database/database.db"
 USERS_TABLE_NAME = 'users'
 SURVEYS_TABLE_NAME = 'surveys'
 VOTERS_TABLE_NAME = 'voters'
@@ -22,8 +21,8 @@ survey_table_init_query = f"""
     CREATE TABLE {SURVEYS_TABLE_NAME}(
         id TEXT PRIMARY KEY,
         name TEXT,
-        start time,
-        end time,
+        start timestamp,
+        _end timestamp,
         owner TEXT,
         FOREIGN KEY (owner) REFERENCES {USERS_TABLE_NAME} (email)
     )
@@ -31,11 +30,11 @@ survey_table_init_query = f"""
 
 user_survey_table_init_query = f"""
     CREATE TABLE {VOTERS_TABLE_NAME}(
-        survey_id TEXT,
-        user TEXT,
+        survey_id varchar(255),
+        _user varchar(255),
         voted boolean,
         FOREIGN KEY (survey_id) REFERENCES {SURVEYS_TABLE_NAME} (id),
-         PRIMARY KEY (survey_id, user)
+         PRIMARY KEY (survey_id, _user)
     )
 """
 
@@ -53,10 +52,15 @@ candidate_table_init_query = f"""
 
 """
 
+def get_connection():
+    return pg.connect(os.environ['DB_HOST'])
+
 def init_tables():
     """Create tables
     """
-    conn = sqlite3.connect(DB_PATH)
+    # Connect to the database
+    conn = get_connection();
+
     curr = conn.cursor()
     curr.execute(users_table_init_query)
     curr.execute(survey_table_init_query)
@@ -65,8 +69,8 @@ def init_tables():
     conn.commit()
     conn.close()
 
-def get_connection():
-    try:
-        return sqlite3.connect(DB_PATH)
-    except Exception as e:
-        return sqlite3.connect(DB_PATH_PROD)
+"""conn=get_connection()
+curr=conn.cursor()
+curr.execute(candidate_table_init_query)
+conn.commit()
+conn.close()"""

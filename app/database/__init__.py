@@ -20,9 +20,9 @@ from database.surveys import get_user_surveys # user owned surveys
 from database.surveys import delete_survey
 from database.surveys import get_results
 from database.surveys import requirements_to_vote
+
 from database.surveys import update_start_date
 from database.surveys import update_end_date
-
 
 # user CRUD operations
 from database.users import add_user

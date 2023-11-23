@@ -4,7 +4,7 @@ from werkzeug.security import check_password_hash
 import database.models as models
 import database.db_queries as db_queries
 import database.db_tables as db_tables
-
+from .db_files import get_img_from_bucket
 EMAIL_SIZE_LIMIT = 150
 F_NAME_SIZE_LIMIT = 100
 S_NAME_SIZE_LIMIT = 100
@@ -101,7 +101,7 @@ def get_share(email: str) -> Image:
     user = get_user(email)
     if user is None:
         raise ValueError(f"email \"{email}\" doesn't exist")
-    share = Image2.open(user.share_path)
+    share = get_img_from_bucket(user.share_path)
     return share
 
 def get_surveys_related_to_user(user_email: str) -> list[dict]:

@@ -33,13 +33,13 @@ def add_survey(name: str, start_day: int, start_month: int, start_year: int,
         start_hour (int, optional): Defaults to 0.
         start_minute (int, optional): Defaults to 0.
         end_hour (int, optional): Defaults to 0.
-        end_minute (int, optional): efaults to 0.
+        end_minute (int, optional): Defaults to 0.
     Returns:
         str: Survey id
     """
     conn = get_connection()
     return __add_survey__(conn, name, start_day, start_month, start_year, start_hour, start_minute,
-                   end_day, end_month, end_year, end_hour, end_minute,owner_email, SURVEY_NAME_LENGTH_LIMIT)
+                   end_day, end_month, end_year, end_hour, end_minute, owner_email, SURVEY_NAME_LENGTH_LIMIT)
     
 
 def get_user_surveys(email: str) -> list[Survey]:
@@ -88,6 +88,8 @@ def requirements_to_vote(survey_id: str, voter_email: str) -> dict:
     """
     from .voters import get_voter
     voter = get_voter(voter_email, survey_id)
+    if voter is None:
+        return ValueError(f"voter {voter_email} does not exist in survey {survey_id}")
     from .surveys import get_survey
     survey = get_survey(survey_id)
 
@@ -99,7 +101,7 @@ def requirements_to_vote(survey_id: str, voter_email: str) -> dict:
               "end_date": survey.end_date,
               "has_user_voted": has_voted}
     return result
-
+    
 def update_start_date(survey_id: str, start_year: int, start_month: int, start_day: int, start_hour: int, start_minute: int):
     """This method updates the start date of the survey according to ALL the parameters given
     Args:

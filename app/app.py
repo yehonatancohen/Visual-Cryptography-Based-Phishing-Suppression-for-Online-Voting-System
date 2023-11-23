@@ -22,11 +22,11 @@ def create_app():
         app.register_blueprint(home, url_prefix='/')
 
     # connect to the database
-    try:
+    """try:
         db.init_tables()
     except sqlite3.OperationalError as e:
         print(e)
-        pass
+        pass"""
     
      
     @app.errorhandler(500)

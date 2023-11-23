@@ -12,7 +12,7 @@ class User(UserMixin):
         self.hashed_password = hashed_password
         self.hashed_server_code = hashed_server_code
 
-    def get_id(self):
+    def get_id(self):   
         return str(self.id)
     
     def __repr__(self) -> str:
@@ -32,8 +32,9 @@ class Survey:
     
     def is_active(self):
         from datetime import datetime
-        startDateObj = datetime.strptime(self.start_date, '%Y-%m-%d %H:%M')
-        endDateObj = datetime.strptime(self.end_date, '%Y-%m-%d %H:%M')
+        format = "%Y-%m-%d %H:%M"
+        startDateObj = datetime.strptime(self.start_date.strftime(format), format)
+        endDateObj = datetime.strptime(self.end_date.strftime(format), format)
         is_active = (datetime.now() >= startDateObj) and (datetime.now() <= endDateObj)
         return is_active
     
