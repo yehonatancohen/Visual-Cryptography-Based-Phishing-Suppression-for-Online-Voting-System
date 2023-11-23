@@ -24,8 +24,8 @@ def create_app():
     # connect to the database
     try:
         db.init_tables()
-    except sqlite3.OperationalError:
-        # TABLES ALREADY INITIATED
+    except sqlite3.OperationalError as e:
+        print(e)
         pass
     
      
